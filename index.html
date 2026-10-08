@@ -2,35 +2,49 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>ReinierTutoriales — OpenCore · macOS · Hackintosh</title>
-  <meta name="description" content="Portafolio técnico de ReinierTutoriales: EFI OpenCore, macOS en hardware no soportado, Wi-Fi/Bluetooth Intel y Broadcom, AMD Ryzen e Intel. Configuraciones reproducibles y verificables." />
+  <meta name="description" content="Portafolio de ReinierTutoriales: ingeniería OpenCore y EFI, macOS en hardware no soportado, Wi-Fi/Bluetooth Intel y Broadcom, AMD Ryzen e Intel. Configuraciones reproducibles y verificables." />
   <meta name="author" content="ReinierTutoriales" />
-  <meta name="theme-color" content="#05070d" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#04060c" />
   <meta name="color-scheme" content="dark" />
   <link rel="canonical" href="https://reiniertutoriales.github.io/" />
-  <link rel="icon" type="image/png" href="imagenes/Logo%20RT.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon.png" />
+  <link rel="apple-touch-icon" href="imagenes/apple-touch-icon.png" />
+  <link rel="preload" as="image" href="imagenes/logo-384.webp" type="image/webp" />
 
   <meta property="og:type" content="profile" />
+  <meta property="og:locale" content="es_ES" />
+  <meta property="og:url" content="https://reiniertutoriales.github.io/" />
+  <meta property="og:site_name" content="ReinierTutoriales" />
   <meta property="og:title" content="ReinierTutoriales — OpenCore · macOS · Hackintosh" />
-  <meta property="og:description" content="EFI OpenCore, macOS en hardware no soportado, Wi-Fi/Bluetooth y AMD/Intel. Documentación técnica reproducible." />
-  <meta property="og:image" content="https://raw.githubusercontent.com/ReinierTutoriales/ReinierTutoriales/main/imagenes/Logo%20RT.png" />
+  <meta property="og:description" content="Ingeniería OpenCore y EFI, macOS en hardware no soportado, Wi-Fi/Bluetooth y AMD/Intel. Documentación técnica reproducible." />
+  <meta property="og:image" content="https://reiniertutoriales.github.io/imagenes/og-logo.png" />
+  <meta property="og:image:width" content="512" />
+  <meta property="og:image:height" content="512" />
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:site" content="@ReinierTutorial" />
 
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "ReinierTutoriales",
-    "url": "https://www.reiniertutoriales.com/",
-    "knowsAbout": ["OpenCore", "macOS", "Hackintosh", "ACPI", "EFI", "AMD Ryzen", "Intel", "Wi-Fi", "Bluetooth"],
-    "sameAs": [
-      "https://github.com/ReinierTutoriales",
-      "https://youtube.com/c/ReinierTutoriales",
-      "https://t.me/ReinierTutoriales",
-      "https://twitter.com/ReinierTutorial"
-    ]
+    "@type": "ProfilePage",
+    "url": "https://reiniertutoriales.github.io/",
+    "mainEntity": {
+      "@type": "Person",
+      "name": "ReinierTutoriales",
+      "image": "https://reiniertutoriales.github.io/imagenes/og-logo.png",
+      "url": "https://reiniertutoriales.github.io/",
+      "knowsAbout": ["OpenCore", "macOS", "Hackintosh", "ACPI", "EFI", "AMD Ryzen", "Intel", "Wi-Fi", "Bluetooth"],
+      "sameAs": [
+        "https://www.reiniertutoriales.com/",
+        "https://github.com/ReinierTutoriales",
+        "https://youtube.com/c/ReinierTutoriales",
+        "https://t.me/ReinierTutoriales",
+        "https://twitter.com/ReinierTutorial"
+      ]
+    }
   }
   </script>
 
@@ -40,536 +54,870 @@
 
   <style>
     :root {
-      --bg: #05070d;
-      --bg-2: #0a0f1c;
-      --glass: rgba(16, 24, 42, 0.55);
-      --line: rgba(120, 160, 255, 0.14);
+      --bg: #04060c;
+      --bg-2: #080d19;
+      --glass: rgba(14, 21, 38, 0.55);
+      --line: rgba(120, 160, 255, 0.13);
       --line-hi: rgba(0, 229, 255, 0.45);
-      --text: #e8efff;
-      --muted: #8a97b4;
+      --text: #eaf0ff;
+      --muted: #8d9ab8;
+      --dim: #5d6a88;
       --cyan: #00e5ff;
       --violet: #8b5cf6;
       --magenta: #ff3ea5;
       --lime: #7cff6b;
       --amd: #ff5a4e;
       --intel: #3d9bff;
-      --radius: 16px;
+      --radius: 18px;
+      --nav-h: 68px;
       --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
       --sans: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --ease: cubic-bezier(.2, .7, .2, 1);
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-
+    html { scroll-behavior: smooth; scroll-padding-top: calc(var(--nav-h) + 12px); -webkit-text-size-adjust: 100%; }
     body {
-      font-family: var(--sans);
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      min-height: 100vh;
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
+      font-family: var(--sans); background: var(--bg); color: var(--text);
+      line-height: 1.6; min-height: 100vh; overflow-x: hidden;
+      -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
     }
+    body.menu-open { overflow: hidden; }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+    ::selection { background: rgba(0, 229, 255, 0.3); }
+    :focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; border-radius: 8px; }
 
-    /* ---------- Fondo: grid en perspectiva + auroras ---------- */
-    .bg {
-      position: fixed; inset: 0; z-index: -1; pointer-events: none;
+    .skip { position: absolute; left: 16px; top: -60px; z-index: 100; padding: 10px 16px; border-radius: 10px; background: var(--cyan); color: #000; font-weight: 600; }
+    .skip:focus { top: 12px; }
+
+    .wrap { width: 100%; max-width: 1180px; margin: 0 auto; padding: 0 16px; }
+    @media (min-width: 720px) { .wrap { padding: 0 32px; } }
+
+    /* ---------- Fondo ---------- */
+    .bg { position: fixed; inset: 0; z-index: -2; pointer-events: none;
       background:
-        radial-gradient(60vw 40vw at 85% -10%, rgba(139, 92, 246, 0.22), transparent 60%),
-        radial-gradient(50vw 40vw at -10% 20%, rgba(0, 229, 255, 0.14), transparent 60%),
-        radial-gradient(40vw 30vw at 50% 110%, rgba(255, 62, 165, 0.10), transparent 60%),
+        radial-gradient(60vw 45vw at 90% -10%, rgba(139, 92, 246, 0.22), transparent 60%),
+        radial-gradient(55vw 45vw at -10% 15%, rgba(0, 229, 255, 0.13), transparent 60%),
+        radial-gradient(45vw 35vw at 50% 115%, rgba(255, 62, 165, 0.10), transparent 60%),
         var(--bg);
     }
-    .bg::after {
-      content: ""; position: absolute; inset: 0;
-      background-image:
-        linear-gradient(var(--line) 1px, transparent 1px),
-        linear-gradient(90deg, var(--line) 1px, transparent 1px);
-      background-size: 56px 56px;
-      mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, #000 30%, transparent 75%);
-      -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, #000 30%, transparent 75%);
-      opacity: 0.55;
+    .bg::after { content: ""; position: absolute; inset: 0;
+      background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);
+      background-size: 64px 64px;
+      mask-image: radial-gradient(ellipse 85% 60% at 50% 25%, #000 25%, transparent 75%);
+      -webkit-mask-image: radial-gradient(ellipse 85% 60% at 50% 25%, #000 25%, transparent 75%);
+      opacity: .5;
+    }
+    #net { position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: .55; }
+    .noise { position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: .035;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     }
 
-    a { color: inherit; text-decoration: none; }
-    :focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; border-radius: 6px; }
+    /* ---------- Progreso de scroll ---------- */
+    .progress { position: fixed; top: 0; left: 0; right: 0; height: 2px; z-index: 60; transform-origin: 0 50%; transform: scaleX(0);
+      background: linear-gradient(90deg, var(--cyan), var(--violet), var(--magenta)); box-shadow: 0 0 12px var(--cyan); }
 
-    .wrap { max-width: 1120px; margin: 0 auto; padding: 0 16px; }
-    @media (min-width: 720px) { .wrap { padding: 0 28px; } }
+    /* ---------- Header ---------- */
+    .header { position: fixed; top: 0; left: 0; right: 0; z-index: 50; height: var(--nav-h);
+      transition: background .3s ease, border-color .3s ease;
+      border-bottom: 1px solid transparent; }
+    .header.scrolled { background: rgba(4, 6, 12, 0.72); border-bottom-color: var(--line);
+      backdrop-filter: blur(16px) saturate(140%); -webkit-backdrop-filter: blur(16px) saturate(140%); }
+    .header .wrap { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .brand { display: flex; align-items: center; gap: 11px; font-weight: 600; letter-spacing: -0.01em; }
+    .brand img { width: 34px; height: 34px; border-radius: 10px; box-shadow: 0 0 0 1px var(--line), 0 0 18px rgba(0,229,255,.25); }
+    .brand small { display: block; font-family: var(--mono); font-size: .66rem; color: var(--cyan); letter-spacing: .12em; font-weight: 400; line-height: 1; margin-top: 4px; }
+    .brand b { display: block; line-height: 1; font-size: .98rem; }
 
-    /* ---------- Nav ---------- */
-    nav {
-      position: sticky; top: 0; z-index: 10;
-      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-      background: rgba(5, 7, 13, 0.6);
-      border-bottom: 1px solid var(--line);
-    }
-    nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 60px; }
-    .brand { display: flex; align-items: center; gap: 10px; font-weight: 600; letter-spacing: -0.01em; }
-    .brand img { width: 30px; height: 30px; border-radius: 8px; }
-    .brand span { font-family: var(--mono); font-size: 0.8rem; color: var(--cyan); }
-    .nav-links { display: none; gap: 26px; font-size: 0.92rem; color: var(--muted); }
-    .nav-links a:hover { color: var(--text); }
-    @media (min-width: 720px) { .nav-links { display: flex; } }
-    .btn {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 10px 18px; border-radius: 999px; font-size: 0.9rem; font-weight: 600;
-      border: 1px solid var(--line-hi); color: var(--text);
-      background: linear-gradient(135deg, rgba(0,229,255,0.14), rgba(139,92,246,0.14));
-      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
-    }
-    .btn:hover { transform: translateY(-2px); box-shadow: 0 0 24px rgba(0,229,255,0.35); border-color: var(--cyan); }
-    .btn.solid { background: linear-gradient(135deg, var(--cyan), var(--violet)); color: #04060b; border-color: transparent; }
-    .btn.sm { padding: 7px 14px; font-size: 0.82rem; }
+    .nav { display: none; align-items: center; gap: 4px; padding: 5px; border-radius: 999px;
+      background: rgba(14, 21, 38, 0.5); border: 1px solid var(--line); }
+    .nav a { padding: 7px 15px; border-radius: 999px; font-size: .88rem; color: var(--muted); transition: color .2s ease, background .2s ease; }
+    .nav a:hover { color: var(--text); }
+    .nav a.active { color: var(--text); background: rgba(0, 229, 255, 0.1); box-shadow: inset 0 0 0 1px rgba(0,229,255,.3); }
+    .head-cta { display: none !important; }
+    @media (min-width: 960px) { .nav { display: flex; } .head-cta { display: inline-flex !important; } .burger { display: none !important; } }
+
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 9px; padding: 12px 20px; border-radius: 999px;
+      font-size: .92rem; font-weight: 600; white-space: nowrap; border: 1px solid var(--line-hi);
+      background: linear-gradient(135deg, rgba(0,229,255,.12), rgba(139,92,246,.12));
+      transition: transform .25s var(--ease), box-shadow .25s ease, border-color .25s ease; }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 0 28px rgba(0,229,255,.3); border-color: var(--cyan); }
+    .btn.solid { color: #03050a; border-color: transparent; background: linear-gradient(135deg, var(--cyan), var(--violet)); }
+    .btn.solid:hover { box-shadow: 0 10px 34px -6px rgba(139,92,246,.6), 0 0 24px rgba(0,229,255,.35); }
+    .btn.sm { padding: 8px 15px; font-size: .82rem; }
+    .btn svg { width: 17px; height: 17px; fill: currentColor; flex: none; }
+
+    /* Hamburguesa */
+    .burger { position: relative; width: 46px; height: 46px; border-radius: 14px; display: grid; place-items: center;
+      border: 1px solid var(--line); background: rgba(14, 21, 38, 0.6); transition: border-color .25s ease, background .25s ease; }
+    .burger:hover { border-color: var(--line-hi); }
+    .burger span { position: absolute; left: 13px; right: 13px; top: 21px; height: 2px; border-radius: 2px; background: var(--text);
+      transition: transform .4s var(--ease), opacity .2s ease, background .3s ease, right .4s var(--ease); }
+    .burger span:nth-child(1) { transform: translateY(-6px); }
+    .burger span:nth-child(3) { transform: translateY(6px); right: 19px; }
+    .burger[aria-expanded="true"] { border-color: var(--line-hi); background: rgba(0,229,255,.08); }
+    .burger[aria-expanded="true"] span { background: var(--cyan); }
+    .burger[aria-expanded="true"] span:nth-child(1) { transform: rotate(45deg); }
+    .burger[aria-expanded="true"] span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .burger[aria-expanded="true"] span:nth-child(3) { transform: rotate(-45deg); right: 13px; }
+
+    /* Menú móvil */
+    .menu { position: fixed; inset: 0; z-index: 45; display: flex; flex-direction: column;
+      padding: calc(var(--nav-h) + 24px) 16px max(28px, env(safe-area-inset-bottom));
+      background: rgba(4, 6, 12, 0.95); backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px);
+      clip-path: circle(0 at calc(100% - 39px) 34px); visibility: hidden;
+      transition: clip-path .6s var(--ease), visibility 0s linear .6s; overflow-y: auto; }
+    .menu.open { clip-path: circle(150% at calc(100% - 39px) 34px); visibility: visible; transition: clip-path .7s var(--ease), visibility 0s; }
+    .menu::before { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+      background: radial-gradient(70% 50% at 100% 0%, rgba(139,92,246,.25), transparent 70%), radial-gradient(60% 40% at 0% 100%, rgba(0,229,255,.15), transparent 70%); }
+    .menu-label { font-family: var(--mono); font-size: .72rem; letter-spacing: .16em; color: var(--dim); text-transform: uppercase; margin-bottom: 10px; }
+    .menu ol { list-style: none; counter-reset: m; margin-bottom: 32px; }
+    .menu li { overflow: hidden; border-bottom: 1px solid var(--line); }
+    .menu ol a { display: flex; align-items: baseline; gap: 16px; padding: 14px 0; font-size: clamp(1.6rem, 7.5vw, 2.4rem); font-weight: 600; letter-spacing: -.03em;
+      transform: translateY(105%); transition: transform .6s var(--ease), color .2s ease; }
+    .menu ol a::before { counter-increment: m; content: "0" counter(m); font-family: var(--mono); font-size: .8rem; font-weight: 400; color: var(--cyan); letter-spacing: 0; }
+    .menu ol a::after { content: "→"; margin-left: auto; font-size: 1.2rem; color: var(--dim); transition: transform .25s ease, color .25s ease; }
+    .menu ol a:hover, .menu ol a.active { color: var(--cyan); }
+    .menu ol a:hover::after, .menu ol a.active::after { transform: translateX(4px); color: var(--cyan); }
+    .menu.open ol a { transform: none; }
+    .menu.open li:nth-child(1) a { transition-delay: .15s; } .menu.open li:nth-child(2) a { transition-delay: .2s; }
+    .menu.open li:nth-child(3) a { transition-delay: .25s; } .menu.open li:nth-child(4) a { transition-delay: .3s; }
+    .menu.open li:nth-child(5) a { transition-delay: .35s; } .menu.open li:nth-child(6) a { transition-delay: .4s; }
+    .menu-foot { margin-top: auto; display: grid; gap: 16px; opacity: 0; transform: translateY(12px); transition: opacity .5s ease .4s, transform .5s var(--ease) .4s; }
+    .menu.open .menu-foot { opacity: 1; transform: none; }
+    .socials { display: flex; flex-wrap: wrap; gap: 10px; }
+    .icon-btn { width: 46px; height: 46px; border-radius: 14px; display: grid; place-items: center; border: 1px solid var(--line); background: rgba(14,21,38,.6); color: var(--text); transition: border-color .2s ease, color .2s ease, transform .2s ease; }
+    .icon-btn:hover { border-color: var(--line-hi); color: var(--cyan); transform: translateY(-2px); }
+    .icon-btn svg { width: 19px; height: 19px; fill: currentColor; }
 
     /* ---------- Hero ---------- */
-    .hero { padding: 72px 0 56px; display: grid; gap: 44px; align-items: center; }
-    @media (min-width: 920px) { .hero { grid-template-columns: 1.15fr 0.85fr; padding: 110px 0 80px; } }
+    .hero-wrap { position: relative; }
+    .hero { min-height: 100svh; display: grid; align-items: center; gap: 48px; padding-top: calc(var(--nav-h) + 40px); padding-bottom: 64px; }
+    @media (min-width: 960px) { .hero { grid-template-columns: 1.1fr .9fr; padding-top: calc(var(--nav-h) + 24px); } }
 
-    .status {
-      display: inline-flex; align-items: center; gap: 8px;
-      font-family: var(--mono); font-size: 0.78rem; color: var(--lime);
-      border: 1px solid rgba(124,255,107,0.3); background: rgba(124,255,107,0.06);
-      padding: 6px 12px; border-radius: 999px; margin-bottom: 22px;
-    }
-    .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 10px var(--lime); animation: pulse 2s infinite; }
-    @keyframes pulse { 50% { opacity: .35; } }
+    .id { display: flex; align-items: center; gap: 16px; margin-bottom: 26px; }
+    .avatar { position: relative; width: 74px; height: 74px; flex: none; border-radius: 50%; padding: 3px; }
+    .avatar::before { content: ""; position: absolute; inset: 0; border-radius: 50%;
+      background: conic-gradient(from 0deg, var(--cyan), var(--violet), var(--magenta), var(--cyan)); animation: spin 6s linear infinite; }
+    .avatar img { position: relative; width: 100%; height: 100%; border-radius: 50%; background: var(--bg); border: 3px solid var(--bg); }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .id-text b { display: block; font-size: 1.1rem; letter-spacing: -.01em; }
+    .status { display: inline-flex; align-items: center; gap: 8px; margin-top: 4px; font-family: var(--mono); font-size: .74rem; color: var(--lime); }
+    .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 10px var(--lime); animation: pulse 2s infinite; }
+    @keyframes pulse { 50% { opacity: .3; } }
 
-    h1 {
-      font-size: clamp(2.3rem, 6.4vw, 4.4rem);
-      line-height: 1.02; letter-spacing: -0.04em; font-weight: 700;
-      margin-bottom: 20px;
-    }
-    .grad {
-      background: linear-gradient(90deg, var(--cyan), var(--violet) 55%, var(--magenta));
-      -webkit-background-clip: text; background-clip: text; color: transparent;
-      background-size: 200% auto; animation: shine 8s linear infinite;
-    }
-    @keyframes shine { to { background-position: 200% center; } }
-    .lead { color: var(--muted); font-size: 1.1rem; max-width: 560px; margin-bottom: 30px; }
+    h1 { font-size: clamp(2.5rem, 7.4vw, 5rem); line-height: .98; letter-spacing: -.045em; font-weight: 700; margin-bottom: 24px; }
+    .grad { background: linear-gradient(90deg, var(--cyan), var(--violet) 50%, var(--magenta), var(--cyan)); background-size: 300% auto;
+      -webkit-background-clip: text; background-clip: text; color: transparent; animation: shine 10s linear infinite; }
+    @keyframes shine { to { background-position: 300% center; } }
+    .lead { color: var(--muted); font-size: clamp(1rem, 2.2vw, 1.14rem); max-width: 560px; margin-bottom: 32px; }
     .lead strong { color: var(--text); font-weight: 500; }
-    .cta { display: flex; flex-wrap: wrap; gap: 12px; }
+    .cta { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 36px; }
+    .roles { display: flex; flex-wrap: wrap; gap: 8px; }
+    .role { font-family: var(--mono); font-size: .74rem; padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); background: rgba(14,21,38,.4); }
 
     /* Terminal */
-    .term {
-      border-radius: var(--radius); overflow: hidden;
-      background: rgba(8, 12, 22, 0.85);
-      border: 1px solid var(--line);
-      box-shadow: 0 30px 80px -20px rgba(0,0,0,0.7), 0 0 0 1px rgba(0,229,255,0.06), 0 0 60px -10px rgba(139,92,246,0.35);
-      font-family: var(--mono); font-size: 0.82rem;
-    }
-    .term-bar { display: flex; gap: 7px; padding: 12px 14px; border-bottom: 1px solid var(--line); align-items: center; }
-    .term-bar i { width: 11px; height: 11px; border-radius: 50%; background: #2a3247; }
+    .term { position: relative; border-radius: var(--radius); overflow: hidden; background: rgba(6, 10, 20, 0.88); border: 1px solid var(--line);
+      box-shadow: 0 40px 100px -30px rgba(0,0,0,.8), 0 0 80px -20px rgba(139,92,246,.4); font-family: var(--mono); font-size: .8rem; }
+    .term::after { content: ""; position: absolute; inset: 0; pointer-events: none;
+      background: repeating-linear-gradient(0deg, rgba(255,255,255,.018) 0 1px, transparent 1px 3px); }
+    .term-bar { display: flex; gap: 7px; padding: 13px 15px; border-bottom: 1px solid var(--line); align-items: center; background: rgba(255,255,255,.015); }
+    .term-bar i { width: 11px; height: 11px; border-radius: 50%; }
     .term-bar i:nth-child(1) { background: #ff5f57; } .term-bar i:nth-child(2) { background: #febc2e; } .term-bar i:nth-child(3) { background: #28c840; }
-    .term-bar span { margin-left: 8px; color: var(--muted); font-size: 0.75rem; }
-    .term pre { padding: 18px 18px 22px; white-space: pre-wrap; word-break: break-word; color: #b9c6e4; line-height: 1.7; min-height: 270px; }
-    .c { color: var(--cyan); } .v { color: var(--violet); } .g { color: var(--lime); } .m { color: var(--muted); } .p { color: var(--magenta); }
-    .caret { display: inline-block; width: 8px; height: 1em; background: var(--cyan); vertical-align: -2px; animation: blink 1s steps(1) infinite; }
+    .term-bar span { margin-left: 10px; color: var(--dim); font-size: .74rem; }
+    .term pre { padding: 20px 20px 24px; white-space: pre-wrap; word-break: break-word; color: #b9c6e4; line-height: 1.75; min-height: 310px; font: inherit; }
+    .c { color: var(--cyan); } .v { color: var(--violet); } .g { color: var(--lime); } .m { color: var(--dim); } .p { color: var(--magenta); }
+    .caret { display: inline-block; width: 8px; height: 1.05em; background: var(--cyan); vertical-align: -3px; animation: blink 1s steps(1) infinite; }
     @keyframes blink { 50% { opacity: 0; } }
 
-    /* ---------- Métricas ---------- */
-    .metrics { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 96px; }
-    @media (min-width: 720px) { .metrics { grid-template-columns: repeat(4, 1fr); } }
-    .metric {
-      padding: 20px; border-radius: var(--radius);
-      background: var(--glass); border: 1px solid var(--line);
-      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    .scroll-hint { display: none; }
+    @media (min-width: 960px) and (min-height: 760px) {
+      .scroll-hint { display: flex; position: absolute; left: 50%; bottom: 26px; transform: translateX(-50%); flex-direction: column; align-items: center; gap: 8px;
+        font-family: var(--mono); font-size: .68rem; letter-spacing: .2em; color: var(--dim); }
+      .scroll-hint i { width: 1px; height: 36px; background: linear-gradient(var(--cyan), transparent); animation: drop 2s var(--ease) infinite; transform-origin: top; }
     }
-    .metric b { display: block; font-size: 1.9rem; letter-spacing: -0.03em; }
-    .metric span { font-family: var(--mono); font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+    @keyframes drop { 0% { transform: scaleY(0); } 50% { transform: scaleY(1); } 100% { transform: scaleY(1); opacity: 0; } }
+
+    /* ---------- Ticker ---------- */
+    .ticker { border-block: 1px solid var(--line); background: rgba(8, 13, 25, 0.6); overflow: hidden; padding: 16px 0; margin-bottom: 112px;
+      mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); }
+    .ticker-track { display: flex; width: max-content; animation: marquee 40s linear infinite; font-family: var(--mono); font-size: .85rem; color: var(--muted); white-space: nowrap; }
+    .ticker-track span { padding-right: 44px; }
+    .ticker-track span::before { content: "◆"; color: var(--cyan); margin-right: 44px; font-size: .6rem; vertical-align: 2px; }
+    @keyframes marquee { to { transform: translateX(-50%); } }
 
     /* ---------- Secciones ---------- */
-    section { margin-bottom: 104px; scroll-margin-top: 80px; }
-    .eyebrow { font-family: var(--mono); font-size: 0.78rem; color: var(--cyan); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 10px; }
-    h2 { font-size: clamp(1.7rem, 3.6vw, 2.5rem); letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 14px; }
-    .sub { color: var(--muted); max-width: 620px; margin-bottom: 34px; }
+    section { margin-bottom: 128px; }
+    .head { display: grid; gap: 14px; margin-bottom: 40px; }
+    @media (min-width: 820px) { .head { grid-template-columns: 1fr 1fr; align-items: end; gap: 48px; } }
+    .eyebrow { display: inline-flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: .76rem; color: var(--cyan); letter-spacing: .16em; text-transform: uppercase; margin-bottom: 12px; }
+    .eyebrow::before { content: ""; width: 26px; height: 1px; background: var(--cyan); box-shadow: 0 0 8px var(--cyan); }
+    h2 { font-size: clamp(2rem, 4.6vw, 3.2rem); letter-spacing: -.04em; line-height: 1.04; }
+    .sub { color: var(--muted); max-width: 560px; }
+
+    .glass { background: var(--glass); border: 1px solid var(--line); border-radius: var(--radius);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+
+    /* Perfil */
+    .about { display: grid; gap: 16px; }
+    @media (min-width: 900px) { .about { grid-template-columns: 1.3fr 1fr; } }
+    .about-main { padding: clamp(24px, 4vw, 34px); }
+    .about-main p { color: var(--muted); font-size: 1.04rem; margin-bottom: 16px; }
+    .about-main p:last-child { margin-bottom: 0; }
+    .about-main strong { color: var(--text); font-weight: 500; }
+    .kpis { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .kpi { padding: 22px; display: flex; flex-direction: column; justify-content: space-between; gap: 14px; min-height: 124px; }
+    .kpi b { font-size: clamp(1.4rem, 3.6vw, 2.1rem); letter-spacing: -.04em; line-height: 1;
+      background: linear-gradient(135deg, var(--text), #a9b8dc); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .kpi span { font-family: var(--mono); font-size: .7rem; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; }
 
     /* Filtros */
-    .filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 26px; }
-    .filters button {
-      font: 500 0.82rem var(--mono); color: var(--muted); cursor: pointer;
-      background: transparent; border: 1px solid var(--line); border-radius: 999px; padding: 7px 14px;
-      transition: all .2s ease;
-    }
-    .filters button:hover { color: var(--text); border-color: var(--line-hi); }
-    .filters button[aria-pressed="true"] { color: #04060b; background: var(--cyan); border-color: var(--cyan); }
+    .toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; margin-bottom: 24px; }
+    .filters { display: flex; gap: 6px; padding: 5px; border-radius: 999px; border: 1px solid var(--line); background: rgba(14,21,38,.5); overflow-x: auto; max-width: 100%; scrollbar-width: none; }
+    .filters::-webkit-scrollbar { display: none; }
+    .filters button { flex: none; font-family: var(--mono); font-size: .78rem; color: var(--muted); border-radius: 999px; padding: 8px 15px; transition: color .2s ease, background .2s ease; }
+    .filters button:hover { color: var(--text); }
+    .filters button[aria-pressed="true"] { color: #03050a; background: var(--cyan); box-shadow: 0 0 18px rgba(0,229,255,.4); }
+    .count { font-family: var(--mono); font-size: .78rem; color: var(--dim); }
+    .count b { color: var(--cyan); font-weight: 500; }
 
     /* Proyectos */
     .grid { display: grid; gap: 16px; grid-template-columns: 1fr; }
     @media (min-width: 640px) { .grid { grid-template-columns: repeat(2, 1fr); } }
-    @media (min-width: 980px) { .grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (min-width: 1000px) { .grid { grid-template-columns: repeat(3, 1fr); } }
 
-    .card {
-      position: relative; display: flex; flex-direction: column;
-      padding: 24px; border-radius: var(--radius);
-      background: var(--glass); border: 1px solid var(--line);
-      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-      transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
-      overflow: hidden;
-    }
-    .card::before {
-      content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .3s ease;
-      background: radial-gradient(400px circle at var(--mx, 50%) var(--my, 0%), rgba(0,229,255,0.12), transparent 45%);
-    }
-    .card:hover { transform: translateY(-4px); border-color: var(--line-hi); box-shadow: 0 18px 50px -20px rgba(0,229,255,0.35); }
+    .card { position: relative; display: flex; flex-direction: column; padding: 26px; overflow: hidden; isolation: isolate;
+      transition: transform .35s var(--ease), border-color .3s ease, box-shadow .3s ease, opacity .8s var(--ease); }
+    .card::before { content: ""; position: absolute; inset: 0; z-index: -1; opacity: 0; transition: opacity .3s ease;
+      background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 0%), rgba(0,229,255,.13), transparent 45%); }
+    .card:hover { transform: translateY(-5px); border-color: var(--line-hi); box-shadow: 0 24px 60px -24px rgba(0,229,255,.35); }
     .card:hover::before { opacity: 1; }
-    .card.featured { border-color: rgba(139,92,246,0.45); }
-    @media (min-width: 980px) { .card.featured { grid-column: span 2; } }
     .card.hidden { display: none; }
-
-    .card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
-    .kind { font-family: var(--mono); font-size: 0.72rem; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; }
-    .arrow { color: var(--muted); transition: transform .25s ease, color .25s ease; }
-    .card:hover .arrow { transform: translate(3px, -3px); color: var(--cyan); }
-    .card h3 { font-size: 1.15rem; letter-spacing: -0.02em; line-height: 1.3; margin-bottom: 8px; }
+    .card.featured { background: linear-gradient(135deg, rgba(139,92,246,.16), rgba(0,229,255,.06) 60%), var(--glass); border-color: rgba(139,92,246,.45); }
+    @media (min-width: 1000px) { .card.featured { grid-column: span 2; } }
+    .card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+    .kind { font-family: var(--mono); font-size: .7rem; color: var(--muted); letter-spacing: .1em; text-transform: uppercase; }
+    .card.featured .kind { color: var(--violet); }
+    .arrow { width: 32px; height: 32px; border-radius: 10px; display: grid; place-items: center; border: 1px solid var(--line); color: var(--muted);
+      transition: transform .3s var(--ease), color .25s ease, border-color .25s ease, background .25s ease; }
+    .card:hover .arrow { transform: rotate(-45deg); color: #03050a; background: var(--cyan); border-color: var(--cyan); }
+    .card h3 { font-size: 1.18rem; letter-spacing: -.02em; line-height: 1.3; margin-bottom: 10px; }
+    .card.featured h3 { font-size: clamp(1.3rem, 2.6vw, 1.6rem); }
     .card h3 a::after { content: ""; position: absolute; inset: 0; }
-    .card p { color: var(--muted); font-size: 0.93rem; flex: 1; margin-bottom: 18px; }
+    .card p { color: var(--muted); font-size: .93rem; flex: 1; margin-bottom: 20px; }
     .tags { display: flex; flex-wrap: wrap; gap: 6px; }
-    .tag {
-      font-family: var(--mono); font-size: 0.7rem; padding: 3px 9px; border-radius: 6px;
-      border: 1px solid var(--line); color: #b9c6e4; background: rgba(255,255,255,0.02);
-    }
-    .tag.amd { color: var(--amd); border-color: rgba(255,90,78,0.35); }
-    .tag.intel { color: var(--intel); border-color: rgba(61,155,255,0.35); }
-    .tag.oc { color: var(--violet); border-color: rgba(139,92,246,0.4); }
-    .tag.net { color: var(--lime); border-color: rgba(124,255,107,0.3); }
+    .tag { font-family: var(--mono); font-size: .69rem; padding: 4px 9px; border-radius: 7px; border: 1px solid var(--line); color: #b9c6e4; background: rgba(255,255,255,.02); }
+    .tag.amd { color: var(--amd); border-color: rgba(255,90,78,.35); }
+    .tag.intel { color: var(--intel); border-color: rgba(61,155,255,.35); }
+    .tag.oc { color: var(--violet); border-color: rgba(139,92,246,.42); }
+    .tag.net { color: var(--lime); border-color: rgba(124,255,107,.3); }
+    .more { margin-top: 28px; text-align: center; }
 
     /* Stack */
     .stack { display: grid; gap: 16px; grid-template-columns: 1fr; }
-    @media (min-width: 720px) { .stack { grid-template-columns: repeat(3, 1fr); } }
-    .stack .card h3 { display: flex; align-items: center; gap: 10px; }
-    .stack ul { list-style: none; display: grid; gap: 8px; color: var(--muted); font-size: 0.92rem; }
-    .stack li::before { content: "▸ "; color: var(--cyan); font-family: var(--mono); }
+    @media (min-width: 760px) { .stack { grid-template-columns: repeat(3, 1fr); } }
+    .stack .glass { padding: 28px; }
+    .stack-icon { width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center; margin-bottom: 20px; font-size: 1.3rem; color: var(--cyan);
+      border: 1px solid var(--line-hi); background: linear-gradient(135deg, rgba(0,229,255,.12), rgba(139,92,246,.12)); box-shadow: 0 0 24px -6px rgba(0,229,255,.4); }
+    .stack h3 { font-size: 1.15rem; margin-bottom: 16px; letter-spacing: -.02em; }
+    .stack ul { list-style: none; display: grid; gap: 10px; }
+    .stack li { display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: .93rem; padding-bottom: 10px; border-bottom: 1px dashed var(--line); }
+    .stack li:last-child { border-bottom: 0; padding-bottom: 0; }
+    .stack li::before { content: ""; width: 6px; height: 6px; border-radius: 2px; background: var(--cyan); box-shadow: 0 0 8px var(--cyan); flex: none; }
 
     /* Método */
     .steps { display: grid; gap: 16px; grid-template-columns: 1fr; counter-reset: s; }
-    @media (min-width: 720px) { .steps { grid-template-columns: repeat(4, 1fr); } }
-    .step { padding: 22px; border-left: 2px solid var(--line-hi); background: linear-gradient(90deg, rgba(0,229,255,0.06), transparent); border-radius: 0 12px 12px 0; }
-    .step::before { counter-increment: s; content: "0" counter(s); display: block; font-family: var(--mono); color: var(--cyan); font-size: 0.8rem; margin-bottom: 8px; }
-    .step b { display: block; margin-bottom: 6px; }
-    .step span { color: var(--muted); font-size: 0.9rem; }
+    @media (min-width: 760px) { .steps { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1000px) { .steps { grid-template-columns: repeat(4, 1fr); } }
+    .step { padding: 26px; }
+    .step::before { counter-increment: s; content: "0" counter(s); display: block; font-family: var(--mono); font-size: 2.4rem; line-height: 1; margin-bottom: 18px; font-weight: 500;
+      background: linear-gradient(135deg, var(--cyan), var(--violet)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .step b { display: block; font-size: 1.08rem; margin-bottom: 8px; }
+    .step span { color: var(--muted); font-size: .92rem; }
 
     /* Contacto */
-    .contact {
-      text-align: center; padding: 56px 22px; border-radius: 24px;
-      background: linear-gradient(135deg, rgba(0,229,255,0.08), rgba(139,92,246,0.10) 50%, rgba(255,62,165,0.06));
-      border: 1px solid var(--line);
-    }
-    .contact .sub { margin: 0 auto 30px; }
-    .socials { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-bottom: 26px; }
-    .social {
-      display: inline-flex; align-items: center; gap: 9px; padding: 11px 18px; border-radius: 12px;
-      border: 1px solid var(--line); background: rgba(5,7,13,0.5); font-size: 0.9rem; font-weight: 500;
-      transition: all .2s ease;
-    }
-    .social svg { width: 18px; height: 18px; fill: currentColor; }
-    .social:hover { border-color: var(--line-hi); transform: translateY(-2px); }
-    .support { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+    .contact { position: relative; overflow: hidden; text-align: center; padding: clamp(44px, 8vw, 80px) 20px; border-radius: 28px; border: 1px solid var(--line);
+      background: radial-gradient(80% 120% at 50% 0%, rgba(139,92,246,.22), transparent 60%), radial-gradient(60% 80% at 50% 100%, rgba(0,229,255,.12), transparent 70%), var(--bg-2); }
+    .contact::before { content: ""; position: absolute; inset: 0; pointer-events: none;
+      background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px); background-size: 40px 40px;
+      mask-image: radial-gradient(ellipse at center, #000, transparent 70%); -webkit-mask-image: radial-gradient(ellipse at center, #000, transparent 70%); opacity: .6; }
+    .contact > * { position: relative; }
+    .contact .eyebrow { justify-content: center; }
+    .contact h2 { max-width: 720px; margin: 0 auto 16px; }
+    .contact .sub { margin: 0 auto 34px; }
+    .contact .cta { justify-content: center; margin-bottom: 30px; }
+    .contact .socials { justify-content: center; }
 
-    footer { border-top: 1px solid var(--line); padding: 28px 0 40px; color: var(--muted); font-size: 0.85rem; }
-    footer .wrap { display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between; }
-    footer code { font-family: var(--mono); font-size: 0.78rem; }
+    /* ---------- Footer ---------- */
+    footer { border-top: 1px solid var(--line); background: linear-gradient(rgba(8,13,25,.4), rgba(4,6,12,.95)); padding-top: 64px; }
+    .foot-grid { display: grid; gap: 40px; grid-template-columns: 1fr 1fr; padding-bottom: 48px; }
+    .foot-brand { grid-column: 1 / -1; }
+    @media (min-width: 960px) { .foot-grid { grid-template-columns: 1.6fr 1fr 1fr 1fr; } .foot-brand { grid-column: auto; } }
+    .foot-brand p { color: var(--muted); font-size: .92rem; max-width: 340px; margin: 16px 0 20px; }
+    .foot-col h3 { font-family: var(--mono); font-size: .72rem; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: var(--dim); margin-bottom: 16px; }
+    .foot-col ul { list-style: none; display: grid; gap: 10px; }
+    .foot-col a { color: var(--muted); font-size: .92rem; transition: color .2s ease; }
+    .foot-col a:hover { color: var(--cyan); }
+    .copyright { border-top: 1px solid var(--line); padding: 22px 0 max(28px, env(safe-area-inset-bottom)); }
+    .copyright .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 24px; }
+    .copyright p { color: var(--muted); font-size: .85rem; }
+    .copyright p strong { color: var(--text); font-weight: 600; }
+    .copyright .legal { font-family: var(--mono); font-size: .7rem; color: var(--dim); }
 
-    /* Revelado al hacer scroll */
-    .reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s ease; }
-    .reveal.in { opacity: 1; transform: none; }
-    .no-js .reveal { opacity: 1; transform: none; }
+    .to-top { position: fixed; right: 16px; bottom: max(16px, env(safe-area-inset-bottom)); z-index: 30; width: 46px; height: 46px; border-radius: 14px;
+      display: grid; place-items: center; border: 1px solid var(--line-hi); background: rgba(8,13,25,.8); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      color: var(--cyan); opacity: 0; transform: translateY(16px); pointer-events: none; transition: opacity .3s ease, transform .3s var(--ease), box-shadow .2s ease; }
+    .to-top.show { opacity: 1; transform: none; pointer-events: auto; }
+    .to-top:hover { box-shadow: 0 0 24px rgba(0,229,255,.4); }
+
+    /* ---------- Revelado ---------- */
+    .js .reveal { opacity: 0; transform: translateY(24px); transition: opacity .8s var(--ease), transform .8s var(--ease); }
+    .js .reveal.in { opacity: 1; transform: none; }
+    .js .card.reveal.in:hover { transform: translateY(-5px); }
+    .js .card.reveal { transition: transform .45s var(--ease), border-color .3s ease, box-shadow .3s ease, opacity .8s var(--ease); }
+    .d1 { transition-delay: .08s; } .d2 { transition-delay: .16s; } .d3 { transition-delay: .24s; } .d4 { transition-delay: .32s; }
 
     @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { animation: none !important; transition: none !important; }
-      .reveal { opacity: 1; transform: none; }
+      *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; transition-delay: 0s !important; }
       html { scroll-behavior: auto; }
+      .js .reveal { opacity: 1; transform: none; }
+      #net { display: none; }
     }
   </style>
 </head>
-<body class="no-js">
+<body>
+  <a class="skip" href="#main">Saltar al contenido</a>
   <div class="bg" aria-hidden="true"></div>
+  <canvas id="net" aria-hidden="true"></canvas>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="progress" aria-hidden="true"></div>
 
-  <nav aria-label="Principal">
+  <!-- ===== HEADER ===== -->
+  <header class="header" id="header">
     <div class="wrap">
-      <a class="brand" href="#top">
-        <img src="imagenes/Logo%20RT.png" alt="" width="30" height="30" />
-        ReinierTutoriales <span>// rt</span>
+      <a class="brand" href="#inicio" aria-label="ReinierTutoriales, inicio">
+        <img src="imagenes/logo-192.webp" alt="" width="34" height="34" />
+        <span><b>ReinierTutoriales</b><small>OPENCORE · MACOS</small></span>
       </a>
-      <div class="nav-links">
+
+      <nav class="nav" aria-label="Principal">
+        <a href="#perfil">Perfil</a>
         <a href="#proyectos">Proyectos</a>
         <a href="#stack">Stack</a>
         <a href="#metodo">Método</a>
         <a href="#contacto">Contacto</a>
-      </div>
-      <a class="btn sm" href="https://github.com/ReinierTutoriales" rel="noopener">GitHub ↗</a>
+      </nav>
+
+      <a class="btn sm head-cta" href="https://github.com/ReinierTutoriales" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-6 0-1.2.5-2.3 1.3-3.1-.2-.4-.6-1.6.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.6 18.3 5 18.3 5c.7 1.6.2 2.9.1 3.2.8.8 1.3 1.9 1.3 3.1 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3Z"/></svg>
+        GitHub
+      </a>
+
+      <button class="burger" id="burger" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu">
+        <span></span><span></span><span></span>
+      </button>
     </div>
-  </nav>
+  </header>
 
-  <main class="wrap" id="top">
-    <!-- HERO -->
-    <header class="hero">
-      <div>
-        <div class="status"><span class="dot"></span> Activo · OpenCore &amp; macOS</div>
-        <h1>macOS en hardware<br /><span class="grad">que no debería soportarlo.</span></h1>
-        <p class="lead">
-          Ingeniería de <strong>OpenCore</strong>, <strong>EFI</strong> y compatibilidad de hardware para sistemas
-          <strong>Intel y AMD</strong>. Configuraciones limpias, reproducibles y verificables. Sin tweaks placebo.
-        </p>
-        <div class="cta">
-          <a class="btn solid" href="#proyectos">Ver proyectos →</a>
-          <a class="btn" href="https://youtube.com/c/ReinierTutoriales" rel="noopener">Tutoriales en YouTube</a>
+  <!-- ===== MENÚ MÓVIL ===== -->
+  <div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="Menú de navegación" inert>
+    <p class="menu-label">// Navegación</p>
+    <ol>
+      <li><a href="#inicio">Inicio</a></li>
+      <li><a href="#perfil">Perfil</a></li>
+      <li><a href="#proyectos">Proyectos</a></li>
+      <li><a href="#stack">Stack</a></li>
+      <li><a href="#metodo">Método</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ol>
+    <div class="menu-foot">
+      <p class="menu-label">// Conecta</p>
+      <div class="socials" data-socials></div>
+      <a class="btn solid" href="https://www.reiniertutoriales.com/" target="_blank" rel="noopener">Visitar el foro →</a>
+    </div>
+  </div>
+
+  <main id="main">
+    <!-- ===== HERO ===== -->
+    <div class="hero-wrap" id="inicio">
+      <div class="wrap hero">
+        <div>
+          <div class="id reveal">
+            <div class="avatar"><img src="imagenes/logo-384.webp" alt="Logo de ReinierTutoriales" width="68" height="68" fetchpriority="high" /></div>
+            <div class="id-text">
+              <b>ReinierTutoriales</b>
+              <span class="status"><span class="dot"></span> Activo · OpenCore &amp; macOS</span>
+            </div>
+          </div>
+          <h1 class="reveal d1">macOS en hardware<br /><span class="grad">que no debería soportarlo.</span></h1>
+          <p class="lead reveal d2">
+            Ingeniería de <strong>OpenCore</strong>, <strong>EFI</strong> y compatibilidad de hardware para sistemas
+            <strong>Intel y AMD</strong>. Configuraciones limpias, reproducibles y verificables. Sin tweaks placebo.
+          </p>
+          <div class="cta reveal d3">
+            <a class="btn solid" href="#proyectos">Explorar proyectos →</a>
+            <a class="btn" href="https://youtube.com/c/ReinierTutoriales" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31.4 31.4 0 0 0 0 12a31.4 31.4 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31.4 31.4 0 0 0 24 12a31.4 31.4 0 0 0-.5-5.8ZM9.6 15.6V8.4l6.3 3.6-6.3 3.6Z"/></svg>
+              Ver tutoriales
+            </a>
+          </div>
+          <div class="roles reveal d4">
+            <span class="role">Hackintosh</span><span class="role">EFI Engineering</span><span class="role">Wi-Fi / BT</span><span class="role">Docs en español</span>
+          </div>
         </div>
-      </div>
 
-      <div class="term" role="img" aria-label="Terminal mostrando un resumen del perfil">
-        <div class="term-bar"><i></i><i></i><i></i><span>rt@opencore: ~/efi</span></div>
-        <pre id="term"><span class="c">$</span> whoami
+        <div class="term reveal d2" role="img" aria-label="Terminal: validación de una EFI OpenCore con cero errores y arranque de macOS">
+          <div class="term-bar"><i></i><i></i><i></i><span>rt@opencore — ~/EFI</span></div>
+          <pre id="term"><span class="c">$</span> whoami
 ReinierTutoriales
 <span class="c">$</span> cat focus.txt
 <span class="v">OpenCore</span> · macOS · Hackintosh · ACPI · USB
-<span class="c">$</span> ./validate --config EFI/OC/config.plist
+<span class="c">$</span> ./validate EFI/OC/config.plist
 <span class="g">✔</span> ocvalidate      <span class="m">0 errors</span>
 <span class="g">✔</span> SSDTs           <span class="m">mínimos</span>
 <span class="g">✔</span> kexts           <span class="m">solo necesarios</span>
 <span class="g">✔</span> rollback        <span class="m">documentado</span>
 <span class="c">$</span> boot <span class="p">--target</span> tahoe
 <span class="g">▸ macOS booting…</span> <span class="caret"></span></pre>
+        </div>
       </div>
-    </header>
-
-    <div class="metrics reveal">
-      <div class="metric"><b>13</b><span>Proyectos listados</span></div>
-      <div class="metric"><b>Intel · AMD</b><span>Plataformas</span></div>
-      <div class="metric"><b>Z77 → B760</b><span>Generaciones</span></div>
-      <div class="metric"><b>ES</b><span>Docs en español</span></div>
+      <div class="scroll-hint" aria-hidden="true"><i></i>SCROLL</div>
     </div>
 
-    <!-- PROYECTOS -->
-    <section id="proyectos">
-      <p class="eyebrow">// 01 — Selected work</p>
-      <h2 class="reveal">Proyectos</h2>
-      <p class="sub reveal">EFI, drivers de red y documentación técnica mantenidos en GitHub. Cada repositorio apunta a una configuración concreta y verificable.</p>
-
-      <div class="filters" role="group" aria-label="Filtrar proyectos">
-        <button type="button" data-filter="all" aria-pressed="true">Todos</button>
-        <button type="button" data-filter="core" aria-pressed="false">OpenCore</button>
-        <button type="button" data-filter="efi" aria-pressed="false">EFI</button>
-        <button type="button" data-filter="net" aria-pressed="false">Wi-Fi / BT</button>
-        <button type="button" data-filter="docs" aria-pressed="false">Guías</button>
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker-track">
+        <span>OpenCore</span><span>macOS Tahoe</span><span>Sequoia</span><span>Sonoma</span><span>ACPI · SSDT</span><span>AMD Ryzen</span><span>Intel</span><span>itlwm</span><span>AirportItlwm</span><span>Broadcom</span><span>USBToolBox</span><span>OCLP</span>
+        <span>OpenCore</span><span>macOS Tahoe</span><span>Sequoia</span><span>Sonoma</span><span>ACPI · SSDT</span><span>AMD Ryzen</span><span>Intel</span><span>itlwm</span><span>AirportItlwm</span><span>Broadcom</span><span>USBToolBox</span><span>OCLP</span>
       </div>
+    </div>
 
-      <div class="grid" id="projects">
-        <article class="card featured reveal" data-cat="core">
-          <div class="card-top"><span class="kind">Featured · Fork</span><span class="arrow">↗</span></div>
-          <h3><a href="https://github.com/ReinierTutoriales/OpenCore-Legacy-Patcher" rel="noopener">OpenCore Legacy Patcher</a></h3>
-          <p>Fork orientado a pruebas, compilación y adaptación de OpenCore Legacy Patcher para extender la vida útil de equipos fuera del soporte oficial de Apple.</p>
-          <div class="tags"><span class="tag oc">OpenCore</span><span class="tag">Python</span><span class="tag">Root patches</span></div>
-        </article>
-
-        <article class="card reveal" data-cat="net">
-          <div class="card-top"><span class="kind">Driver · Wi-Fi</span><span class="arrow">↗</span></div>
-          <h3><a href="https://github.com/ReinierTutoriales/itlwm-AirportItlwm-LQM" rel="noopener">itlwm · AirportItlwm · LQM</a></h3>
-          <p>Trabajo sobre Intel Wi-Fi, AirportItlwm y la implementación LQM para macOS.</p>
-          <div class="tags"><span class="tag intel">Intel</span><span class="tag net">Wi-Fi</span><span class="tag">kext</span></div>
-        </article>
-
-        <article class="card reveal" data-cat="net">
-          <div class="card-top"><span class="kind">Wi-Fi · BT</span><span class="arrow">↗</span></div>
-          <h3><a href="https://github.com/ReinierTutoriales/Intel-AX210-macOS-Sonoma-Sequoia-Tahoe" rel="noopener">Intel AX210 · macOS</a></h3>
-          <p>Configuración y documentación de Intel AX210 para Sonoma, Sequoia y Tahoe.</p>
-          <div class="tags"><span class="tag intel">AX210</span><span class="tag net">Wi-Fi</span><span class="tag">Tahoe</span></div>
-        </article>
-
-        <article class="card reveal" data-cat="net">
-          <div class="card-top"><span class="kind">Wi-Fi · BT</span><span class="arrow">↗</span></div>
-          <h3><a href="https://github.com/ReinierTutoriales/Broadcom-WiFi-Bluetooth-macOS-Sequoia" rel="noopener">Broadcom Wi-Fi / Bluetooth</a></h3>
-          <p>Compatibilidad Broadcom, Wi-Fi y Bluetooth en macOS Sequoia.</p>
-          <div class="tags"><span class="tag net">Broadcom</span><span class="tag">Bluetooth</span><span class="tag">Sequoia</span></div>
-        </article>
-
-        <article class="card reveal" data-cat="efi">
-          <div class="card-top"><span class="kind">EFI · AMD</span><span class="arrow">↗</span></div>
-          <h3><a href="https://github.com/ReinierTutoriales/Ryzentosh-GenMachine-Rem5000-Ryzen-7-5800U" rel="noopener">Ryzentosh · Ryzen 7 5800U</a></h3>
-          <p>macOS sobre APU AMD Ryzen 7 5800U (GenMachine Rem5000). Configuración específica para este hardware.</p>
-          <div class="tags"><span class="tag amd">AMD</span><span class="tag">APU</span><span class="tag oc">OpenCore</span></div>
-        </article>
-
-        <article class="card reveal" data-cat="efi">
-          <div class="card-top"><span class="kind">EFI · AMD</span><span class="arrow">↗</span></div>
-          <h3><a href="https://github.com/ReinierTutoriales/Hackintosh-Gigabyte-X570-AORUS-ELITE" rel="noopener">Gigabyte X570 AORUS ELITE</a></h3>
-          <p>EFI OpenCore para AMD Ryzen sobre chipset X570.</p>
-          <div class="tags"><span class="tag amd">Ryzen</span><span class="tag">X570</span><span class="tag oc">OpenCore</span></div>
-        </article>
-
-        <article class="card reveal" data-cat="efi">
-          <div class="card-top"><span class="kind">EFI · Intel</span><span class="arrow">↗</span></div>
-          <h3><a href="https://github.com/ReinierTutoriales/EFI-ASUS-ROG-Strix-B760-F-Gaming" rel="noopener">ASUS ROG Strix B760-F</a></h3>
-          <p>EFI para placa Intel B760 de gama alta.</p>
-          <div class="tags"><span class="tag intel">Intel</span><span class="tag">B760</span><span class="tag oc">OpenCore</span></div>
-        </article>
-
-        <article class="card reveal" data-cat="efi">
-          <div class="card-top"><span class="kind">EFI · Intel</span><span class="arrow">↗</span></div>
-          <h3><a href="https://github.com/ReinierTutoriales/Hackintosh-Dell-OptiPlex-5050" rel="noopener">Dell OptiPlex 5050</a></h3>
-          <p>EFI para OptiPlex 5050: equipos de oficina reconvertidos en estaciones macOS.</p>
-          <div class="tags"><span class="tag intel">Intel</span><span class="tag">Dell</span><span class="tag oc">OpenCore</span></div>
-        </article>
-
-        <article class="card reveal" data-cat="efi">
-          <div class="card-top"><span class="kind">EFI · Legacy</span><span class="arrow">↗</span></div>
-          <h3><a href="https://github.com/ReinierTutoriales/ASUS-Z77-P8Z77V-LX" rel="noopener">ASUS Z77 P8Z77-V LX</a></h3>
-          <p>EFI legacy Intel Z77, estable y documentada.</p>
-          <div class="tags"><span class="tag intel">Intel</span><span class="tag">Z77</span><span class="tag oc">OpenCore</span></div>
-        </article>
-
-        <article class="card reveal" data-cat="efi">
-          <div class="card-top"><span class="kind">EFI · Base</span><span class="arrow">↗</span></div>
-          <h3><a href="https://github.com/ReinierTutoriales/EFI-Ryzentosh" rel="noopener">EFI Ryzentosh</a></h3>
-          <p>Base genérica AMD Ryzen para iniciar configuraciones Ryzentosh.</p>
-          <div class="tags"><span class="tag amd">AMD</span><span class="tag oc">OpenCore</span></div>
-        </article>
-
-        <article class="card reveal" data-cat="efi">
-          <div class="card-top"><span class="kind">EFI · Base</span><span class="arrow">↗</span></div>
-          <h3><a href="https://github.com/ReinierTutoriales/EFI-Ryzentosh-APU-AMD" rel="noopener">EFI Ryzentosh APU AMD</a></h3>
-          <p>Variante para APUs AMD con gráficos integrados.</p>
-          <div class="tags"><span class="tag amd">APU</span><span class="tag oc">OpenCore</span></div>
-        </article>
-
-        <article class="card reveal" data-cat="docs core">
-          <div class="card-top"><span class="kind">Guía · ACPI</span><span class="arrow">↗</span></div>
-          <h3><a href="https://github.com/ReinierTutoriales/OpenCore-NO-ACPI" rel="noopener">OpenCore NO ACPI</a></h3>
-          <p>Documentación en español sobre el uso de OpenCore sin tablas ACPI personalizadas.</p>
-          <div class="tags"><span class="tag oc">OpenCore</span><span class="tag">ACPI</span></div>
-        </article>
-
-        <article class="card reveal" data-cat="docs">
-          <div class="card-top"><span class="kind">Guía · USB</span><span class="arrow">↗</span></div>
-          <h3><a href="https://github.com/ReinierTutoriales/Mapear-puertos-USB-para-macOS-con-USBToolBox-desde-Windows" rel="noopener">Mapeo USB con USBToolBox</a></h3>
-          <p>Guía para mapear puertos USB para macOS desde Windows con USBToolBox.</p>
-          <div class="tags"><span class="tag">USB</span><span class="tag">Windows</span></div>
-        </article>
-      </div>
-    </section>
-
-    <!-- STACK -->
-    <section id="stack">
-      <p class="eyebrow">// 02 — Technical areas</p>
-      <h2 class="reveal">Stack técnico</h2>
-      <p class="sub reveal">Áreas donde se concentra el trabajo diario: arranque, firmware y controladores.</p>
-      <div class="stack">
-        <div class="card reveal">
-          <h3><span class="c">⌁</span> Boot &amp; firmware</h3>
-          <ul><li>OpenCore / config.plist</li><li>ACPI · SSDT mínimos</li><li>EFI · UEFI · Quirks</li><li>OCLP root patches</li></ul>
+    <div class="wrap">
+      <!-- ===== PERFIL ===== -->
+      <section id="perfil" aria-labelledby="t-perfil">
+        <div class="head">
+          <div>
+            <p class="eyebrow reveal">01 — Perfil</p>
+            <h2 id="t-perfil" class="reveal d1">Ingeniería, no recetas.</h2>
+          </div>
+          <p class="sub reveal d2">Documentación técnica en español para llevar macOS a equipos fuera del soporte oficial de Apple.</p>
         </div>
-        <div class="card reveal">
-          <h3><span class="v">◈</span> Hardware</h3>
-          <ul><li>AMD Ryzen · APU</li><li>Intel Z77 → B760</li><li>iGPU / dGPU</li><li>Mapeo USB</li></ul>
+        <div class="about">
+          <div class="glass about-main reveal">
+            <p>Trabajo principalmente con configuraciones <strong>Intel y AMD</strong>: documentación de EFI, compatibilidad de hardware y resolución de problemas de macOS en equipos no soportados.</p>
+            <p>La prioridad es siempre la misma: configuraciones <strong>claras, reproducibles y verificables</strong>, encontrando la causa raíz y evitando modificaciones innecesarias.</p>
+            <p>Todo el trabajo se publica abierto en GitHub, con tutoriales en YouTube y soporte de la comunidad en el foro, Telegram y Discord.</p>
+          </div>
+          <div class="kpis">
+            <div class="glass kpi reveal d1"><b>13</b><span>Proyectos destacados</span></div>
+            <div class="glass kpi reveal d2"><b>Intel · AMD</b><span>Plataformas</span></div>
+            <div class="glass kpi reveal d3"><b>Z77→B760</b><span>Generaciones</span></div>
+            <div class="glass kpi reveal d4"><b>ES</b><span>Docs en español</span></div>
+          </div>
         </div>
-        <div class="card reveal">
-          <h3><span class="g">⟁</span> Conectividad</h3>
-          <ul><li>itlwm · AirportItlwm</li><li>Intel AX210</li><li>Broadcom Wi-Fi / BT</li><li>Sonoma · Sequoia · Tahoe</li></ul>
-        </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- MÉTODO -->
-    <section id="metodo">
-      <p class="eyebrow">// 03 — Method</p>
-      <h2 class="reveal">Método de trabajo</h2>
-      <p class="sub reveal">Cada configuración sigue el mismo proceso para que cualquiera pueda reproducirla.</p>
-      <div class="steps">
-        <div class="step reveal"><b>Diagnóstico</b><span>Inventario de hardware y causa raíz antes de tocar nada.</span></div>
-        <div class="step reveal"><b>Configuración mínima</b><span>Solo los kexts, SSDTs y quirks necesarios.</span></div>
-        <div class="step reveal"><b>Validación</b><span>ocvalidate, logs de arranque y pruebas funcionales.</span></div>
-        <div class="step reveal"><b>Documentación</b><span>Pasos reproducibles y ruta de rollback.</span></div>
-      </div>
-    </section>
+      <!-- ===== PROYECTOS ===== -->
+      <section id="proyectos" aria-labelledby="t-proy">
+        <div class="head">
+          <div>
+            <p class="eyebrow reveal">02 — Proyectos</p>
+            <h2 id="t-proy" class="reveal d1">Trabajo seleccionado</h2>
+          </div>
+          <p class="sub reveal d2">EFI, drivers de red y guías mantenidas en GitHub. Cada repositorio apunta a una configuración concreta y verificable.</p>
+        </div>
 
-    <!-- CONTACTO -->
-    <section id="contacto">
-      <div class="contact reveal">
-        <p class="eyebrow">// 04 — Contact</p>
-        <h2>¿Proyecto o configuración en mente?</h2>
-        <p class="sub">Comunidad, tutoriales y soporte técnico en español.</p>
-        <div class="socials">
-          <a class="social" href="https://www.reiniertutoriales.com/" rel="noopener">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm6.9 6h-2.95a15.7 15.7 0 0 0-1.38-3.56A8.03 8.03 0 0 1 18.9 8ZM12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96ZM4.26 14a8.2 8.2 0 0 1 0-4h3.38a16.5 16.5 0 0 0 0 4H4.26Zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56A7.99 7.99 0 0 1 5.08 16Zm2.95-8H5.08a7.99 7.99 0 0 1 4.33-3.56A15.7 15.7 0 0 0 8.03 8ZM12 19.96A14.1 14.1 0 0 1 10.09 16h3.82A14.1 14.1 0 0 1 12 19.96ZM14.34 14H9.66a14.7 14.7 0 0 1 0-4h4.68a14.7 14.7 0 0 1 0 4Zm.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95a8.03 8.03 0 0 1-4.33 3.56ZM16.36 14a16.5 16.5 0 0 0 0-4h3.38a8.2 8.2 0 0 1 0 4h-3.38Z"/></svg>
-            Web · Foro
-          </a>
-          <a class="social" href="https://youtube.com/c/ReinierTutoriales" rel="noopener">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31.4 31.4 0 0 0 0 12a31.4 31.4 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31.4 31.4 0 0 0 24 12a31.4 31.4 0 0 0-.5-5.8ZM9.6 15.6V8.4l6.3 3.6-6.3 3.6Z"/></svg>
-            YouTube
-          </a>
-          <a class="social" href="https://github.com/ReinierTutoriales" rel="noopener">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-6 0-1.2.5-2.3 1.3-3.1-.2-.4-.6-1.6.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.6 18.3 5 18.3 5c.7 1.6.2 2.9.1 3.2.8.8 1.3 1.9 1.3 3.1 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3Z"/></svg>
-            GitHub
-          </a>
-          <a class="social" href="https://t.me/ReinierTutoriales" rel="noopener">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.9 4.3 18.7 19.5c-.2 1-.9 1.3-1.7.8l-4.8-3.6-2.3 2.2c-.3.3-.5.5-1 .5l.3-4.9 8.9-8c.4-.3-.1-.5-.6-.2L6.5 13.2l-4.7-1.5c-1-.3-1-1 .2-1.5L20.5 3c.9-.3 1.6.2 1.4 1.3Z"/></svg>
-            Telegram
-          </a>
-          <a class="social" href="https://discord.gg/Z63x4k4Kmj" rel="noopener">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.3 4.4A19.8 19.8 0 0 0 15.4 3l-.6 1.3a18.4 18.4 0 0 0-5.6 0L8.6 3a19.7 19.7 0 0 0-4.9 1.5C.6 9.1-.3 13.6.1 18.1a19.9 19.9 0 0 0 6 3l1.3-2.1c-.7-.3-1.4-.6-2-1l.5-.4a14.2 14.2 0 0 0 12.2 0l.5.4c-.6.4-1.3.7-2 1l1.3 2.1a19.8 19.8 0 0 0 6-3c.5-5.2-.8-9.7-3.6-13.7ZM8 15.4c-1.2 0-2.2-1.1-2.2-2.4s1-2.4 2.2-2.4 2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Zm8 0c-1.2 0-2.2-1.1-2.2-2.4s1-2.4 2.2-2.4 2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Z"/></svg>
-            Discord
-          </a>
-          <a class="social" href="https://twitter.com/ReinierTutorial" rel="noopener">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.2 2.3h3.4l-7.4 8.4 8.7 11.5h-6.8l-5.3-7-6.1 7H1.3l7.9-9L.9 2.3h7l4.8 6.4 5.5-6.4Zm-1.2 17.9h1.9L7 4.2H5l12 16Z"/></svg>
-            X
-          </a>
+        <div class="toolbar">
+          <div class="filters" role="group" aria-label="Filtrar proyectos">
+            <button type="button" data-filter="all" aria-pressed="true">Todos</button>
+            <button type="button" data-filter="core" aria-pressed="false">OpenCore</button>
+            <button type="button" data-filter="efi" aria-pressed="false">EFI</button>
+            <button type="button" data-filter="net" aria-pressed="false">Wi-Fi / BT</button>
+            <button type="button" data-filter="docs" aria-pressed="false">Guías</button>
+          </div>
+          <p class="count" aria-live="polite"><b id="count">13</b> proyectos</p>
         </div>
-        <div class="support">
-          <a class="btn sm" href="https://www.paypal.com/paypalme/ReinierTutoriales" rel="noopener">PayPal</a>
-          <a class="btn sm" href="https://www.patreon.com/ReinierTutoriales" rel="noopener">Patreon</a>
-          <a class="btn sm" href="https://www.buymeacoffee.com/reiniertutoriales" rel="noopener">Buy Me a Coffee</a>
+
+        <div class="grid" id="projects">
+          <article class="card glass featured reveal" data-cat="core">
+            <div class="card-top"><span class="kind">★ Destacado · Fork</span><span class="arrow" aria-hidden="true">→</span></div>
+            <h3><a href="https://github.com/ReinierTutoriales/OpenCore-Legacy-Patcher" target="_blank" rel="noopener">OpenCore Legacy Patcher</a></h3>
+            <p>Fork orientado a pruebas, compilación y adaptación de OpenCore Legacy Patcher para extender la vida útil de equipos fuera del soporte oficial de Apple.</p>
+            <div class="tags"><span class="tag oc">OpenCore</span><span class="tag">Python</span><span class="tag">Root patches</span></div>
+          </article>
+
+          <article class="card glass reveal" data-cat="net">
+            <div class="card-top"><span class="kind">Driver · Wi-Fi</span><span class="arrow" aria-hidden="true">→</span></div>
+            <h3><a href="https://github.com/ReinierTutoriales/itlwm-AirportItlwm-LQM" target="_blank" rel="noopener">itlwm · AirportItlwm · LQM</a></h3>
+            <p>Trabajo sobre Intel Wi-Fi, AirportItlwm y la implementación LQM para macOS.</p>
+            <div class="tags"><span class="tag intel">Intel</span><span class="tag net">Wi-Fi</span><span class="tag">kext</span></div>
+          </article>
+
+          <article class="card glass reveal" data-cat="net">
+            <div class="card-top"><span class="kind">Wi-Fi · BT</span><span class="arrow" aria-hidden="true">→</span></div>
+            <h3><a href="https://github.com/ReinierTutoriales/Intel-AX210-macOS-Sonoma-Sequoia-Tahoe" target="_blank" rel="noopener">Intel AX210 · macOS</a></h3>
+            <p>Configuración y documentación de Intel AX210 para Sonoma, Sequoia y Tahoe.</p>
+            <div class="tags"><span class="tag intel">AX210</span><span class="tag net">Wi-Fi</span><span class="tag">Tahoe</span></div>
+          </article>
+
+          <article class="card glass reveal" data-cat="net">
+            <div class="card-top"><span class="kind">Wi-Fi · BT</span><span class="arrow" aria-hidden="true">→</span></div>
+            <h3><a href="https://github.com/ReinierTutoriales/Broadcom-WiFi-Bluetooth-macOS-Sequoia" target="_blank" rel="noopener">Broadcom Wi-Fi / Bluetooth</a></h3>
+            <p>Compatibilidad Broadcom, Wi-Fi y Bluetooth en macOS Sequoia.</p>
+            <div class="tags"><span class="tag net">Broadcom</span><span class="tag">Bluetooth</span><span class="tag">Sequoia</span></div>
+          </article>
+
+          <article class="card glass reveal" data-cat="efi">
+            <div class="card-top"><span class="kind">EFI · AMD</span><span class="arrow" aria-hidden="true">→</span></div>
+            <h3><a href="https://github.com/ReinierTutoriales/Ryzentosh-GenMachine-Rem5000-Ryzen-7-5800U" target="_blank" rel="noopener">Ryzentosh · Ryzen 7 5800U</a></h3>
+            <p>macOS sobre APU AMD Ryzen 7 5800U (GenMachine Rem5000). Configuración específica para este hardware.</p>
+            <div class="tags"><span class="tag amd">AMD</span><span class="tag">APU</span><span class="tag oc">OpenCore</span></div>
+          </article>
+
+          <article class="card glass reveal" data-cat="efi">
+            <div class="card-top"><span class="kind">EFI · AMD</span><span class="arrow" aria-hidden="true">→</span></div>
+            <h3><a href="https://github.com/ReinierTutoriales/Hackintosh-Gigabyte-X570-AORUS-ELITE" target="_blank" rel="noopener">Gigabyte X570 AORUS ELITE</a></h3>
+            <p>EFI OpenCore para AMD Ryzen sobre chipset X570.</p>
+            <div class="tags"><span class="tag amd">Ryzen</span><span class="tag">X570</span><span class="tag oc">OpenCore</span></div>
+          </article>
+
+          <article class="card glass reveal" data-cat="efi">
+            <div class="card-top"><span class="kind">EFI · Intel</span><span class="arrow" aria-hidden="true">→</span></div>
+            <h3><a href="https://github.com/ReinierTutoriales/EFI-ASUS-ROG-Strix-B760-F-Gaming" target="_blank" rel="noopener">ASUS ROG Strix B760-F</a></h3>
+            <p>EFI para placa Intel B760 de gama alta.</p>
+            <div class="tags"><span class="tag intel">Intel</span><span class="tag">B760</span><span class="tag oc">OpenCore</span></div>
+          </article>
+
+          <article class="card glass reveal" data-cat="efi">
+            <div class="card-top"><span class="kind">EFI · Intel</span><span class="arrow" aria-hidden="true">→</span></div>
+            <h3><a href="https://github.com/ReinierTutoriales/Hackintosh-Dell-OptiPlex-5050" target="_blank" rel="noopener">Dell OptiPlex 5050</a></h3>
+            <p>EFI para OptiPlex 5050: equipos de oficina reconvertidos en estaciones macOS.</p>
+            <div class="tags"><span class="tag intel">Intel</span><span class="tag">Dell</span><span class="tag oc">OpenCore</span></div>
+          </article>
+
+          <article class="card glass reveal" data-cat="efi">
+            <div class="card-top"><span class="kind">EFI · Legacy</span><span class="arrow" aria-hidden="true">→</span></div>
+            <h3><a href="https://github.com/ReinierTutoriales/ASUS-Z77-P8Z77V-LX" target="_blank" rel="noopener">ASUS Z77 P8Z77-V LX</a></h3>
+            <p>EFI legacy Intel Z77, estable y documentada.</p>
+            <div class="tags"><span class="tag intel">Intel</span><span class="tag">Z77</span><span class="tag oc">OpenCore</span></div>
+          </article>
+
+          <article class="card glass reveal" data-cat="efi">
+            <div class="card-top"><span class="kind">EFI · Base</span><span class="arrow" aria-hidden="true">→</span></div>
+            <h3><a href="https://github.com/ReinierTutoriales/EFI-Ryzentosh" target="_blank" rel="noopener">EFI Ryzentosh</a></h3>
+            <p>Base genérica AMD Ryzen para iniciar configuraciones Ryzentosh.</p>
+            <div class="tags"><span class="tag amd">AMD</span><span class="tag oc">OpenCore</span></div>
+          </article>
+
+          <article class="card glass reveal" data-cat="efi">
+            <div class="card-top"><span class="kind">EFI · Base</span><span class="arrow" aria-hidden="true">→</span></div>
+            <h3><a href="https://github.com/ReinierTutoriales/EFI-Ryzentosh-APU-AMD" target="_blank" rel="noopener">EFI Ryzentosh APU AMD</a></h3>
+            <p>Variante para APUs AMD con gráficos integrados.</p>
+            <div class="tags"><span class="tag amd">APU</span><span class="tag oc">OpenCore</span></div>
+          </article>
+
+          <article class="card glass reveal" data-cat="docs core">
+            <div class="card-top"><span class="kind">Guía · ACPI</span><span class="arrow" aria-hidden="true">→</span></div>
+            <h3><a href="https://github.com/ReinierTutoriales/OpenCore-NO-ACPI" target="_blank" rel="noopener">OpenCore NO ACPI</a></h3>
+            <p>Documentación en español sobre el uso de OpenCore sin tablas ACPI personalizadas.</p>
+            <div class="tags"><span class="tag oc">OpenCore</span><span class="tag">ACPI</span></div>
+          </article>
+
+          <article class="card glass reveal" data-cat="docs">
+            <div class="card-top"><span class="kind">Guía · USB</span><span class="arrow" aria-hidden="true">→</span></div>
+            <h3><a href="https://github.com/ReinierTutoriales/Mapear-puertos-USB-para-macOS-con-USBToolBox-desde-Windows" target="_blank" rel="noopener">Mapeo USB con USBToolBox</a></h3>
+            <p>Guía para mapear puertos USB para macOS desde Windows con USBToolBox.</p>
+            <div class="tags"><span class="tag">USB</span><span class="tag">Windows</span></div>
+          </article>
         </div>
-      </div>
-    </section>
+
+        <div class="more">
+          <a class="btn" href="https://github.com/ReinierTutoriales?tab=repositories" target="_blank" rel="noopener">Ver todos los repositorios →</a>
+        </div>
+      </section>
+
+      <!-- ===== STACK ===== -->
+      <section id="stack" aria-labelledby="t-stack">
+        <div class="head">
+          <div>
+            <p class="eyebrow reveal">03 — Stack</p>
+            <h2 id="t-stack" class="reveal d1">Áreas técnicas</h2>
+          </div>
+          <p class="sub reveal d2">Donde se concentra el trabajo diario: arranque, firmware, hardware y controladores.</p>
+        </div>
+        <div class="stack">
+          <div class="glass reveal">
+            <div class="stack-icon" aria-hidden="true">⌁</div>
+            <h3>Boot &amp; firmware</h3>
+            <ul><li>OpenCore · config.plist</li><li>ACPI · SSDT mínimos</li><li>UEFI · Quirks</li><li>OCLP root patches</li></ul>
+          </div>
+          <div class="glass reveal d1">
+            <div class="stack-icon" aria-hidden="true">◈</div>
+            <h3>Hardware</h3>
+            <ul><li>AMD Ryzen · APU</li><li>Intel Z77 → B760</li><li>iGPU / dGPU</li><li>Mapeo USB</li></ul>
+          </div>
+          <div class="glass reveal d2">
+            <div class="stack-icon" aria-hidden="true">⟁</div>
+            <h3>Conectividad</h3>
+            <ul><li>itlwm · AirportItlwm</li><li>Intel AX210</li><li>Broadcom Wi-Fi / BT</li><li>Sonoma · Sequoia · Tahoe</li></ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== MÉTODO ===== -->
+      <section id="metodo" aria-labelledby="t-met">
+        <div class="head">
+          <div>
+            <p class="eyebrow reveal">04 — Método</p>
+            <h2 id="t-met" class="reveal d1">Proceso reproducible</h2>
+          </div>
+          <p class="sub reveal d2">Cada configuración sigue el mismo flujo para que cualquiera pueda replicarla y revertirla.</p>
+        </div>
+        <div class="steps">
+          <div class="glass step reveal"><b>Diagnóstico</b><span>Inventario de hardware y causa raíz antes de tocar nada.</span></div>
+          <div class="glass step reveal d1"><b>Configuración mínima</b><span>Solo los kexts, SSDTs y quirks necesarios.</span></div>
+          <div class="glass step reveal d2"><b>Validación</b><span>ocvalidate, logs de arranque y pruebas funcionales.</span></div>
+          <div class="glass step reveal d3"><b>Documentación</b><span>Pasos reproducibles y ruta de rollback.</span></div>
+        </div>
+      </section>
+
+      <!-- ===== CONTACTO ===== -->
+      <section id="contacto" aria-labelledby="t-contact">
+        <div class="contact reveal">
+          <p class="eyebrow">05 — Contacto</p>
+          <h2 id="t-contact">¿Tienes un equipo que debería correr macOS?</h2>
+          <p class="sub">Comunidad, tutoriales y soporte técnico en español. Elige el canal que prefieras.</p>
+          <div class="cta">
+            <a class="btn solid" href="https://www.reiniertutoriales.com/" target="_blank" rel="noopener">Ir al foro →</a>
+            <a class="btn" href="https://t.me/ReinierTutoriales" target="_blank" rel="noopener">Canal de Telegram</a>
+          </div>
+          <div class="socials" data-socials></div>
+        </div>
+      </section>
+    </div>
   </main>
 
+  <!-- ===== FOOTER ===== -->
   <footer>
-    <div class="wrap">
-      <span>© <span id="y">2026</span> ReinierTutoriales · Documentación técnica, no promesas.</span>
-      <code>build: static · zero-deps</code>
+    <div class="wrap foot-grid">
+      <div class="foot-brand">
+        <a class="brand" href="#inicio">
+          <img src="imagenes/logo-192.webp" alt="" width="34" height="34" loading="lazy" />
+          <span><b>ReinierTutoriales</b><small>OPENCORE · MACOS</small></span>
+        </a>
+        <p>Documentación técnica en español sobre OpenCore, macOS y compatibilidad de hardware Intel y AMD.</p>
+        <div class="socials" data-socials></div>
+      </div>
+      <nav class="foot-col" aria-label="Secciones">
+        <h3>Navegación</h3>
+        <ul>
+          <li><a href="#perfil">Perfil</a></li>
+          <li><a href="#proyectos">Proyectos</a></li>
+          <li><a href="#stack">Stack</a></li>
+          <li><a href="#metodo">Método</a></li>
+        </ul>
+      </nav>
+      <div class="foot-col">
+        <h3>Comunidad</h3>
+        <ul>
+          <li><a href="https://www.reiniertutoriales.com/" target="_blank" rel="noopener">Foro</a></li>
+          <li><a href="https://youtube.com/c/ReinierTutoriales" target="_blank" rel="noopener">YouTube</a></li>
+          <li><a href="https://t.me/ReinierTutoriales" target="_blank" rel="noopener">Telegram</a></li>
+          <li><a href="https://discord.gg/Z63x4k4Kmj" target="_blank" rel="noopener">Discord</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h3>Apoya</h3>
+        <ul>
+          <li><a href="https://www.paypal.com/paypalme/ReinierTutoriales" target="_blank" rel="noopener">PayPal</a></li>
+          <li><a href="https://www.patreon.com/ReinierTutoriales" target="_blank" rel="noopener">Patreon</a></li>
+          <li><a href="https://www.buymeacoffee.com/reiniertutoriales" target="_blank" rel="noopener">Buy Me a Coffee</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="copyright">
+      <div class="wrap">
+        <p>© <span id="year">2026</span> <strong>ReinierTutoriales</strong>. Todos los derechos reservados.</p>
+        <p class="legal">macOS es marca registrada de Apple Inc. Proyecto independiente, sin afiliación con Apple.</p>
+      </div>
     </div>
   </footer>
 
-  <script>
-    document.body.classList.remove('no-js');
-    document.getElementById('y').textContent = new Date().getFullYear();
+  <button class="to-top" id="toTop" type="button" aria-label="Volver arriba">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+  </button>
 
-    // Filtro de proyectos
+  <template id="socials-tpl">
+    <a class="icon-btn" href="https://www.reiniertutoriales.com/" target="_blank" rel="noopener" aria-label="Web y foro"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm6.9 6h-2.95a15.7 15.7 0 0 0-1.38-3.56A8.03 8.03 0 0 1 18.9 8ZM12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96ZM4.26 14a8.2 8.2 0 0 1 0-4h3.38a16.5 16.5 0 0 0 0 4H4.26Zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56A7.99 7.99 0 0 1 5.08 16Zm2.95-8H5.08a7.99 7.99 0 0 1 4.33-3.56A15.7 15.7 0 0 0 8.03 8ZM12 19.96A14.1 14.1 0 0 1 10.09 16h3.82A14.1 14.1 0 0 1 12 19.96ZM14.34 14H9.66a14.7 14.7 0 0 1 0-4h4.68a14.7 14.7 0 0 1 0 4Zm.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95a8.03 8.03 0 0 1-4.33 3.56ZM16.36 14a16.5 16.5 0 0 0 0-4h3.38a8.2 8.2 0 0 1 0 4h-3.38Z"/></svg></a>
+    <a class="icon-btn" href="https://github.com/ReinierTutoriales" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-6 0-1.2.5-2.3 1.3-3.1-.2-.4-.6-1.6.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.6 18.3 5 18.3 5c.7 1.6.2 2.9.1 3.2.8.8 1.3 1.9 1.3 3.1 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3Z"/></svg></a>
+    <a class="icon-btn" href="https://youtube.com/c/ReinierTutoriales" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31.4 31.4 0 0 0 0 12a31.4 31.4 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31.4 31.4 0 0 0 24 12a31.4 31.4 0 0 0-.5-5.8ZM9.6 15.6V8.4l6.3 3.6-6.3 3.6Z"/></svg></a>
+    <a class="icon-btn" href="https://t.me/ReinierTutoriales" target="_blank" rel="noopener" aria-label="Telegram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.9 4.3 18.7 19.5c-.2 1-.9 1.3-1.7.8l-4.8-3.6-2.3 2.2c-.3.3-.5.5-1 .5l.3-4.9 8.9-8c.4-.3-.1-.5-.6-.2L6.5 13.2l-4.7-1.5c-1-.3-1-1 .2-1.5L20.5 3c.9-.3 1.6.2 1.4 1.3Z"/></svg></a>
+    <a class="icon-btn" href="https://discord.gg/Z63x4k4Kmj" target="_blank" rel="noopener" aria-label="Discord"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.3 4.4A19.8 19.8 0 0 0 15.4 3l-.6 1.3a18.4 18.4 0 0 0-5.6 0L8.6 3a19.7 19.7 0 0 0-4.9 1.5C.6 9.1-.3 13.6.1 18.1a19.9 19.9 0 0 0 6 3l1.3-2.1c-.7-.3-1.4-.6-2-1l.5-.4a14.2 14.2 0 0 0 12.2 0l.5.4c-.6.4-1.3.7-2 1l1.3 2.1a19.8 19.8 0 0 0 6-3c.5-5.2-.8-9.7-3.6-13.7ZM8 15.4c-1.2 0-2.2-1.1-2.2-2.4s1-2.4 2.2-2.4 2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Zm8 0c-1.2 0-2.2-1.1-2.2-2.4s1-2.4 2.2-2.4 2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Z"/></svg></a>
+    <a class="icon-btn" href="https://twitter.com/ReinierTutorial" target="_blank" rel="noopener" aria-label="X (Twitter)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.2 2.3h3.4l-7.4 8.4 8.7 11.5h-6.8l-5.3-7-6.1 7H1.3l7.9-9L.9 2.3h7l4.8 6.4 5.5-6.4Zm-1.2 17.9h1.9L7 4.2H5l12 16Z"/></svg></a>
+  </template>
+
+  <script>
+  (function () {
+    'use strict';
+    var doc = document.documentElement;
+    doc.classList.add('js');
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Iconos sociales reutilizados (menú, contacto, footer)
+    var tpl = document.getElementById('socials-tpl');
+    document.querySelectorAll('[data-socials]').forEach(function (el) { el.appendChild(tpl.content.cloneNode(true)); });
+
+    // ---------- Menú hamburguesa ----------
+    var burger = document.getElementById('burger');
+    var menu = document.getElementById('menu');
+    var main = document.getElementById('main');
+    var footer = document.querySelector('footer');
+    function setMenu(open) {
+      burger.setAttribute('aria-expanded', String(open));
+      burger.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+      menu.classList.toggle('open', open);
+      document.body.classList.toggle('menu-open', open);
+      [main, footer].forEach(function (el) { open ? el.setAttribute('inert', '') : el.removeAttribute('inert'); });
+      if (open) { menu.removeAttribute('inert'); setTimeout(function () { menu.querySelector('a').focus({ preventScroll: true }); }, 300); }
+      else { menu.setAttribute('inert', ''); }
+    }
+    burger.addEventListener('click', function () { setMenu(burger.getAttribute('aria-expanded') !== 'true'); });
+    menu.addEventListener('click', function (e) { if (e.target.closest('a')) setMenu(false); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && menu.classList.contains('open')) { setMenu(false); burger.focus(); }
+    });
+    var desk = window.matchMedia('(min-width: 960px)');
+    var onDesk = function (m) { if (m.matches) setMenu(false); };
+    desk.addEventListener ? desk.addEventListener('change', onDesk) : desk.addListener(onDesk);
+
+    // ---------- Scroll: header, progreso, volver arriba ----------
+    var header = document.getElementById('header');
+    var bar = document.querySelector('.progress');
+    var toTop = document.getElementById('toTop');
+    var ticking = false;
+    function onScroll() {
+      var y = window.scrollY, max = doc.scrollHeight - window.innerHeight;
+      header.classList.toggle('scrolled', y > 12);
+      bar.style.transform = 'scaleX(' + (max > 0 ? Math.min(y / max, 1) : 0) + ')';
+      toTop.classList.toggle('show', y > window.innerHeight * 0.9);
+      ticking = false;
+    }
+    window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
+    onScroll();
+    toTop.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' }); });
+
+    // ---------- Sección activa en la navegación ----------
+    var links = document.querySelectorAll('.nav a, .menu ol a');
+    if ('IntersectionObserver' in window) {
+      var spy = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (!en.isIntersecting) return;
+          var id = '#' + en.target.id;
+          links.forEach(function (a) { a.classList.toggle('active', a.getAttribute('href') === id); });
+        });
+      }, { rootMargin: '-45% 0px -50% 0px' });
+      document.querySelectorAll('#inicio, main section[id]').forEach(function (s) { spy.observe(s); });
+    }
+
+    // ---------- Revelado ----------
+    var reveals = document.querySelectorAll('.reveal');
+    if (reduce || !('IntersectionObserver' in window)) {
+      reveals.forEach(function (el) { el.classList.add('in'); });
+    } else {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+      }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+      reveals.forEach(function (el) { io.observe(el); });
+    }
+
+    // ---------- Filtros de proyectos ----------
     var buttons = document.querySelectorAll('.filters button');
     var cards = document.querySelectorAll('#projects .card');
+    var count = document.getElementById('count');
     buttons.forEach(function (btn) {
       btn.addEventListener('click', function () {
-        var f = btn.dataset.filter;
-        buttons.forEach(function (b) { b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'); });
+        var f = btn.dataset.filter, n = 0;
+        buttons.forEach(function (b) { b.setAttribute('aria-pressed', String(b === btn)); });
         cards.forEach(function (c) {
           var show = f === 'all' || c.dataset.cat.split(' ').indexOf(f) !== -1;
           c.classList.toggle('hidden', !show);
-          if (show) c.classList.add('in');
+          if (show) { n++; c.classList.add('in'); }
         });
+        count.textContent = n;
       });
     });
 
-    // Brillo que sigue al cursor
-    document.querySelectorAll('.card').forEach(function (card) {
-      card.addEventListener('pointermove', function (e) {
-        var r = card.getBoundingClientRect();
-        card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
-        card.style.setProperty('--my', (e.clientY - r.top) + 'px');
-      });
-    });
-
-    // Revelado al hacer scroll
-    var els = document.querySelectorAll('.reveal');
-    if ('IntersectionObserver' in window) {
-      var io = new IntersectionObserver(function (entries) {
-        entries.forEach(function (en) {
-          if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+    // ---------- Brillo que sigue al cursor ----------
+    if (window.matchMedia('(hover: hover)').matches) {
+      cards.forEach(function (card) {
+        card.addEventListener('pointermove', function (e) {
+          var r = card.getBoundingClientRect();
+          card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+          card.style.setProperty('--my', (e.clientY - r.top) + 'px');
         });
-      }, { threshold: 0.12 });
-      els.forEach(function (el) { io.observe(el); });
-    } else {
-      els.forEach(function (el) { el.classList.add('in'); });
+      });
     }
+
+    // ---------- Terminal: efecto de escritura ----------
+    var term = document.getElementById('term');
+    if (!reduce && term) {
+      var html = term.innerHTML, out = '', i = 0;
+      term.innerHTML = '<span class="caret"></span>';
+      var type = function () {
+        if (i >= html.length) { term.innerHTML = html; return; }
+        if (html[i] === '<') { var j = html.indexOf('>', i); out += html.slice(i, j + 1); i = j + 1; }
+        else if (html[i] === '&') { var k = html.indexOf(';', i); out += html.slice(i, k + 1); i = k + 1; }
+        else { out += html[i++]; }
+        term.innerHTML = out + '<span class="caret"></span>';
+        setTimeout(type, html[i - 1] === '\n' ? 140 : 12);
+      };
+      setTimeout(type, 700);
+    }
+
+    // ---------- Fondo: red de nodos ----------
+    var cv = document.getElementById('net');
+    if (!reduce && cv && cv.getContext) {
+      var ctx = cv.getContext('2d'), pts = [], w, h, raf, running = true;
+      var resize = function () {
+        var dpr = Math.min(window.devicePixelRatio || 1, 2);
+        w = window.innerWidth; h = window.innerHeight;
+        cv.width = w * dpr; cv.height = h * dpr; cv.style.width = w + 'px'; cv.style.height = h + 'px';
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        var n = Math.round(Math.min(70, (w * h) / 22000));
+        pts = [];
+        for (var p = 0; p < n; p++) pts.push({ x: Math.random() * w, y: Math.random() * h, vx: (Math.random() - .5) * .25, vy: (Math.random() - .5) * .25 });
+      };
+      var draw = function () {
+        ctx.clearRect(0, 0, w, h);
+        for (var a = 0; a < pts.length; a++) {
+          var p = pts[a];
+          p.x += p.vx; p.y += p.vy;
+          if (p.x < 0 || p.x > w) p.vx *= -1;
+          if (p.y < 0 || p.y > h) p.vy *= -1;
+          for (var b = a + 1; b < pts.length; b++) {
+            var q = pts[b], dx = p.x - q.x, dy = p.y - q.y, d = dx * dx + dy * dy;
+            if (d < 18000) {
+              ctx.strokeStyle = 'rgba(0,229,255,' + (0.14 * (1 - d / 18000)) + ')';
+              ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y); ctx.stroke();
+            }
+          }
+          ctx.fillStyle = 'rgba(139,92,246,.7)';
+          ctx.beginPath(); ctx.arc(p.x, p.y, 1.3, 0, 6.283); ctx.fill();
+        }
+        if (running) raf = requestAnimationFrame(draw);
+      };
+      resize(); draw();
+      var rt; window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(resize, 200); });
+      document.addEventListener('visibilitychange', function () {
+        running = !document.hidden;
+        cancelAnimationFrame(raf);
+        if (running) raf = requestAnimationFrame(draw);
+      });
+    }
+  })();
   </script>
 </body>
 </html>
