@@ -1,4 +1,3 @@
-import { projectDetails, type ProjectRepo } from './project-details.js';
 import catalog from './data/projects.json';
 
 export type Project = (typeof catalog.projects)[number];
@@ -10,6 +9,4 @@ export const categories: { value: Category; label: string }[] = [
   { value: 'windows', label: 'Windows' },
   { value: 'android', label: 'Android TV' }
 ];
-export const repositoryUrl = (repo: string) => `https://github.com/ReinierTutoriales/${repo}`;
-
-export const projectPath = (repo: string) => `/aplicaciones/${projectDetails[repo as ProjectRepo].slug}/`;
+export { repositoryUrl, projectPath } from './project-links.js';

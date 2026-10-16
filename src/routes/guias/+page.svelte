@@ -1,10 +1,8 @@
 <script lang="ts">
-  import Seo from '#lib/components/Seo.svelte';
   import Breadcrumbs from '#lib/components/Breadcrumbs.svelte';
 import ResourceList from '#lib/components/ResourceList.svelte';
 import { guides, guidePath } from '#lib/guide-catalog.js';</script>
-<Seo path="/guias/" />
-<section class="container library-hero"><Breadcrumbs path="/guias/" /><p class="eyebrow">EXPLORAR / GUÍAS</p><h1>Guías prácticas de<br>Windows y macOS.</h1><p class="library-lead">Procedimientos con requisitos, pasos y comprobaciones. Empieza con las guías de esta web y amplía la información con sus fuentes originales.</p></section>
+<section class="container library-hero"><Breadcrumbs /><p class="eyebrow">EXPLORAR / GUÍAS</p><h1>Guías prácticas de<br>Windows y macOS.</h1><p class="library-lead">Procedimientos con requisitos, pasos y comprobaciones. Empieza con las guías de esta web y amplía la información con sus fuentes originales.</p></section>
 <section class="container library-body" aria-labelledby="native-guides"><h2 id="native-guides">Guías en esta web</h2><div class="category-grid">{#each guides as guide}<a class="category-card" href={guidePath(guide.slug)}><span class="eyebrow">{guide.system === 'macos' ? 'macOS / USB' : 'Windows / Descargas'}</span><h3>{guide.label}</h3><p>{guide.summary}</p><span>Leer guía →</span></a>{/each}</div></section>
 <section class="container library-body guide-directory" aria-label="Guías y recursos"><h2>Más documentación en GitHub</h2><ResourceList excludeNative /><p class="group-note">Las configuraciones EFI dependen del hardware. Revisa siempre la documentación de cada proyecto antes de utilizar sus archivos.</p><a class="text-link" href="/herramientas/">Explorar herramientas de configuración →</a></section>
 

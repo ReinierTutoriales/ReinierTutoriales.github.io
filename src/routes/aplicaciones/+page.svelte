@@ -1,12 +1,10 @@
 <script lang="ts">
-  import Seo from '#lib/components/Seo.svelte';
   import Breadcrumbs from '#lib/components/Breadcrumbs.svelte';
   import ProjectCatalog from '#lib/components/ProjectCatalog.svelte';
   import type { PageData } from './$types';
   let { data }: { data: PageData } = $props();
 </script>
-<Seo path="/aplicaciones/" />
-<section class="container library-hero"><Breadcrumbs path="/aplicaciones/" /><p class="eyebrow">EXPLORAR / APLICACIONES</p><h1>Aplicaciones para<br>Windows y Android TV.</h1><p class="library-lead">Copia archivos, gestiona descargas o navega desde el televisor. Consulta el código y el estado de cada proyecto.</p></section>
+<section class="container library-hero"><Breadcrumbs /><p class="eyebrow">EXPLORAR / APLICACIONES</p><h1>Aplicaciones para<br>Windows y Android TV.</h1><p class="library-lead">Copia archivos, gestiona descargas o navega desde el televisor. Consulta el código y el estado de cada proyecto.</p></section>
 <section class="container library-body" id="comparar" aria-labelledby="compare-title">
   <h2 id="compare-title">Elige según lo que necesitas hacer</h2>
   <p class="group-note">Para organizar copias y movimientos, consulta VelocityCopy. Para distribuir un mismo origen a varios destinos, consulta RepartoCopier. La tabla compara su propósito, no sus velocidades.</p>

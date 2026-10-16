@@ -74,7 +74,7 @@ Análisis editorial de los 23 repositorios públicos: [docs/AUDIT.md](docs/AUDIT
 
 ## SEO y páginas de aplicaciones
 
-Cada aplicación tiene una ficha en `/aplicaciones/<slug>/` con funciones, uso, compatibilidad y alcance. `src/lib/project-details.ts` mantiene el contenido y `src/lib/seo.ts` centraliza títulos, descripciones, canónicas y las diecisiete rutas públicas del sitemap. Las páginas incluyen Open Graph, Twitter y datos estructurados coherentes con su contenido. Detalles y límites de validación en [docs/SEO.md](docs/SEO.md).
+Cada aplicación tiene una ficha en `/aplicaciones/<slug>/` con funciones, uso, compatibilidad y alcance. `src/lib/project-details.server.ts` mantiene el contenido y `src/lib/seo.server.ts` centraliza títulos, descripciones, canónicas y las diecisiete rutas públicas del sitemap. Las páginas incluyen Open Graph, Twitter y datos estructurados coherentes con su contenido. Detalles y límites de validación en [docs/SEO.md](docs/SEO.md).
 
 
 Si Pages conserva temporalmente la publicación por rama, el job de despliegue detecta ese modo y espera al flujo heredado del mismo commit antes de publicar SvelteKit. Así se evita que el artefacto de Jekyll sobrescriba la web compilada. El permiso adicional `actions: read` se usa únicamente para consultar ese estado. Cambiar Source a GitHub Actions sigue siendo la configuración recomendada para evitar el trabajo duplicado.
@@ -88,4 +88,13 @@ Las fichas separan requisitos, primeros pasos, alcance y distribución. `src/lib
 
 Para actualizar una ficha: revisar el README y los paquetes de Releases, guardar la referencia del commit consultado, comprobar si la publicación es preliminar y actualizar la fecha solo cuando se revise el contenido. No inferir una descarga disponible a partir de una etiqueta o de un artefacto de CI. Los enlaces de distribución apuntan a la publicación verificada, sin afirmar que sea la última para siempre.
 
-Validación de esta ampliación: `npm run check`, `npm run build` y 19 pruebas (12 de salida estática y 7 de componentes/datos). Se comprueban las 17 páginas, los destinos y anclas internos, la navegación activa durante cambios de ruta, temas, filtros, SEO, fuentes editoriales y el presupuesto total de JS/CSS de 200 KiB. No se ha medido Lighthouse ni Core Web Vitals y no se ha realizado inspección visual en navegador.
+Validación de esta ampliación: `npm run check`, `npm run build` y 24 pruebas (14 de salida estática y 10 de componentes/datos). Se comprueban las 17 páginas, los destinos y anclas internos, la navegación activa durante cambios de ruta, temas, filtros, SEO, fuentes editoriales y el presupuesto total de JS/CSS de 200 KiB. No se ha medido Lighthouse ni Core Web Vitals y no se ha realizado inspección visual en navegador.
+
+
+## SEO y tamaño por página
+
+El SEO se prepara durante el build desde `+layout.server.ts`: solo los metadatos de la ruta actual llegan al cliente. Las fichas completas y la generación de JSON-LD permanecen en módulos `.server.ts`. Las guías incluyen Article con autor y fechas visibles. Las rutas y los enlaces de proyectos usan módulos pequeños para evitar cargar el catálogo editorial desde componentes que solo necesitan una URL.
+
+`npm run size` informa del HTML, CSS y JS precargado de cada página. Las pruebas mantienen un límite de 112 KiB de JS precargado por ruta, además del presupuesto global del bundle. La limpieza previa elimina únicamente la salida generada del compilador.
+
+Mediciones antes/después, auditoría de dependencias, compatibilidad de TypeScript y límites de validación: [docs/PERFORMANCE.md](docs/PERFORMANCE.md).

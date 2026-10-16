@@ -1,12 +1,14 @@
 import { expect, test } from 'vitest';
 import { projectEditorial } from './project-editorial.server';
-import { projectDetails } from './project-details';
+import { projectPath } from './project-links';
+import { projectDetails } from './project-details.server';
 import { guides } from './guide-catalog';
 import { guideContent } from './guides.server';
 
 test('cada proyecto tiene revisión trazable y publica solo enlaces de paquetes comprobados', () => {
   expect(Object.keys(projectEditorial).sort()).toEqual(Object.keys(projectDetails).sort());
   for (const [repo, data] of Object.entries(projectEditorial)) {
+    expect(projectPath(repo)).toBe(`/aplicaciones/${projectDetails[repo as keyof typeof projectDetails].slug}/`);
     expect(data.reviewedAt).toMatch(/^\d{4}-\d{2}-\d{2}$/);
     expect(data.requirements.length).toBeGreaterThan(0);
     expect(data.start.length).toBeGreaterThan(1);
