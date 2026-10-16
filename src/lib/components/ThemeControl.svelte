@@ -15,8 +15,8 @@
 </script>
 
 <div class="theme-control">
-  <label class="sr-only" for="site-theme">Tema de apariencia</label>
-  <select id="site-theme" bind:value={preference} onchange={changeTheme} disabled={!ready}>
+  <label class="theme-label" for="site-theme">Tema</label>
+  <select id="site-theme" aria-label="Tema de apariencia" bind:value={preference} onchange={changeTheme} disabled={!ready}>
     <option value="system">Sistema</option>
     <option value="light">Claro</option>
     <option value="dark">Oscuro</option>
