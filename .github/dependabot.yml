@@ -5,3 +5,16 @@ updates:
     schedule:
       interval: monthly
     open-pull-requests-limit: 3
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: monthly
+    open-pull-requests-limit: 3
+    groups:
+      svelte-toolchain:
+        patterns:
+          - '@sveltejs/*'
+          - svelte
+          - vite
+          - svelte-check
+          - typescript
