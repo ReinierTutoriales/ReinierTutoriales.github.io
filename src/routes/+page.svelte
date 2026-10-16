@@ -1,19 +1,17 @@
-<!doctype html>
-<html lang="es">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+<script lang="ts">
+  import ProjectCatalog from '#lib/components/ProjectCatalog.svelte';
+  import { resources, repositoryUrl } from '#lib/catalog.js';
+</script>
+
+<svelte:head>
   <meta name="color-scheme" content="light">
   <meta name="theme-color" content="#f4f5f0">
   <meta name="description" content="ReinierTutoriales: aplicaciones para Windows y Android TV, herramientas de sistema y documentación de macOS. Explora los proyectos y su código en GitHub.">
   <meta name="referrer" content="strict-origin-when-cross-origin">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
   <title>ReinierTutoriales — Software, sistemas y documentación</title>
   <link rel="canonical" href="https://reiniertutoriales.github.io/">
   <link rel="icon" href="favicon.png" type="image/png">
   <link rel="apple-touch-icon" href="imagenes/apple-touch-icon.png">
-  <link rel="stylesheet" href="assets/site.css">
-  <script src="assets/site.js" defer></script>
   <meta property="og:type" content="website">
   <meta property="og:locale" content="es_ES">
   <meta property="og:site_name" content="ReinierTutoriales">
@@ -23,17 +21,8 @@
   <meta property="og:image" content="https://reiniertutoriales.github.io/imagenes/og-logo.png">
   <meta property="og:image:alt" content="Logo de ReinierTutoriales">
   <meta name="twitter:card" content="summary">
-</head>
-<body>
-  <a class="skip-link" href="#main">Saltar al contenido</a>
-  <header class="site-header">
-    <div class="container header-inner">
-      <a class="brand" href="#inicio" aria-label="ReinierTutoriales, inicio"><img src="imagenes/logo-192.webp" alt="" width="38" height="38"><span>Reinier<span class="brand-light">Tutoriales</span></span></a>
-      <nav aria-label="Navegación principal"><a href="#proyectos">Proyectos</a><a href="#recursos">Recursos</a><a href="#enfoque">Enfoque</a><a href="#contacto">Comunidad</a></nav>
-      <a class="github-link" href="https://github.com/ReinierTutoriales">GitHub <span aria-hidden="true">↗</span></a>
-    </div>
-  </header>
-  <main id="main">
+</svelte:head>
+
     <section class="hero container" id="inicio" aria-labelledby="hero-title">
       <div class="eyebrow"><span class="status-dot" aria-hidden="true"></span> REINIER LAZO / REINIERTUTORIALES</div>
       <h1 id="hero-title">Software útil.<br>Sistemas <span>bien pensados.</span></h1>
@@ -43,11 +32,7 @@
     <section class="work-section" id="proyectos" aria-labelledby="projects-title">
       <div class="container">
         <div class="section-heading"><div><p class="eyebrow">01 / PROYECTOS SELECCIONADOS</p><h2 id="projects-title">Del código al uso diario.</h2></div><p>Qué hace cada herramienta, para qué sistema está pensada y dónde seguir su desarrollo.</p></div>
-        <div class="filters" id="filters" role="group" aria-label="Filtrar proyectos por plataforma" hidden><button type="button" data-filter="all" aria-pressed="true">Todos</button><button type="button" data-filter="windows" aria-pressed="false">Windows</button><button type="button" data-filter="android" aria-pressed="false">Android TV</button></div>
-        <p class="sr-only" id="filter-status" role="status" aria-live="polite"></p>
-        <div class="project-grid">
-          <!-- PROJECTS -->
-        </div>
+        <ProjectCatalog />
         <p class="section-note">Las funciones y la disponibilidad dependen de cada proyecto. Consulta su README y sus publicaciones antes de instalar.</p>
         <a class="text-link" href="https://github.com/ReinierTutoriales?tab=repositories">Ver todos los repositorios <span aria-hidden="true">↗</span></a>
       </div>
@@ -55,7 +40,9 @@
     <section class="resources-section container" id="recursos" aria-labelledby="resources-title">
       <div class="resource-intro"><p class="eyebrow">02 / BIBLIOTECA TÉCNICA</p><h2 id="resources-title">Conocer el sistema.<br>Documentar el camino.</h2><p>Las guías y configuraciones de macOS siguen aquí: OpenCore, conectividad y compatibilidad de hardware.</p><p class="small-note">Cada configuración tiene requisitos propios. Los forks se identifican y conservan su proyecto de origen.</p></div>
       <ul class="resource-list">
-        <!-- RESOURCES -->
+        {#each resources as resource (resource.repo)}
+          <li><a href={repositoryUrl(resource.repo)}><span><span class="resource-type">{resource.type}</span><strong>{resource.name}</strong><span class="resource-summary">{resource.summary}</span></span><span aria-hidden="true">↗</span></a></li>
+        {/each}
       </ul>
     </section>
     <section class="approach-section" id="enfoque" aria-labelledby="approach-title">
@@ -64,7 +51,4 @@
       </div>
     </section>
     <section class="community-section container" id="contacto" aria-labelledby="community-title"><div><p class="eyebrow">04 / COMUNIDAD</p><h2 id="community-title">El trabajo continúa<br>en comunidad.</h2><p>Consulta el código, sigue los tutoriales o participa en la conversación.</p></div><div class="community-links"><a href="https://github.com/ReinierTutoriales"><span>GitHub<small>Código, cambios e incidencias</small></span><span aria-hidden="true">↗</span></a><a href="https://youtube.com/c/ReinierTutoriales"><span>YouTube<small>Tutoriales y demostraciones</small></span><span aria-hidden="true">↗</span></a><a href="https://t.me/ReinierTutoriales"><span>Telegram<small>Conversación y novedades</small></span><span aria-hidden="true">↗</span></a></div></section>
-  </main>
-  <footer class="container"><div class="footer-top"><a class="brand" href="#inicio"><img src="imagenes/logo-192.webp" alt="" width="32" height="32">ReinierTutoriales</a><div class="footer-links"><a href="https://www.reiniertutoriales.com/">Blog ↗</a><a href="https://discord.gg/Z63x4k4Kmj">Discord ↗</a><a href="https://twitter.com/ReinierTutorial">X ↗</a><a href="#inicio">Volver arriba ↑</a></div></div><div class="footer-bottom"><p>© <span id="year">2026</span> ReinierTutoriales</p><p>Software, sistemas y documentación.</p></div></footer>
-</body>
-</html>
+  
