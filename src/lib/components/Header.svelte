@@ -1,6 +1,6 @@
 <script lang="ts">
   import { page } from '$app/state';
-  import { siteSections } from '#lib/sections.js';
+  import { siteSections } from '#lib/navigation.js';
   import ThemeControl from './ThemeControl.svelte';
 </script>
 <header class="site-header">

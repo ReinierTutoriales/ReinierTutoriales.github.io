@@ -208,3 +208,38 @@ test('guías, comparación y fichas ofrecen contenido útil sin JavaScript', asy
     assert.ok(page.length>10000);
   }
 });
+
+test('cada página limita el JavaScript inicial a 112 KiB', async () => {
+  const { execFile } = await import('node:child_process');
+  const { promisify } = await import('node:util');
+  const { stdout } = await promisify(execFile)(process.execPath,['scripts/asset-sizes.mjs']);
+  const report = JSON.parse(stdout);
+  assert.equal(report.pages.length,17);
+  for (const page of report.pages) {
+    assert.ok(page.preloaded_js_bytes > 0,page.path);
+    assert.ok(page.preloaded_js_bytes <= 112*1024,`${page.path}: ${page.preloaded_js_bytes} bytes de JS inicial`);
+  }
+});
+
+test('los artículos exponen autor y fechas visibles, y lastmod coincide con su modificación', async () => {
+  const sitemap=await readFile('build/sitemap.xml','utf8');
+  const urls=[...sitemap.matchAll(/<url>([\s\S]*?)<\/url>/g)];
+  for (const [,entry] of urls) {
+    const url=entry.match(/<loc>([^<]+)<\/loc>/)[1];
+    const path=new URL(url).pathname;
+    const page=await readFile(resolve('build',path.slice(1),'index.html'),'utf8');
+    const graph=JSON.parse(page.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1])['@graph'];
+    const article=graph.find(node=>node['@type']==='Article');
+    if(path.startsWith('/guias/') && path!=='/guias/') {
+      assert.ok(article,url);
+      assert.ok(page.includes('Por Reinier Lazo'),url);
+      assert.ok(page.includes(`datetime="${article.datePublished}"`),url);
+      assert.ok(page.includes(`datetime="${article.dateModified}"`),url);
+      assert.ok(entry.includes(`<lastmod>${article.dateModified}</lastmod>`),url);
+      assert.ok(page.includes('property="og:type" content="article"'),url);
+    } else {
+      assert.ok(!article,url);
+      assert.ok(!entry.includes('<lastmod>'),url);
+    }
+  }
+});

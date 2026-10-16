@@ -9,10 +9,11 @@
   "scripts": {
     "dev": "vite dev",
     "prepare": "svelte-kit sync",
-    "build": "vite build && node scripts/finalize.mjs",
+    "build": "node scripts/clean-build.mjs && vite build && node scripts/finalize.mjs",
     "preview": "vite preview",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-    "test": "node --test scripts/*.test.mjs && vitest run"
+    "test": "node --test scripts/*.test.mjs && vitest run",
+    "size": "node scripts/asset-sizes.mjs"
   },
   "devDependencies": {
     "@sveltejs/adapter-static": "4.0.0",

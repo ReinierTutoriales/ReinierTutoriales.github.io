@@ -1,12 +1,10 @@
 <script lang="ts">
-  import Seo from '#lib/components/Seo.svelte';
 
   import ProjectCatalog from '#lib/components/ProjectCatalog.svelte';
   import { siteSections } from '#lib/sections.js';
   import ResourceList from '#lib/components/ResourceList.svelte';
 </script>
 
-<Seo path="/" />
 
     <section class="hero container" id="inicio" aria-labelledby="hero-title">
       <div class="eyebrow"><span class="status-dot" aria-hidden="true"></span> REINIER LAZO / REINIERTUTORIALES</div>

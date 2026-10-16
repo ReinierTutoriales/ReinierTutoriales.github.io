@@ -1,16 +1,12 @@
 <script lang="ts">
-  import Seo from '#lib/components/Seo.svelte';
   import Breadcrumbs from '#lib/components/Breadcrumbs.svelte';
-  import { guidePath } from '#lib/guide-catalog.js';
   import type { PageData } from './$types';
   let { data }: { data: PageData } = $props();
-  const path = $derived(guidePath(data.guide.slug));
 </script>
-<Seo {path} />
 <section class="container library-hero project-hero">
-  <Breadcrumbs {path} /><p class="eyebrow">GUÍA / {data.guide.system === 'macos' ? 'macOS' : 'Windows'}</p>
+  <Breadcrumbs /><p class="eyebrow">GUÍA / {data.guide.system === 'macos' ? 'macOS' : 'Windows'}</p>
   <h1>{data.guide.title}</h1><p class="library-lead">{data.content.intro}</p>
-  <p class="review-note">Contenido revisado el <time datetime={data.content.reviewedAt}>{data.content.reviewedAt.split('-').reverse().join('/')}</time>. Fuentes al final de la guía.</p>
+  <p class="review-note">Por Reinier Lazo · Publicado el <time datetime={data.guide.publishedAt}>{data.guide.publishedAt.split('-').reverse().join('/')}</time> · Contenido revisado el <time datetime={data.content.reviewedAt}>{data.content.reviewedAt.split('-').reverse().join('/')}</time>. Fuentes al final de la guía.</p>
 </section>
 <div class="container project-article">
   <nav class="article-index" aria-label="En esta guía"><strong>En esta guía</strong><ul><li><a href="#requisitos">Antes de empezar</a></li>{#each data.content.sections as section}<li><a href={`#${section.id}`}>{section.title}</a></li>{/each}<li><a href="#problemas">Resolver problemas</a></li><li><a href="#fuentes">Fuentes y documentación</a></li></ul></nav>

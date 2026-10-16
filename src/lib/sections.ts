@@ -1,9 +1,4 @@
-export const siteSections = [
-  { path: '/sistemas/', label: '01 / SISTEMAS', title: 'Sistemas', summary: 'Windows, macOS, Linux y Android TV. Recursos según tu equipo.' },
-  { path: '/aplicaciones/', label: '02 / APLICACIONES', title: 'Aplicaciones', summary: 'Mis proyectos para copiar archivos, descargar, navegar y filtrar conexiones.' },
-  { path: '/herramientas/', label: '03 / HERRAMIENTAS', title: 'Herramientas', summary: 'Utilidades de la comunidad para preparar y configurar el sistema.' },
-  { path: '/guias/', label: '04 / GUÍAS', title: 'Guías y documentación', summary: 'Descargas en Windows, mapeo USB, OpenCore y configuraciones de hardware.' }
-];
+export { siteSections } from './navigation.js';
 export const systems = [
   { slug: 'windows', name: 'Windows', summary: 'Copia de archivos, descargas y personalización del escritorio.', description: 'Aplicaciones para trabajar con tus archivos y utilidades para preparar medios y configurar el equipo. Cada proyecto documenta las versiones de Windows que admite.', projectCategory: 'windows' },
   { slug: 'macos', name: 'macOS', summary: 'Instalación, OpenCore y compatibilidad de hardware.', description: 'Configuraciones y documentación para Mac y equipos Hackintosh. Encuentra recursos de conectividad, mapeo USB y herramientas para trabajar con OpenCore.', projectCategory: '' },
