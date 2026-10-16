@@ -879,3 +879,22 @@ a,button {
 .related-links a { color:var(--ink); text-decoration:underline; text-underline-offset:4px; }
 
 .project-hero h1 { font-size:clamp(2.2rem,4vw,3.6rem); max-width:1050px; }
+
+.site-header nav a[aria-current] { color:var(--green); text-decoration:underline; text-underline-offset:7px; text-decoration-thickness:2px; }
+.review-note { margin-block:18px; font-size:.82rem; max-width:750px; }
+.table-scroll { overflow-x:auto; margin-top:18px; border:1px solid var(--line); border-radius:6px; }
+.table-scroll:focus-visible { outline:3px solid var(--focus); outline-offset:4px; }
+.table-scroll table { width:100%; min-width:640px; border-collapse:collapse; text-align:left; font-size:.88rem; }
+.table-scroll caption { text-align:left; padding:18px; color:var(--muted); }
+.table-scroll th,.table-scroll td { padding:18px; border-top:1px solid var(--line); vertical-align:top; }
+.table-scroll thead { background:var(--soft); }
+.table-scroll th { font-weight:650; }
+.table-scroll td { color:var(--muted); }
+.table-scroll a,.article-index a { text-decoration:underline; text-underline-offset:4px; }
+.article-index { border:1px solid var(--line); border-radius:6px; padding:24px; margin-block:0 32px; background:var(--soft); }
+.article-index ul { margin-bottom:0; }
+.project-article section[id] { scroll-margin-top:24px; }
+.project-article pre { overflow-x:auto; padding:20px; background:var(--soft); border:1px solid var(--line); border-radius:6px; font-size:.85rem; }
+.problem-list dt { color:var(--ink); font-weight:650; margin-top:24px; }
+.problem-list dd { color:var(--muted); margin:8px 0 0; line-height:1.8; }
+@media print { .table-scroll { overflow:visible; } .table-scroll table { min-width:0; font-size:.75rem; } .table-scroll th,.table-scroll td { padding:8px; } }

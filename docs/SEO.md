@@ -2,7 +2,7 @@
 
 ## Cambios
 
-- Quince rutas públicas prerenderizadas: portada, cuatro secciones, cuatro sistemas y seis fichas de aplicaciones.
+- Diecisiete rutas públicas prerenderizadas: portada, cuatro secciones, cuatro sistemas, seis fichas de aplicaciones y dos guías propias.
 - Título y descripción específicos para cada URL, con una sola canónica absoluta. La identidad se centraliza en `src/lib/seo.ts`.
 - Open Graph y Twitter coherentes con cada página, imagen y favicon locales. Los iconos usan rutas absolutas para funcionar desde las páginas interiores.
 - JSON-LD WebSite, Person y WebPage; BreadcrumbList para páginas interiores, reflejado en las migas de pan visibles.
@@ -13,7 +13,7 @@
 
 ## Validación
 
-Svelte-check, build estático y 14 pruebas: diez de salida y cuatro en Vitest. Se comprueban las quince canónicas, títulos y descripciones únicos, JSON-LD válido y correspondencia con las rutas, migas de pan, ausencia de noindex en páginas públicas y conservación de temas y filtros. La serialización JSON-LD escapa `<` y conserva el texto al decodificar; los scripts ejecutables siguen sujetos a hashes CSP.
+Svelte-check, build estático y 19 pruebas: doce de salida y siete en Vitest. Se comprueban las diecisiete canónicas, títulos y descripciones únicos, JSON-LD válido y correspondencia con las rutas, migas de pan, ausencia de noindex en páginas públicas y conservación de temas y filtros. La serialización JSON-LD escapa `<` y conserva el texto al decodificar; los scripts ejecutables siguen sujetos a hashes CSP.
 
 Estas comprobaciones no equivalen a una validación externa de Rich Results Test ni a la inspección de URLs de Search Console. No se ha medido Lighthouse, Core Web Vitals, posiciones ni tráfico orgánico. No se añaden ratings, reseñas, ofertas, FAQ o acciones de búsqueda que el sitio no ofrezca.
 
@@ -31,3 +31,14 @@ En Search Console del propietario, enviar `https://reiniertutoriales.github.io/s
 - https://developers.google.com/search/docs/appearance/structured-data/breadcrumb
 - https://developers.google.com/search/docs/appearance/structured-data/sd-policies
 - https://developers.google.com/search/docs/crawling-indexing/sitemaps/build-sitemap
+
+
+## Ampliación de contenido y navegación — 16/10/2026
+
+- Comparación por tarea, plataforma y estado, sin clasificaciones de velocidad inventadas.
+- Fichas con requisitos, primeros pasos, fecha por proyecto y fuentes fijadas a commits consultados. Las publicaciones con archivos se identifican como una revisión puntual, con distinción de preliminares.
+- Guías nativas: `/guias/mapear-usb-desde-windows/` y `/guias/descargas-reanudables-w11downloaderpro/`, con requisitos, índice, pasos, diagnóstico, fuentes y enlaces relacionados.
+- Navegación principal reactiva con `page` de `$app/state`: `aria-current="page"` en la sección principal y `aria-current="location"` en sus páginas hijas. Las migas conservan la página actual.
+- El texto completo de guías y revisiones se mantiene en módulos de servidor; la prerenderización sirve el contenido correspondiente sin una API externa en cada visita.
+
+Documentación contrastada: `$app/state` y rendimiento de SvelteKit, README de cada proyecto, publicaciones con paquetes, USBToolBox/tool y USBToolBox/kext. La comparación y las guías no requieren JavaScript para leerse. Las pruebas de DOM no sustituyen una evaluación visual o una medición de rendimiento real.

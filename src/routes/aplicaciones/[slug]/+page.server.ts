@@ -1,6 +1,7 @@
 import { error } from '@sveltejs/kit';
 import { projects, projectPath } from '#lib/catalog.js';
 import { projectDetails, type ProjectRepo } from '#lib/project-details.js';
+import { projectEditorial } from '#lib/project-editorial.server.js';
 export const entries = () => Object.values(projectDetails).map(project => ({ slug: project.slug }));
 export function load({ params }: { params: { slug: string } }) {
   const entry = Object.entries(projectDetails).find(([,detail]) => detail.slug === params.slug);
@@ -9,5 +10,5 @@ export function load({ params }: { params: { slug: string } }) {
   const project = projects.find(project => project.repo === repo);
   if (!project) error(404,'Proyecto no encontrado');
   const related = projects.filter(p => p.category === project.category && p.repo !== repo).slice(0,2).map(p => ({name:p.name,path:projectPath(p.repo)}));
-  return {project, detail:projectDetails[repo as ProjectRepo], related};
+  return {project, detail:projectDetails[repo as ProjectRepo], editorial:projectEditorial[repo as ProjectRepo], related};
 }

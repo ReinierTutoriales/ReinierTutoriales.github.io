@@ -53,9 +53,9 @@ No se versionan `build/`, `.svelte-kit/` ni `node_modules/`. El repositorio es u
 ## Secciones y apariencia
 
 - `/sistemas/`: Windows, macOS, Linux y Android TV, con páginas propias para cada plataforma.
-- `/aplicaciones/`: catálogo de seis proyectos con filtros por plataforma.
+- `/aplicaciones/`: catálogo de seis proyectos con filtros por plataforma y comparación por tarea.
 - `/herramientas/`: ProperTree, OCAuxiliaryTools y WinDiskWriter, atribuidos a sus autores y enlazados a sus repositorios originales.
-- `/guias/`: documentación de OpenCore, conectividad, USB y configuraciones de hardware.
+- `/guias/`: guías propias de mapeo USB y descargas reanudables, más documentación de OpenCore, conectividad y hardware.
 
 Esta organización toma los ejes temáticos de reiniertutoriales.com, sin reproducir categorías, hilos, cuentas ni funciones del foro. El enlace a la web original se conserva. El sitemap se genera con las rutas nativas; no incluye la página de recuperación.
 
@@ -74,7 +74,18 @@ Análisis editorial de los 23 repositorios públicos: [docs/AUDIT.md](docs/AUDIT
 
 ## SEO y páginas de aplicaciones
 
-Cada aplicación tiene una ficha en `/aplicaciones/<slug>/` con funciones, uso, compatibilidad y alcance. `src/lib/project-details.ts` mantiene el contenido y `src/lib/seo.ts` centraliza títulos, descripciones, canónicas y las quince rutas públicas del sitemap. Las páginas incluyen Open Graph, Twitter y datos estructurados coherentes con su contenido. Detalles y límites de validación en [docs/SEO.md](docs/SEO.md).
+Cada aplicación tiene una ficha en `/aplicaciones/<slug>/` con funciones, uso, compatibilidad y alcance. `src/lib/project-details.ts` mantiene el contenido y `src/lib/seo.ts` centraliza títulos, descripciones, canónicas y las diecisiete rutas públicas del sitemap. Las páginas incluyen Open Graph, Twitter y datos estructurados coherentes con su contenido. Detalles y límites de validación en [docs/SEO.md](docs/SEO.md).
 
 
 Si Pages conserva temporalmente la publicación por rama, el job de despliegue detecta ese modo y espera al flujo heredado del mismo commit antes de publicar SvelteKit. Así se evita que el artefacto de Jekyll sobrescriba la web compilada. El permiso adicional `actions: read` se usa únicamente para consultar ese estado. Cambiar Source a GitHub Actions sigue siendo la configuración recomendada para evitar el trabajo duplicado.
+
+
+## Revisión editorial y guías
+
+Las fichas separan requisitos, primeros pasos, alcance y distribución. `src/lib/project-editorial.server.ts` conserva por proyecto la fecha de revisión, un enlace al README fijado a su commit y la publicación con paquete comprobada (si existe), distinguiendo versiones preliminares. No se consulta GitHub desde el navegador ni se presenta una instantánea como un estado actualizado en tiempo real.
+
+`src/lib/guide-catalog.ts` contiene el índice y metadatos de las guías; `src/lib/guides.server.ts` conserva sus procedimientos y fuentes. El contenido completo se entrega por la ruta correspondiente, sin incorporar todos los artículos a un módulo de JavaScript del cliente. Las nuevas guías aparecen en el sitemap y tienen migas de pan y enlaces por sección.
+
+Para actualizar una ficha: revisar el README y los paquetes de Releases, guardar la referencia del commit consultado, comprobar si la publicación es preliminar y actualizar la fecha solo cuando se revise el contenido. No inferir una descarga disponible a partir de una etiqueta o de un artefacto de CI. Los enlaces de distribución apuntan a la publicación verificada, sin afirmar que sea la última para siempre.
+
+Validación de esta ampliación: `npm run check`, `npm run build` y 19 pruebas (12 de salida estática y 7 de componentes/datos). Se comprueban las 17 páginas, los destinos y anclas internos, la navegación activa durante cambios de ruta, temas, filtros, SEO, fuentes editoriales y el presupuesto total de JS/CSS de 200 KiB. No se ha medido Lighthouse ni Core Web Vitals y no se ha realizado inspección visual en navegador.

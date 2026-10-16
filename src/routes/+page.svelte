@@ -19,7 +19,7 @@
         <div class="section-heading"><div><p class="eyebrow">01 / PROYECTOS SELECCIONADOS</p><h2 id="projects-title">Aplicaciones para copiar, descargar y navegar.</h2></div><p>Qué hace cada herramienta, para qué sistema está pensada y dónde seguir su desarrollo.</p></div>
         <ProjectCatalog />
         <p class="section-note">Las funciones y la disponibilidad dependen de cada proyecto. Consulta su README y sus publicaciones antes de instalar.</p>
-        <a class="text-link" href="https://github.com/ReinierTutoriales?tab=repositories">Ver todos los repositorios <span aria-hidden="true">↗</span></a>
+        <a class="text-link" href="/aplicaciones/#comparar">Comparar aplicaciones por tarea <span aria-hidden="true">↗</span></a>
       </div>
     </section>
     <section class="guide-teaser container" aria-labelledby="guides-title">
