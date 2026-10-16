@@ -1,6 +1,7 @@
 import { error } from '@sveltejs/kit';
 import { projects, projectPath } from '#lib/catalog.js';
-import { projectDetails, type ProjectRepo } from '#lib/project-details.js';
+import { projectDetails } from '#lib/project-details.server.js';
+import type { ProjectRepo } from '#lib/project-paths.js';
 import { projectEditorial } from '#lib/project-editorial.server.js';
 export const entries = () => Object.values(projectDetails).map(project => ({ slug: project.slug }));
 export function load({ params }: { params: { slug: string } }) {

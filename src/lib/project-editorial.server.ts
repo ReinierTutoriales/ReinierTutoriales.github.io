@@ -1,4 +1,4 @@
-import type { ProjectRepo } from './project-details.js';
+import type { ProjectRepo } from './project-paths.js';
 export type Editorial = { task: string; status: string; requirements: string[]; start: string[]; reviewedAt: string; sources: {label:string;url:string}[]; release: {url:string;tag:string;prerelease:boolean} | null };
 export const projectEditorial: Record<ProjectRepo, Editorial> = {
   "VelocityCopy": {

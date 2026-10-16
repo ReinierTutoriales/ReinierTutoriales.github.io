@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { projectPath, type Project } from '#lib/catalog.js';
+  import { projectPath } from '#lib/project-links.js';
+  import type { Project } from '#lib/catalog.js';
   let { project, index, hidden = false }: { project: Project; index: number; hidden?: boolean } = $props();
 </script>
 

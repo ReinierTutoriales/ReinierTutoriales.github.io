@@ -1,8 +1,11 @@
 <script lang="ts">
   import '../app.css';
   import Header from '#lib/components/Header.svelte';
+  import Seo from '#lib/components/Seo.svelte';
+  import type { LayoutData } from './$types';
+  import type { Snippet } from 'svelte';
   import Footer from '#lib/components/Footer.svelte';
-  let { children } = $props();
+  let { children, data }: { children: Snippet; data: LayoutData } = $props();
 </script>
 
 <svelte:head>
@@ -12,6 +15,7 @@
   <link rel="apple-touch-icon" href="/imagenes/apple-touch-icon.png">
 </svelte:head>
 
+<Seo metadata={data.seo} />
 <a class="skip-link" href="#main">Saltar al contenido</a>
 <Header />
 <main id="main">{@render children()}</main>
