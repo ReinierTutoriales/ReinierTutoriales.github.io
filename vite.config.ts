@@ -6,6 +6,7 @@ export default defineConfig({
   plugins: [sveltekit({
     adapter: adapter({ strict: true }),
     paths: { base: '', relative: false },
+    prerender: { entries: ['*', '/sitemap.xml'] },
     csp: {
       mode: 'hash',
       directives: {

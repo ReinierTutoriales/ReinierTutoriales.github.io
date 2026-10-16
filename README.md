@@ -1,4 +1,4 @@
-# ReinierTutoriales · Portfolio con SvelteKit
+# ReinierTutoriales · Portal con SvelteKit
 
 Web pública: **https://reiniertutoriales.github.io/**
 
@@ -49,6 +49,17 @@ El workflow **SvelteKit Pages** instala con `npm ci`, verifica tipos y compilaci
 Al desplegar, el workflow comprueba que Pages usa el modo GitHub Actions y lo establece si aún conserva la fuente por rama. No guarda credenciales ni necesita un PAT. Las acciones oficiales están fijadas por SHA y Dependabot propone sus actualizaciones junto con las dependencias npm.
 
 No se versionan `build/`, `.svelte-kit/` ni `node_modules/`. El repositorio es una web de usuario (`ReinierTutoriales.github.io`), por lo que la ruta base es vacía; no se añade el nombre del repositorio a la URL.
+
+## Secciones y apariencia
+
+- `/sistemas/`: Windows, macOS, Linux y Android TV, con páginas propias para cada plataforma.
+- `/aplicaciones/`: catálogo de seis proyectos con filtros por plataforma.
+- `/herramientas/`: ProperTree, OCAuxiliaryTools y WinDiskWriter, atribuidos a sus autores y enlazados a sus repositorios originales.
+- `/guias/`: documentación de OpenCore, conectividad, USB y configuraciones de hardware.
+
+Esta organización toma los ejes temáticos de reiniertutoriales.com, sin reproducir categorías, hilos, cuentas ni funciones del foro. El enlace a la web original se conserva. El sitemap se genera con las rutas nativas; no incluye la página de recuperación.
+
+El selector permite Sistema, Claro y Oscuro. `static/theme.js` resuelve el tema antes de cargar el contenido, guarda la preferencia en localStorage y escucha los cambios del sistema y de otras pestañas. Si el almacenamiento está bloqueado, el tema sigue funcionando en memoria. Sin JavaScript, CSS sigue el esquema del sistema. Las paletas comparten tokens para superficies, texto, botones, foco y selección. Las pruebas verifican el contraste de los pares de color principales, sin sustituir una auditoría visual completa.
 
 ## Contenido y rendimiento
 

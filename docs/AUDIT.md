@@ -65,6 +65,12 @@ El workflow instala desde el lockfile, verifica tipos, construye, prueba y publi
 - No se ejecutaron Lighthouse, Core Web Vitals ni revisión visual en navegador. Las pruebas de DOM no acreditan apariencia final ni equivalen a un lector de pantalla real.
 - La selección es una revisión editorial fechada; no afirma mostrar el estado de GitHub en tiempo real.
 
+## Organización editorial y temas
+
+Se revisó la portada pública y los índices de reiniertutoriales.com el 16/10/2026. La estructura final adopta los ejes Sistemas, Aplicaciones, Herramientas y Guías, con páginas nativas. No importa el foro, sus hilos ni cuentas. Los sistemas se organizan en Windows, macOS, Linux y Android TV. Las utilidades de terceros se enlazan a los repositorios oficiales, conservando autoría y separándolas de los proyectos propios.
+
+La apariencia incorpora selección persistente de Sistema, Claro y Oscuro. El arranque se ejecuta desde un script propio antes de pintar el contenido, sin permitir scripts inline arbitrarios en CSP. El tema sigue cambios de sistema y pestañas. La falta de acceso a localStorage no impide cambiar de tema. CSS ofrece el esquema del sistema cuando JS no está disponible. Se comprueban pares de color de texto con umbral 4.5:1, incluyendo superficies, botones y proyecto destacado; no se presenta como una certificación WCAG integral.
+
 ## Referencias oficiales
 
 - [GitHub Pages: fuente de publicación](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site)
@@ -78,3 +84,8 @@ El workflow instala desde el lockfile, verifica tipos, construye, prueba y publi
 - [SvelteKit 3: migración](https://svelte.dev/docs/kit/migrating-to-sveltekit-3)
 - [SvelteKit: configuración Vite y CSP](https://svelte.dev/docs/kit/@sveltejs-kit-vite)
 - [SvelteKit: configuración TypeScript](https://svelte.dev/docs/kit/$app-tsconfig)
+
+- [ReinierTutoriales: referencia editorial](https://reiniertutoriales.com/)
+- [ProperTree: proyecto original](https://github.com/corpnewt/ProperTree)
+- [OCAuxiliaryTools: proyecto original](https://github.com/ic005k/OCAuxiliaryTools)
+- [WinDiskWriter: proyecto original](https://github.com/TechUnRestricted/WinDiskWriter)

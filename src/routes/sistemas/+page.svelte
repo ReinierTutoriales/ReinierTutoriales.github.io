@@ -1,0 +1,4 @@
+<script lang="ts">import { systems } from '#lib/sections.js';</script>
+<svelte:head><title>Sistemas — ReinierTutoriales</title><meta name="description" content="Explora recursos de Windows, macOS, Linux y Android TV: aplicaciones, herramientas y documentación organizadas por sistema."><link rel="canonical" href="https://reiniertutoriales.github.io/sistemas/"></svelte:head>
+<section class="container library-hero"><p class="eyebrow">EXPLORAR / SISTEMAS</p><h1>Elige tu sistema.<br>Encuentra tu recurso.</h1><p class="library-lead">Aplicaciones, herramientas y documentación organizadas por plataforma.</p></section>
+<section class="container library-body" aria-label="Sistemas disponibles"><div class="category-grid">{#each systems as system (system.slug)}<a class="category-card" href={`/sistemas/${system.slug}/`}><h2>{system.name}</h2><p>{system.summary}</p><span>Explorar recursos <span aria-hidden="true">→</span></span></a>{/each}</div></section>
