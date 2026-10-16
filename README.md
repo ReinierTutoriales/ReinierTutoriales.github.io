@@ -75,3 +75,6 @@ Análisis editorial de los 23 repositorios públicos: [docs/AUDIT.md](docs/AUDIT
 ## SEO y páginas de aplicaciones
 
 Cada aplicación tiene una ficha en `/aplicaciones/<slug>/` con funciones, uso, compatibilidad y alcance. `src/lib/project-details.ts` mantiene el contenido y `src/lib/seo.ts` centraliza títulos, descripciones, canónicas y las quince rutas públicas del sitemap. Las páginas incluyen Open Graph, Twitter y datos estructurados coherentes con su contenido. Detalles y límites de validación en [docs/SEO.md](docs/SEO.md).
+
+
+Si Pages conserva temporalmente la publicación por rama, el job de despliegue detecta ese modo y espera al flujo heredado del mismo commit antes de publicar SvelteKit. Así se evita que el artefacto de Jekyll sobrescriba la web compilada. El permiso adicional `actions: read` se usa únicamente para consultar ese estado. Cambiar Source a GitHub Actions sigue siendo la configuración recomendada para evitar el trabajo duplicado.

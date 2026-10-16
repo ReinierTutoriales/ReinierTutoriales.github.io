@@ -37,12 +37,33 @@ jobs:
     timeout-minutes: 5
     permissions:
       pages: write
+      actions: read
       id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
+      - name: Wait for an existing legacy Pages deployment
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PAGES_REPOSITORY: ${{ github.repository }}
+          PAGES_HEAD_SHA: ${{ github.sha }}
+        run: |
+          mode=$(gh api "repos/$PAGES_REPOSITORY/pages" --jq .build_type)
+          if [ "$mode" != "legacy" ]; then
+            exit 0
+          fi
+          echo "::warning::Pages still uses branch publishing. Waiting for its deployment before publishing the SvelteKit artifact."
+          for attempt in {1..30}; do
+            state=$(gh api --method GET "repos/$PAGES_REPOSITORY/actions/runs" -f head_sha="$PAGES_HEAD_SHA" -f per_page=100 --jq '[.workflow_runs[] | select(.path == "dynamic/pages/pages-build-deployment")] | if length > 0 and all(.[]; .status == "completed") then "done" else "pending" end')
+            if [ "$state" = "done" ]; then
+              exit 0
+            fi
+            sleep 5
+          done
+          echo "::error::The legacy Pages workflow has not finished. Retry this deployment after it completes, or select GitHub Actions as the Pages source."
+          exit 1
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
