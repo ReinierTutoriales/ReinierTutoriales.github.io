@@ -58,4 +58,4 @@ No hay fuentes remotas, analítica, servidor de aplicación ni llamadas a GitHub
 
 La captura procede de `VelocityCopy/docs/screenshots/transfer-compact.png`, rama `main`, consultada el 16/10/2026 y convertida a WebP. Sus cifras son ilustrativas; no son un benchmark. Se mantienen los enlaces comunitarios originales.
 
-Análisis editorial de los 24 repositorios públicos: [docs/AUDIT.md](docs/AUDIT.md).
+Análisis editorial de los 23 repositorios públicos: [docs/AUDIT.md](docs/AUDIT.md).
