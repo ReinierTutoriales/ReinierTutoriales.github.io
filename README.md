@@ -70,3 +70,8 @@ No hay fuentes remotas, analítica, servidor de aplicación ni llamadas a GitHub
 La captura procede de `VelocityCopy/docs/screenshots/transfer-compact.png`, rama `main`, consultada el 16/10/2026 y convertida a WebP. Sus cifras son ilustrativas; no son un benchmark. Se mantienen los enlaces comunitarios originales.
 
 Análisis editorial de los 23 repositorios públicos: [docs/AUDIT.md](docs/AUDIT.md).
+
+
+## SEO y páginas de aplicaciones
+
+Cada aplicación tiene una ficha en `/aplicaciones/<slug>/` con funciones, uso, compatibilidad y alcance. `src/lib/project-details.ts` mantiene el contenido y `src/lib/seo.ts` centraliza títulos, descripciones, canónicas y las quince rutas públicas del sitemap. Las páginas incluyen Open Graph, Twitter y datos estructurados coherentes con su contenido. Detalles y límites de validación en [docs/SEO.md](docs/SEO.md).

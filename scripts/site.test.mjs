@@ -9,10 +9,12 @@ const catalog = JSON.parse(await readFile('src/lib/data/projects.json', 'utf8'))
 const html = await readFile('build/index.html', 'utf8');
 
 test('el HTML prerenderizado contiene el catálogo sin ejecutar JavaScript', () => {
-  for (const p of [...catalog.projects, ...catalog.resources]) {
+  for (const p of catalog.resources) {
     assert.ok(html.includes(`href="https://github.com/ReinierTutoriales/${p.repo}"`), p.repo);
     assert.ok(html.includes(p.name), p.name);
   }
+  for (const p of catalog.projects) assert.ok(html.includes(p.name), p.name);
+  assert.ok(html.includes('href="/aplicaciones/velocitycopy/"'));
   assert.equal((html.match(/data-category=/g) || []).length, catalog.projects.length);
   assert.doesNotMatch(html, /<article[^>]*\bhidden(?:[\s=>])/);
   assert.equal((html.match(/<h1\b/g) || []).length, 1);
@@ -46,7 +48,7 @@ test('CSP permite por hash los scripts de arranque y prohíbe scripts arbitrario
   assert.ok(csp, 'Falta la CSP');
   assert.ok(!csp.includes('unsafe-inline') && !csp.includes('unsafe-eval'));
   for (const match of html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/g)) {
-    if (match[1].includes('src=') || !match[2].trim()) continue;
+    if (match[1].includes('src=') || match[1].includes('application/ld+json') || !match[2].trim()) continue;
     const hash = createHash('sha256').update(match[2]).digest('base64');
     assert.ok(csp.includes(hash), 'El arranque de SvelteKit quedaría bloqueado por la CSP');
   }
@@ -123,5 +125,38 @@ test('las paletas mantienen contraste de texto de al menos 4.5:1', async () => {
       const ratio=(values[0]+0.05)/(values[1]+0.05);
       assert.ok(ratio>=4.5,`${name}: ${fg}/${bg} = ${ratio.toFixed(2)}`);
     }
+  }
+});
+
+test('SEO completo y único en las 15 páginas indexables', async () => {
+  const sitemap = await readFile('build/sitemap.xml','utf8');
+  const urls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(m => m[1]);
+  assert.equal(urls.length,15);
+  const titles = new Set(); const descriptions = new Set();
+  for (const url of urls) {
+    const path = new URL(url).pathname;
+    const page = await readFile(resolve('build',path.slice(1),'index.html'),'utf8');
+    const head = page.match(/<head>([\s\S]*?)<\/head>/)[1];
+    const title = head.match(/<title>([^<]+)<\/title>/)[1];
+    const description = head.match(/name="description" content="([^"]+)"/)[1];
+    assert.equal((head.match(/<title>/g)||[]).length,1,url);
+    assert.equal((head.match(/rel="canonical"/g)||[]).length,1,url);
+    assert.ok(head.includes(`rel="canonical" href="${url}"`),url);
+    assert.ok(head.includes(`property="og:url" content="${url}"`),url);
+    assert.ok(head.includes('name="twitter:image"'),url);
+    assert.ok(description.length>70,url);
+    assert.ok(!titles.has(title),`Título duplicado: ${url}`);titles.add(title);
+    assert.ok(!descriptions.has(description),`Descripción duplicada: ${url}`);descriptions.add(description);
+    assert.doesNotMatch(head,/noindex/);
+    const json = head.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1];
+    const graph = JSON.parse(json)['@graph'];
+    assert.ok(graph.find(node=>node['@type']==='WebSite'));
+    assert.equal(graph.find(node=>node['@type']==='WebPage').url,url);
+    if(path!=='/') {
+      const crumbs = graph.find(node=>node['@type']==='BreadcrumbList').itemListElement;
+      assert.equal(crumbs.at(-1).item,url);
+      assert.ok(page.includes('aria-label="Ruta de navegación"'));
+    }
+    assert.doesNotMatch(json,/aggregateRating|"offers"|FAQPage|SearchAction/);
   }
 });
