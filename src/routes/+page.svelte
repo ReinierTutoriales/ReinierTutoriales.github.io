@@ -1,36 +1,22 @@
 <script lang="ts">
+  import Seo from '#lib/components/Seo.svelte';
+
   import ProjectCatalog from '#lib/components/ProjectCatalog.svelte';
   import { siteSections } from '#lib/sections.js';
   import ResourceList from '#lib/components/ResourceList.svelte';
 </script>
 
-<svelte:head>
-  <meta name="description" content="ReinierTutoriales: aplicaciones para Windows y Android TV, herramientas de sistema y documentación de macOS. Explora los proyectos y su código en GitHub.">
-  <meta name="referrer" content="strict-origin-when-cross-origin">
-  <title>ReinierTutoriales — Software, sistemas y documentación</title>
-  <link rel="canonical" href="https://reiniertutoriales.github.io/">
-  <link rel="icon" href="favicon.png" type="image/png">
-  <link rel="apple-touch-icon" href="imagenes/apple-touch-icon.png">
-  <meta property="og:type" content="website">
-  <meta property="og:locale" content="es_ES">
-  <meta property="og:site_name" content="ReinierTutoriales">
-  <meta property="og:title" content="ReinierTutoriales — Software, sistemas y documentación">
-  <meta property="og:description" content="Proyectos para Windows y Android TV. Herramientas de sistema y guías de macOS, con el código y la documentación a un clic.">
-  <meta property="og:url" content="https://reiniertutoriales.github.io/">
-  <meta property="og:image" content="https://reiniertutoriales.github.io/imagenes/og-logo.png">
-  <meta property="og:image:alt" content="Logo de ReinierTutoriales">
-  <meta name="twitter:card" content="summary">
-</svelte:head>
+<Seo path="/" />
 
     <section class="hero container" id="inicio" aria-labelledby="hero-title">
       <div class="eyebrow"><span class="status-dot" aria-hidden="true"></span> REINIER LAZO / REINIERTUTORIALES</div>
-      <h1 id="hero-title">Software útil.<br>Sistemas <span>bien pensados.</span></h1>
+      <h1 id="hero-title">Windows, macOS y Android TV.<br><span>Aplicaciones y guías.</span></h1>
       <div class="hero-bottom"><p>Desarrollo herramientas para Windows y Android TV, y comparto documentación para entender, configurar y aprovechar mejor cada equipo.</p><a class="button primary" href="#proyectos">Explorar proyectos <span aria-hidden="true">↓</span></a></div>
       <div class="hero-foot"><span>DESARROLLO &amp; DOCUMENTACIÓN</span><span>Windows <i>/</i> Android TV <i>/</i> macOS</span></div>
     </section>
     <section class="work-section" id="proyectos" aria-labelledby="projects-title">
       <div class="container">
-        <div class="section-heading"><div><p class="eyebrow">01 / PROYECTOS SELECCIONADOS</p><h2 id="projects-title">Del código al uso diario.</h2></div><p>Qué hace cada herramienta, para qué sistema está pensada y dónde seguir su desarrollo.</p></div>
+        <div class="section-heading"><div><p class="eyebrow">01 / PROYECTOS SELECCIONADOS</p><h2 id="projects-title">Aplicaciones para copiar, descargar y navegar.</h2></div><p>Qué hace cada herramienta, para qué sistema está pensada y dónde seguir su desarrollo.</p></div>
         <ProjectCatalog />
         <p class="section-note">Las funciones y la disponibilidad dependen de cada proyecto. Consulta su README y sus publicaciones antes de instalar.</p>
         <a class="text-link" href="https://github.com/ReinierTutoriales?tab=repositories">Ver todos los repositorios <span aria-hidden="true">↗</span></a>

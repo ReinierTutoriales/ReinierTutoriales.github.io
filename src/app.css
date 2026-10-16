@@ -865,3 +865,17 @@ a,button {
   .library-group .section-heading .text-link { margin-top:20px; }
 }
 @media print { .theme-control { display:none; } :root { --paper:white; --ink:black; --muted:#333; --line:#999; --soft:white; --secondary:white; } }
+.breadcrumbs { margin-bottom:28px; font-size:.78rem; color:var(--muted); }
+.breadcrumbs ol { display:flex; flex-wrap:wrap; gap:8px; list-style:none; padding:0; margin:0; }
+.breadcrumbs li + li::before { content:"/"; margin-right:8px; color:var(--muted); }
+.breadcrumbs a { text-decoration:underline; text-underline-offset:3px; }
+.project-article { max-width:900px; padding-bottom:64px; }
+.project-article section { border-top:1px solid var(--line); padding-block:32px; }
+.project-article h2 { font-size:1.7rem; margin-bottom:20px; }
+.project-article p,.project-article li { color:var(--muted); line-height:1.8; font-size:.98rem; }
+.project-article p + p { margin-top:16px; }
+.project-article li + li { margin-top:10px; }
+.related-links { list-style:none; padding:0; }
+.related-links a { color:var(--ink); text-decoration:underline; text-underline-offset:4px; }
+
+.project-hero h1 { font-size:clamp(2.2rem,4vw,3.6rem); max-width:1050px; }
