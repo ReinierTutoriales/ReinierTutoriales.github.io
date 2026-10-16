@@ -45,22 +45,24 @@ La web respondió HTTP 200. El último despliegue existente de Pages (`381891266
 | [EFI-Ryzentosh-APU-AMD](https://github.com/ReinierTutoriales/EFI-Ryzentosh-APU-AMD) | 2023-12-29 | Repositorio no marcado como fork | Listado completo de GitHub |
 | [EFI-ASUS-ROG-Strix-B760-F-Gaming](https://github.com/ReinierTutoriales/EFI-ASUS-ROG-Strix-B760-F-Gaming) | 2023-11-18 | Repositorio no marcado como fork | Listado completo de GitHub |
 
-## Cambios de arquitectura
+## Arquitectura final: SvelteKit
 
-El sitio conserva HTML estático servido por GitHub Pages desde la raíz. Añadir React, Next.js o un servidor no resuelve una necesidad de este portfolio y añadiría dependencias y JavaScript al visitante. Se usa Node.js 24 exclusivamente para generación reproducible y comprobaciones, sin dependencias npm.
+La renovación editorial se integró primero como HTML estático. A petición del propietario, la implementación final utiliza SvelteKit 3.1, Svelte 5.57, Vite 8 y TypeScript 6. Se comprobaron versiones en el registro npm y la documentación oficial vigente el 16/10/2026. TypeScript 7 no es compatible con los peer dependencies de esta combinación; no se fuerza su instalación.
 
-Contenido y plantilla se separan de la salida. CI detecta si un cambio de catálogo no se ha regenerado. Las acciones oficiales están fijadas por SHA, con versiones verificadas en sus etiquetas el 16/10/2026 y actualizaciones mediante Dependabot. El workflow valida, no reemplaza el despliegue existente de Pages.
+`adapter-static` prerenderiza la web. Se mantienen el diseño, el logo y el contenido revisado. El catálogo es un componente Svelte 5 reactivo con runes. Cabecera, pie y tarjetas son componentes reutilizables. La configuración usa `vite.config.ts`, imports `#lib` declarados en package.json y `$app/tsconfig`.
 
-Se eliminan fuentes externas, observadores de revelado, bucles de animación, seguimiento de puntero, fondos desenfocados y menú modal. La navegación queda disponible sin JS. Los filtros son mejora progresiva: sin JS se ven todos los proyectos. Con teclado se activan como botones nativos, anuncian el resultado y conservan el foco. Los enlaces externos usan la misma pestaña para no abrir contextos sin avisar.
+El contenido principal está en el HTML inicial. Sin JS se ve el catálogo completo; los filtros se muestran cuando Svelte está preparado. No se usa un shell SPA sin contenido ni un servidor Node en producción. No se incorporan fuentes externas, analítica, consultas a GitHub desde el navegador, bucles de animación, seguimiento de puntero ni menú modal.
 
-Se conservan el logo y todos los destinos sociales originales. Se añaden descripción y Open Graph acordes al nuevo enfoque, URL canónica, robots.txt, sitemap y una página 404 recuperable. CSP restringe recursos y conexiones al contexto estático; no se presentan sus directivas meta como equivalentes a todas las cabeceras de servidor.
+El workflow instala desde el lockfile, verifica tipos, construye, prueba y publica el artefacto estático. La migración ajusta Pages a publicación mediante Actions si aún conserva el modo por rama. El código generado no se versiona. La política CSP se genera con hashes de los scripts de arranque, evitando bloquear la hidratación y evitando `unsafe-inline` o `unsafe-eval`.
 
 ## Verificación y límites
 
-- `npm run check`: generación exacta, sintaxis JS, enlaces internos y recursos locales, catálogo, escape de HTML, filtros y presupuesto de código.
-- Imagen real de VelocityCopy convertida a WebP; dimensiones intrínsecas comprobadas (461 × 176). No se inventa una captura ni se interpretan sus cifras como rendimiento medido.
-- CSS con rejillas adaptables, tamaños relativos, foco visible y desplazamiento suave solo si no se solicita reducir movimiento.
-- Sin medición de Core Web Vitals, Lighthouse ni comprobación visual en navegador en este entorno. Los tests de filtro usan un DOM simulado; no equivalen a una prueba de accesibilidad con lector de pantalla.
+- Svelte-check y TypeScript: componentes y configuración.
+- Build de producción: prerender, adapter-static y 404 recuperable.
+- Pruebas de salida: catálogo completo en HTML, enlaces, activos locales, hashes CSP y presupuesto de bundle.
+- Vitest + Testing Library + jsdom: filtros de los componentes Svelte reales, selección, anuncios y restauración del catálogo.
+- Imagen real de VelocityCopy convertida a WebP; dimensiones intrínsecas comprobadas (461 × 176). Sus cifras no se usan como rendimiento medido.
+- No se ejecutaron Lighthouse, Core Web Vitals ni revisión visual en navegador. Las pruebas de DOM no acreditan apariencia final ni equivalen a un lector de pantalla real.
 - La selección es una revisión editorial fechada; no afirma mostrar el estado de GitHub en tiempo real.
 
 ## Referencias oficiales
@@ -71,3 +73,8 @@ Se conservan el logo y todos los destinos sociales originales. Se añaden descri
 - [Reducción de movimiento en W3C](https://www.w3.org/WAI/WCAG21/Techniques/client-side-script/SCR40)
 - [Repositorio oficial de checkout](https://github.com/actions/checkout)
 - [Repositorio oficial de setup-node](https://github.com/actions/setup-node)
+
+- [SvelteKit: generación estática y GitHub Pages](https://svelte.dev/docs/kit/adapter-static)
+- [SvelteKit 3: migración](https://svelte.dev/docs/kit/migrating-to-sveltekit-3)
+- [SvelteKit: configuración Vite y CSP](https://svelte.dev/docs/kit/@sveltejs-kit-vite)
+- [SvelteKit: configuración TypeScript](https://svelte.dev/docs/kit/$app-tsconfig)
