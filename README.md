@@ -46,7 +46,7 @@ npm test
 
 El workflow **SvelteKit Pages** instala con `npm ci`, verifica tipos y compilación, ejecuta las pruebas y publica únicamente el directorio `build/`. Los PR no publican. La publicación de `main` usa el entorno `github-pages` y los permisos `pages: write` e `id-token: write`; el job de build solo lee código.
 
-Al desplegar, el workflow comprueba que Pages usa el modo GitHub Actions y lo establece si aún conserva la fuente por rama. No guarda credenciales ni necesita un PAT. Las acciones oficiales están fijadas por SHA y Dependabot propone sus actualizaciones junto con las dependencias npm.
+Antes del primer despliegue, en Settings → Pages → Build and deployment → Source, seleccionar GitHub Actions. Ese cambio administrativo no puede hacerse con los permisos del GITHUB_TOKEN. El workflow no guarda credenciales ni necesita un PAT. Las acciones oficiales están fijadas por SHA y Dependabot propone sus actualizaciones junto con las dependencias npm.
 
 No se versionan `build/`, `.svelte-kit/` ni `node_modules/`. El repositorio es una web de usuario (`ReinierTutoriales.github.io`), por lo que la ruta base es vacía; no se añade el nombre del repositorio a la URL.
 

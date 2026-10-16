@@ -53,7 +53,7 @@ La renovación editorial se integró primero como HTML estático. A petición de
 
 El contenido principal está en el HTML inicial. Sin JS se ve el catálogo completo; los filtros se muestran cuando Svelte está preparado. No se usa un shell SPA sin contenido ni un servidor Node en producción. No se incorporan fuentes externas, analítica, consultas a GitHub desde el navegador, bucles de animación, seguimiento de puntero ni menú modal.
 
-El workflow instala desde el lockfile, verifica tipos, construye, prueba y publica el artefacto estático. La migración ajusta Pages a publicación mediante Actions si aún conserva el modo por rama. El código generado no se versiona. La política CSP se genera con hashes de los scripts de arranque, evitando bloquear la hidratación y evitando `unsafe-inline` o `unsafe-eval`.
+El workflow instala desde el lockfile, verifica tipos, construye, prueba y publica el artefacto estático. La publicación mediante Actions requiere seleccionar esa fuente una vez en Settings → Pages. El cambio requiere permisos administrativos que no tiene GITHUB_TOKEN; no se intenta elevarlos desde el workflow. El código generado no se versiona. La política CSP se genera con hashes de los scripts de arranque, evitando bloquear la hidratación y evitando `unsafe-inline` o `unsafe-eval`.
 
 ## Verificación y límites
 
