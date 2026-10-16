@@ -10,7 +10,8 @@ const html = await readFile('build/index.html', 'utf8');
 
 test('el HTML prerenderizado contiene el catálogo sin ejecutar JavaScript', () => {
   for (const p of catalog.resources) {
-    assert.ok(html.includes(`href="https://github.com/ReinierTutoriales/${p.repo}"`), p.repo);
+    const path = p.repo.startsWith('Mapear-puertos-USB-') ? '/guias/mapear-usb-desde-windows/' : `https://github.com/ReinierTutoriales/${p.repo}`;
+    assert.ok(html.includes(`href="${path}"`), p.repo);
     assert.ok(html.includes(p.name), p.name);
   }
   for (const p of catalog.projects) assert.ok(html.includes(p.name), p.name);
@@ -128,10 +129,10 @@ test('las paletas mantienen contraste de texto de al menos 4.5:1', async () => {
   }
 });
 
-test('SEO completo y único en las 15 páginas indexables', async () => {
+test('SEO completo y único en las 17 páginas indexables', async () => {
   const sitemap = await readFile('build/sitemap.xml','utf8');
   const urls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(m => m[1]);
-  assert.equal(urls.length,15);
+  assert.equal(urls.length,17);
   const titles = new Set(); const descriptions = new Set();
   for (const url of urls) {
     const path = new URL(url).pathname;
@@ -158,5 +159,52 @@ test('SEO completo y único en las 15 páginas indexables', async () => {
       assert.ok(page.includes('aria-label="Ruta de navegación"'));
     }
     assert.doesNotMatch(json,/aggregateRating|"offers"|FAQPage|SearchAction/);
+  }
+});
+
+
+test('navegación activa y destinos internos válidos en todas las páginas públicas', async () => {
+  const sitemap = await readFile('build/sitemap.xml','utf8');
+  const urls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(m => m[1]);
+  for (const url of urls) {
+    const page = await readFile(resolve('build',new URL(url).pathname.slice(1),'index.html'),'utf8');
+    const nav = page.match(/<nav aria-label="Navegación principal">([\s\S]*?)<\/nav>/)[1];
+    const path = new URL(url).pathname;
+    const expected = path === '/' ? 0 : 1;
+    assert.equal((nav.match(/aria-current=/g)||[]).length,expected,url);
+    if (expected) {
+      const rootPath = '/' + path.split('/')[1] + '/';
+      const current = path === rootPath ? 'page' : 'location';
+      assert.ok(nav.includes(`href="${rootPath}" aria-current="${current}"`),url);
+    }
+    const ids = [...page.matchAll(/\bid="([^"]+)"/g)].map(m => m[1]);
+    assert.equal(new Set(ids).size,ids.length,url);
+    for (const [,href] of page.matchAll(/\bhref="([^"]+)"/g)) {
+      if (!href.startsWith('/') && !href.startsWith('#')) continue;
+      const target = new URL(href,url);
+      const isPage = target.pathname.endsWith('/');
+      const file = resolve('build',target.pathname.slice(1),...(isPage ? ['index.html'] : []));
+      await access(file);
+      if (target.hash) {
+        const targetHtml = target.pathname === path ? page : await readFile(file,'utf8');
+        assert.ok(targetHtml.includes(`id="${target.hash.slice(1)}"`),`${url} → ${href}`);
+      }
+    }
+  }
+});
+
+test('guías, comparación y fichas ofrecen contenido útil sin JavaScript', async () => {
+  const applications = await readFile('build/aplicaciones/index.html','utf8');
+  assert.ok(applications.includes('Comparación de aplicaciones'));
+  assert.equal((applications.match(/scope="row"/g)||[]).length,6);
+  for (const slug of ['velocitycopy','repartocopier','nf-dns-vpn','vireolumatv','w11downloaderpro','colorfix']) {
+    const page = await readFile(`build/aplicaciones/${slug}/index.html`,'utf8');
+    for (const text of ['Requisitos','Cómo empezar','Compatibilidad y alcance','Descargas y documentación','README revisado']) assert.ok(page.includes(text),`${slug}: ${text}`);
+    assert.match(page, /<time datetime="\d{4}-\d{2}-\d{2}"/);
+  }
+  for (const slug of ['mapear-usb-desde-windows','descargas-reanudables-w11downloaderpro']) {
+    const page = await readFile(`build/guias/${slug}/index.html`,'utf8');
+    for (const text of ['En esta guía','Antes de empezar','Resolver problemas','Fuentes y documentación']) assert.ok(page.includes(text),`${slug}: ${text}`);
+    assert.ok(page.length>10000);
   }
 });

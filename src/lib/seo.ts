@@ -1,5 +1,6 @@
 import { systems, siteSections } from './sections.js';
 import { projectDetails } from './project-details.js';
+import { guides, guidePath } from './guide-catalog.js';
 export const SITE_ORIGIN = 'https://reiniertutoriales.github.io';
 export const SITE_NAME = 'ReinierTutoriales';
 export type Crumb = { name: string; path: string };
@@ -9,7 +10,8 @@ export const publicPages: SeoPage[] = [
   { path:'/sistemas/', label:'Sistemas', title:'Recursos para Windows, macOS, Linux y Android TV | ReinierTutoriales', description:'Encuentra aplicaciones, herramientas y documentación por sistema: Windows, macOS, Linux y Android TV. Consulta requisitos y proyectos originales.' },
   { path:'/aplicaciones/', label:'Aplicaciones', title:'Aplicaciones para Windows y Android TV | ReinierTutoriales', description:'Explora VelocityCopy, RepartoCopier, NF DNS VPN, VireoLumaTV, W11DownloaderPro y ColorFix: funciones, plataformas, estado y código de cada proyecto.' },
   { path:'/herramientas/', label:'Herramientas', title:'Herramientas para OpenCore, plist y USB | ReinierTutoriales', description:'Conoce ProperTree, OCAuxiliaryTools y WinDiskWriter: para qué sirven, qué sistemas admiten y dónde consultar sus requisitos en los proyectos oficiales.' },
-  { path:'/guias/', label:'Guías', title:'Guías de macOS, OpenCore, Wi-Fi y USB | ReinierTutoriales', description:'Consulta documentación de OpenCore, Intel AX210, Broadcom, mapeo USB y configuraciones EFI para hardware Intel y AMD en ReinierTutoriales.' },
+  { path:'/guias/', label:'Guías', title:'Guías de Windows, descargas y mapeo USB para macOS | ReinierTutoriales', description:'Sigue guías de descargas reanudables en Windows y mapeo USB para macOS. Consulta requisitos, pasos, solución de problemas y documentación de OpenCore.' },
+  ...guides.map(guide => ({path:guidePath(guide.slug), label:guide.label, title:`${guide.title} | ReinierTutoriales`, description:guide.description,parent:{name:'Guías',path:'/guias/'}})),
   ...systems.map(system => ({path:`/sistemas/${system.slug}/`,label:system.name,title:`${system.name}: aplicaciones, herramientas y guías | ReinierTutoriales`,description:system.description,parent:{name:'Sistemas',path:'/sistemas/'}})),
   ...Object.values(projectDetails).map(project => ({path:`/aplicaciones/${project.slug}/`,label:project.title.split(':')[0],title:`${project.title} | ReinierTutoriales`,description:project.description,parent:{name:'Aplicaciones',path:'/aplicaciones/'}}))
 ];
