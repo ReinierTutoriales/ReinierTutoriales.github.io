@@ -42,14 +42,6 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Ensure Pages publishes the SvelteKit artifact
-        env:
-          GH_TOKEN: ${{ github.token }}
-          REPOSITORY: ${{ github.repository }}
-        run: |
-          if [ "$(gh api "repos/$REPOSITORY/pages" --jq .build_type)" != "workflow" ]; then
-            gh api --method PUT "repos/$REPOSITORY/pages" -f build_type=workflow --silent
-          fi
       - uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
       - name: Deploy
         id: deployment
