@@ -51,7 +51,7 @@ h1,h2,h3,p,figure {
 }
 h1,h2,h3 {
   line-height:1.1;
-  letter-spacing:-.045em
+  letter-spacing:-.035em
 }
 p {
   color:var(--muted)
@@ -193,7 +193,7 @@ h1 span {
   padding:14px 22px;
   font-size:.85rem;
   font-weight:600;
-  border-radius:5px;
+  border-radius:8px;
   white-space:nowrap
 }
 .primary {
@@ -751,13 +751,11 @@ h1 {
 }
 
 @media(prefers-reduced-motion:no-preference) {
-  html {
-  scroll-behavior:smooth
-}
-a,button {
-  transition:color .15s,background-color .15s,border-color .15s
-}
-
+  html { scroll-behavior:smooth }
+  html, body, .site-header, .work-section, .approach-section, .project, .featured, .guide-group, .category-card, .button, .theme-switch, .theme-option {
+    transition: background-color .22s ease, color .22s ease, border-color .22s ease, box-shadow .22s ease;
+  }
+  a, button { transition: color .15s ease, background-color .15s ease, border-color .15s ease; }
 }
 @media(forced-colors:active) {
   .filters button[aria-pressed=true] {
@@ -821,11 +819,44 @@ a,button {
     color-scheme:dark;
   }
 }
-.header-actions { display:flex; align-items:center; gap:18px; }
-.theme-control { display:flex; align-items:center; gap:7px; }
-.theme-label { font-size:.7rem; color:var(--muted); }
-.theme-control select { font:inherit; font-size:.78rem; min-height:44px; padding:8px 10px; border:1px solid var(--line); border-radius:5px; color:var(--ink); background:var(--paper); cursor:pointer; }
-.theme-control select:focus-visible { outline:3px solid var(--focus); outline-offset:3px; }
+.header-actions { display:flex; align-items:center; gap:16px; }
+.theme-switch {
+  display:inline-flex;
+  background:var(--soft);
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:3px;
+  gap:2px;
+}
+.theme-option {
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  padding:6px 10px;
+  border:0;
+  border-radius:7px;
+  background:transparent;
+  color:var(--muted);
+  font-size:.72rem;
+  font-weight:550;
+  letter-spacing:.01em;
+  cursor:pointer;
+  min-height:32px;
+  transition: background .18s ease, color .18s ease;
+}
+.theme-option[aria-checked="true"] {
+  background:var(--paper);
+  color:var(--ink);
+  box-shadow:0 1px 2px #00000014;
+}
+.theme-option:hover { color:var(--ink); }
+.theme-option:focus-visible { outline:2px solid var(--focus); outline-offset:1px; }
+.theme-icon { font-size:.85rem; line-height:1; }
+.theme-text { }
+@media (max-width:720px) {
+  .theme-text { display:none; }
+  .theme-option { padding:7px 9px; }
+}
 .guide-teaser { padding-block:76px; border-bottom:1px solid var(--line); }
 .guide-group-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:18px; margin-top:36px; }
 .guide-group { display:flex; flex-direction:column; padding:26px; border:1px solid var(--line); border-radius:6px; }
@@ -854,9 +885,8 @@ a,button {
   .header-inner .brand img { width:32px; height:32px; }
   .site-header nav { grid-column:1/-1; grid-row:2; gap:clamp(12px,4vw,24px); }
   .header-actions { grid-column:2; grid-row:1; }
-  .theme-control { flex-direction:column; align-items:stretch; gap:0; }
-  .theme-label { font-size:.6rem; line-height:1; margin-bottom:3px; }
-  .theme-control select { padding:8px; font-size:.74rem; }
+  .theme-switch { gap:1px; padding:2px; }
+  .theme-option { padding:6px 8px; }
   .guide-group-grid,.category-grid { grid-template-columns:1fr; }
   .guide-teaser { padding-block:48px; }
   .guide-group { padding:24px; }
@@ -864,7 +894,7 @@ a,button {
   .library-group { padding-block:32px; }
   .library-group .section-heading .text-link { margin-top:20px; }
 }
-@media print { .theme-control { display:none; } :root { --paper:white; --ink:black; --muted:#333; --line:#999; --soft:white; --secondary:white; } }
+@media print { .theme-switch { display:none; } :root { --paper:white; --ink:black; --muted:#333; --line:#999; --soft:white; --secondary:white; } }
 .breadcrumbs { margin-bottom:28px; font-size:.78rem; color:var(--muted); }
 .breadcrumbs ol { display:flex; flex-wrap:wrap; gap:8px; list-style:none; padding:0; margin:0; }
 .breadcrumbs li + li::before { content:"/"; margin-right:8px; color:var(--muted); }
