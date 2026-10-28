@@ -50,8 +50,10 @@ h1,h2,h3,p,figure {
   margin:0
 }
 h1,h2,h3 {
-  line-height:1.1;
-  letter-spacing:-.035em
+  line-height:1.05;
+  letter-spacing:-.045em;
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI Variable Display","Segoe UI",Inter,system-ui,sans-serif;
+  font-weight:650
 }
 p {
   color:var(--muted)
@@ -135,8 +137,8 @@ a:hover {
   display:flex;
   align-items:center;
   gap:28px;
-  font-size:.84rem;
-  font-weight:550
+  font-size:.82rem;
+  font-weight:500
 }
 .site-header nav a,.github-link {
   padding-block:12px
@@ -164,10 +166,11 @@ a:hover {
 }
 h1 {
   font-size:clamp(3.4rem,6.7vw,6.3rem);
-  font-weight:580;
+  font-weight:700;
   max-width:1050px;
   margin-top:30px;
-  line-height:1.04
+  line-height:1.02;
+  letter-spacing:-.048em
 }
 h1 span {
   color:var(--green)
@@ -188,12 +191,12 @@ h1 span {
   display:inline-flex;
   align-items:center;
   justify-content:space-between;
-  gap:38px;
-  min-height:54px;
-  padding:14px 22px;
-  font-size:.85rem;
+  gap:32px;
+  min-height:52px;
+  padding:12px 20px;
+  font-size:.84rem;
   font-weight:600;
-  border-radius:8px;
+  border-radius:10px;
   white-space:nowrap
 }
 .primary {
