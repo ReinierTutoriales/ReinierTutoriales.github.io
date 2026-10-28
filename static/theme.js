@@ -13,7 +13,7 @@
     root.dataset.theme = dark ? 'dark' : 'light';
     root.dataset.themePreference = preference;
     var color = document.querySelector('meta[name="theme-color"]');
-    if (color) color.setAttribute('content', dark ? '#101916' : '#f4f5f0');
+    if (color) color.setAttribute('content', dark ? '#000000' : '#ffffff');
   }
   apply();
   media.addEventListener('change', apply);
