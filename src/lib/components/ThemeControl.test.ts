@@ -18,13 +18,13 @@ test('carga la elección guardada, cambia temas, sigue el sistema y sincroniza o
   const lightBtn = screen.getByRole('radio', { name: 'Claro' });
   const systemBtn = screen.getByRole('radio', { name: 'Auto' });
 
-  await waitFor(() => expect(darkBtn).toHaveAttribute('aria-checked', 'true'));
-  expect(lightBtn).toHaveAttribute('aria-checked', 'false');
+  await waitFor(() => expect(darkBtn.getAttribute('aria-checked')).toBe('true'));
+  expect(lightBtn.getAttribute('aria-checked')).toBe('false');
 
   await fireEvent.click(lightBtn);
   expect(document.documentElement.dataset.theme).toBe('light');
   expect(window.localStorage.getItem('rt-theme')).toBe('light');
-  await waitFor(() => expect(lightBtn).toHaveAttribute('aria-checked', 'true'));
+  await waitFor(() => expect(lightBtn.getAttribute('aria-checked')).toBe('true'));
 
   await fireEvent.click(systemBtn);
   media.matches = true;
@@ -32,6 +32,6 @@ test('carga la elección guardada, cambia temas, sigue el sistema y sincroniza o
   expect(document.documentElement.dataset.theme).toBe('dark');
 
   window.dispatchEvent(new StorageEvent('storage', { key: 'rt-theme', newValue: 'light' }));
-  await waitFor(() => expect(lightBtn).toHaveAttribute('aria-checked', 'true'));
+  await waitFor(() => expect(lightBtn.getAttribute('aria-checked')).toBe('true'));
   expect(document.documentElement.dataset.theme).toBe('light');
 });
