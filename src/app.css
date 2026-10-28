@@ -32,7 +32,10 @@
 }
 body {
   margin:0;
-  line-height:1.6
+  line-height:1.6;
+  background:var(--paper);
+  color:var(--ink);
+  min-height:100vh
 }
 a {
   color:inherit;
@@ -50,8 +53,8 @@ h1,h2,h3,p,figure {
   margin:0
 }
 h1,h2,h3 {
-  line-height:1.05;
-  letter-spacing:-.045em;
+  line-height:1.04;
+  letter-spacing:-.04em;
   font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI Variable Display","Segoe UI",Inter,system-ui,sans-serif;
   font-weight:650
 }
@@ -168,9 +171,9 @@ h1 {
   font-size:clamp(3.4rem,6.7vw,6.3rem);
   font-weight:700;
   max-width:1050px;
-  margin-top:30px;
-  line-height:1.02;
-  letter-spacing:-.048em
+  margin-top:28px;
+  line-height:1.0;
+  letter-spacing:-.045em
 }
 h1 span {
   color:var(--green)
@@ -201,11 +204,17 @@ h1 span {
 }
 .primary {
   background:var(--button);
-  color:var(--button-ink)
+  color:var(--button-ink);
+  border-radius:12px;
+  font-weight:600
 }
 .primary:hover {
   background:var(--button-hover);
-  color:var(--button-ink)
+  color:var(--button-ink);
+  transform:translateY(-1px)
+}
+.primary:active {
+  transform:translateY(0)
 }
 .hero-foot {
   display:flex;
@@ -803,7 +812,7 @@ h1 {
 
 /* Color tokens shared by every page and control. */
 :root[data-theme="dark"] {
-  --paper:#000000; --white:#1d1d1f; --ink:#f5f5f7; --muted:#a1a1a6;
+  --paper:#000000; --white:#1c1c1e; --ink:#f5f5f7; --muted:#a1a1a6;
   --line:#424245; --green:#2997ff; --soft:#1d1d1f; --focus:#2997ff;
   --button:#2997ff; --button-ink:#000000; --button-hover:#64b5ff;
   --selected:#f5f5f7; --selected-ink:#000000; --secondary:#1d1d1f;
@@ -813,7 +822,7 @@ h1 {
 }
 @media (prefers-color-scheme:dark) {
   :root:not([data-theme]) {
-    --paper:#000000; --white:#1d1d1f; --ink:#f5f5f7; --muted:#a1a1a6;
+    --paper:#000000; --white:#1c1c1e; --ink:#f5f5f7; --muted:#a1a1a6;
   --line:#424245; --green:#2997ff; --soft:#1d1d1f; --focus:#2997ff;
   --button:#2997ff; --button-ink:#000000; --button-hover:#64b5ff;
   --selected:#f5f5f7; --selected-ink:#000000; --secondary:#1d1d1f;
