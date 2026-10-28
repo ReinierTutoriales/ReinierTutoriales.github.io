@@ -13,17 +13,25 @@ test('carga la elección guardada, cambia temas, sigue el sistema y sincroniza o
   new Function(bootstrap)();
   expect(document.documentElement.dataset.theme).toBe('dark');
   render(ThemeControl);
-  const control = screen.getByRole('combobox', { name: 'Tema de apariencia' }) as HTMLSelectElement;
-  await waitFor(() => expect(control.disabled).toBe(false));
-  expect(control.value).toBe('dark');
-  await fireEvent.change(control, { target: { value: 'light' } });
+
+  const darkBtn = screen.getByRole('radio', { name: 'Oscuro' });
+  const lightBtn = screen.getByRole('radio', { name: 'Claro' });
+  const systemBtn = screen.getByRole('radio', { name: 'Auto' });
+
+  await waitFor(() => expect(darkBtn).toHaveAttribute('aria-checked', 'true'));
+  expect(lightBtn).toHaveAttribute('aria-checked', 'false');
+
+  await fireEvent.click(lightBtn);
   expect(document.documentElement.dataset.theme).toBe('light');
   expect(window.localStorage.getItem('rt-theme')).toBe('light');
-  await fireEvent.change(control, { target: { value: 'system' } });
+  await waitFor(() => expect(lightBtn).toHaveAttribute('aria-checked', 'true'));
+
+  await fireEvent.click(systemBtn);
   media.matches = true;
   onSystemChange?.();
   expect(document.documentElement.dataset.theme).toBe('dark');
+
   window.dispatchEvent(new StorageEvent('storage', { key: 'rt-theme', newValue: 'light' }));
-  await waitFor(() => expect(control.value).toBe('light'));
+  await waitFor(() => expect(lightBtn).toHaveAttribute('aria-checked', 'true'));
   expect(document.documentElement.dataset.theme).toBe('light');
 });
