@@ -106,6 +106,11 @@ test('el tema arranca antes del contenido y tolera almacenamiento bloqueado', as
   assert.equal(root.dataset.theme,'light');
   listeners.get('rt-theme-change')({detail:'invalid'});
   assert.equal(root.dataset.theme,'light');
+  for (const stored of ['system', null, 'invalid', 'light', 'dark']) {
+    context.window.localStorage.getItem = () => stored;
+    vm.runInNewContext(await readFile('static/theme.js','utf8'),context);
+    assert.equal(root.dataset.theme, stored === 'light' ? 'light' : 'dark');
+  }
   const template = await readFile('src/app.html','utf8');
   assert.ok(template.indexOf('/theme.js') < template.indexOf('%sveltekit.head%'));
 });
