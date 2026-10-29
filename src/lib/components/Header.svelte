@@ -43,7 +43,7 @@
       <ThemeControl />
       <details class="mobile-menu" bind:this={menu}>
         <summary aria-label="Menú de navegación">
-          <svg class="menu-icon" viewBox="0 0 20 20" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 7L16 7M4 13L16 13"/></svg>
+          <svg class="menu-icon" viewBox="0 0 20 20" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 7h12"/><path d="M4 13h12"/></svg>
         </summary>
         <nav class="mobile-panel" aria-label="Navegación móvil" data-sveltekit-preload-data="hover">
           <a href="/" aria-current={current('/')} onclick={closeMenu}><span>Inicio</span><i class="arrow-icon" aria-hidden="true"></i></a>

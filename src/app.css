@@ -263,8 +263,13 @@
     &:focus-visible { outline:2px solid var(--focus); outline-offset:2px }
   }
   .mobile-menu[open] summary { background:var(--fill) }
-  .menu-icon { width:20px; height:20px; & path { transition:d .2s var(--ease) } }
-  .mobile-menu[open] .menu-icon path { d:path("M5 5L15 15M5 15L15 5") }
+  .menu-icon {
+    width:20px; height:20px;
+    & path { transform-origin:10px 7px; transition:transform .2s var(--ease) }
+    & path + path { transform-origin:10px 13px }
+  }
+  .mobile-menu[open] .menu-icon path:first-child { transform:translateY(3px) rotate(45deg) }
+  .mobile-menu[open] .menu-icon path:last-child { transform:translateY(-3px) rotate(-45deg) }
   .mobile-panel {
     position:absolute; right:var(--gutter); top:calc(100% + 8px);
     width:min(360px,calc(100% - var(--gutter) * 2));
