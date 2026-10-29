@@ -4,7 +4,7 @@
   import type { PageData } from './$types';
   let { data }: { data: PageData } = $props();
 </script>
-<section class="container library-hero project-hero"><Breadcrumbs /><p class="eyebrow">{data.project.platform} / {data.project.kind}</p><h1>{data.detail.title}</h1><p class="library-lead">{data.project.summary}</p><p class="stack">{data.project.stack}</p><p class="review-note">{data.editorial.status} · Revisado el <time datetime={data.editorial.reviewedAt}>{data.editorial.reviewedAt.split('-').reverse().join('/')}</time></p><a class="button primary" href="#empezar">Cómo empezar ↓</a></section>
+<section class="container library-hero project-hero"><Breadcrumbs /><p class="eyebrow">{data.project.platform} · {data.project.kind}</p><h1>{data.detail.title}</h1><p class="library-lead">{data.project.summary}</p><p class="stack">{data.project.stack}</p><p class="review-note">{data.editorial.status} · Revisado el <time datetime={data.editorial.reviewedAt}>{data.editorial.reviewedAt.split('-').reverse().join('/')}</time></p><a class="button primary" href="#empezar">Cómo empezar ↓</a></section>
 <div class="container project-article">
   <section aria-labelledby="project-purpose"><h2 id="project-purpose">Para qué sirve {data.project.name}</h2><p>{data.detail.use}</p></section>
   <section aria-labelledby="project-features"><h2 id="project-features">Funciones principales</h2><ul>{#each data.detail.features as feature}<li>{feature}</li>{/each}</ul></section>

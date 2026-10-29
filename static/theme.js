@@ -21,7 +21,10 @@
     if (!valid(event.detail)) return;
     preference = event.detail;
     try { window.localStorage.setItem('rt-theme', preference); } catch (_) { /* Keep the in-memory preference. */ }
-    apply();
+    // Crossfade del cambio de tema con View Transitions cuando está disponible.
+    var calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (typeof document.startViewTransition === 'function' && !calm) document.startViewTransition(apply);
+    else apply();
   });
   window.addEventListener('storage', function (event) {
     if (event.key !== 'rt-theme' && event.key !== null) return;
