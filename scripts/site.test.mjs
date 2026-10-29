@@ -232,7 +232,7 @@ test('los artículos exponen autor y fechas visibles, y lastmod coincide con su 
     const article=graph.find(node=>node['@type']==='Article');
     if(path.startsWith('/guias/') && path!=='/guias/') {
       assert.ok(article,url);
-      assert.ok(page.includes('Por Reinier Lazo'),url);
+      assert.ok(page.includes('Por ReinierTutoriales'),url);
       assert.ok(page.includes(`datetime="${article.datePublished}"`),url);
       assert.ok(page.includes(`datetime="${article.dateModified}"`),url);
       assert.ok(entry.includes(`<lastmod>${article.dateModified}</lastmod>`),url);

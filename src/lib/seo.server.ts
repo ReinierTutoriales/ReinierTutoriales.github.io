@@ -28,7 +28,7 @@ export function structuredData(path: string) {
   const page = pageMetadata(path);
   const graph: Record<string,unknown>[] = [
     {'@type':'WebSite','@id':SITE_ORIGIN+'/#website',url:SITE_ORIGIN+'/',name:SITE_NAME,inLanguage:'es',publisher:{'@id':SITE_ORIGIN+'/#author'}},
-    {'@type':'Person','@id':SITE_ORIGIN+'/#author',name:'Reinier Lazo',alternateName:SITE_NAME,url:SITE_ORIGIN+'/',sameAs:['https://github.com/ReinierTutoriales','https://youtube.com/c/ReinierTutoriales']},
+    {'@type':'Person','@id':SITE_ORIGIN+'/#author',name:SITE_NAME,url:SITE_ORIGIN+'/',sameAs:['https://github.com/ReinierTutoriales','https://youtube.com/c/ReinierTutoriales']},
     {'@type':'WebPage','@id':page.canonical+'#webpage',url:page.canonical,name:page.title,description:page.description,inLanguage:'es',isPartOf:{'@id':SITE_ORIGIN+'/#website'}}
   ];
   const guide = guides.find(guide => guidePath(guide.slug) === path);

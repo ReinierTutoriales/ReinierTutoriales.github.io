@@ -6,7 +6,6 @@
 
 
     <section class="hero container" id="inicio" aria-labelledby="hero-title">
-      <div class="eyebrow">Reinier Lazo</div>
       <h1 id="hero-title">Optimizado.<br><span>Listo para usar.</span></h1>
       <div class="hero-bottom"><p>Aplicaciones y guías para Windows, macOS y Android TV. Directo al resultado.</p><div class="hero-actions"><a class="button primary" href="#proyectos">Explorar proyectos <i class="arrow-icon" data-dir="down" aria-hidden="true"></i></a><a class="button secondary" href="/guias/">Ver guías <i class="arrow-icon" aria-hidden="true"></i></a></div></div>
       <div class="hero-foot"><span>Desarrollo y documentación</span><span class="platforms"><span>Windows</span><span>Android TV</span><span>macOS</span></span></div>
