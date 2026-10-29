@@ -5,7 +5,21 @@
   import type { LayoutData } from './$types';
   import type { Snippet } from 'svelte';
   import Footer from '#lib/components/Footer.svelte';
+  import { onNavigate } from '$app/navigation';
   let { children, data }: { children: Snippet; data: LayoutData } = $props();
+
+  // Transición nativa entre páginas (View Transitions API); sin soporte o con
+  // movimiento reducido la navegación es instantánea.
+  onNavigate((navigation) => {
+    if (navigation.to?.url.pathname === navigation.from?.url.pathname && navigation.to?.url.search === navigation.from?.url.search) return;
+    if (!document.startViewTransition || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    return new Promise((resolve) => {
+      document.startViewTransition(async () => {
+        resolve();
+        await navigation.complete;
+      });
+    });
+  });
 </script>
 
 <svelte:head>

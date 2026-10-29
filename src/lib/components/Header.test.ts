@@ -1,5 +1,5 @@
 import { afterEach, expect, test } from 'vitest';
-import { cleanup, render, screen, within, waitFor } from '@testing-library/svelte';
+import { cleanup, fireEvent, render, screen, within, waitFor } from '@testing-library/svelte';
 import { page } from '../../test/app-state.svelte';
 import Header from './Header.svelte';
 afterEach(cleanup);
@@ -19,4 +19,30 @@ test('el menú sigue los cambios de ruta y distingue página, sección e inicio'
   await waitFor(() => expect(nav.querySelector('[aria-current]')).toBeNull());
   page.url = new URL('https://reiniertutoriales.github.io/aplicaciones-otra/');
   await waitFor(() => expect(nav.querySelector('[aria-current]')).toBeNull());
+});
+
+
+test('el menú móvil cierra con Escape, devuelve el foco y cierra al salir o cambiar de ruta', async () => {
+  page.url = new URL('https://reiniertutoriales.github.io/');
+  const { container } = render(Header);
+  const menu = container.querySelector('details')!;
+  const summary = menu.querySelector('summary')!;
+  await fireEvent.click(summary);
+  await waitFor(() => expect(menu.open).toBe(true));
+  const link = within(menu).getByRole('link', { name: /Aplicaciones/ });
+  link.focus();
+  await fireEvent.keyDown(link, { key: 'Escape' });
+  await waitFor(() => expect(menu.open).toBe(false));
+  expect(document.activeElement).toBe(summary);
+
+  await fireEvent.click(summary);
+  await waitFor(() => expect(menu.open).toBe(true));
+  await fireEvent.pointerDown(document.body);
+  await waitFor(() => expect(menu.open).toBe(false));
+
+  await fireEvent.click(summary);
+  await waitFor(() => expect(menu.open).toBe(true));
+  page.url = new URL('https://reiniertutoriales.github.io/guias/');
+  await waitFor(() => expect(menu.open).toBe(false));
+  expect(within(menu).getByRole('link', { name: /Guías/, hidden:true }).getAttribute('aria-current')).toBe('page');
 });
