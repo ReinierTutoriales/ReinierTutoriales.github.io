@@ -1,5 +1,4 @@
 <script lang="ts">
-  import Arrow from '#lib/components/Arrow.svelte';
   import Breadcrumbs from '#lib/components/Breadcrumbs.svelte';
   import type { PageData } from './$types';
   let { data }: { data: PageData } = $props();
@@ -16,6 +15,6 @@
     <section id={section.id} aria-labelledby={`${section.id}-title`}><h2 id={`${section.id}-title`}>{section.title}</h2>{#each section.paragraphs as paragraph}<p>{paragraph}</p>{/each}{#if section.code}<pre><code>{section.code}</code></pre>{/if}</section>
   {/each}
   <section id="problemas" aria-labelledby="problems-title"><h2 id="problems-title">Resolver problemas</h2><dl class="problem-list">{#each data.content.problems as problem}<dt>{problem[0]}</dt><dd>{problem[1]}</dd>{/each}</dl></section>
-  <section id="fuentes" aria-labelledby="sources-title"><h2 id="sources-title">Fuentes y documentación</h2><p>La revisión corresponde al contenido enlazado. Consulta también las publicaciones del proyecto para los cambios posteriores.</p><ul class="related-links">{#each data.content.sources as source}<li><a href={source.url}>{source.label} <Arrow direction="external" /></a></li>{/each}</ul></section>
-  <section aria-labelledby="continue-title"><h2 id="continue-title">Continuar explorando</h2><ul class="related-links">{#each data.content.related as related}<li><a href={related.path}>{related.label} <Arrow /></a></li>{/each}<li><a href="/guias/">Todas las guías <Arrow /></a></li></ul></section>
+  <section id="fuentes" aria-labelledby="sources-title"><h2 id="sources-title">Fuentes y documentación</h2><p>La revisión corresponde al contenido enlazado. Consulta también las publicaciones del proyecto para los cambios posteriores.</p><ul class="related-links">{#each data.content.sources as source}<li><a href={source.url}>{source.label} <i class="arrow-icon" data-dir="external" aria-hidden="true"></i></a></li>{/each}</ul></section>
+  <section aria-labelledby="continue-title"><h2 id="continue-title">Continuar explorando</h2><ul class="related-links">{#each data.content.related as related}<li><a href={related.path}>{related.label} <i class="arrow-icon" aria-hidden="true"></i></a></li>{/each}<li><a href="/guias/">Todas las guías <i class="arrow-icon" aria-hidden="true"></i></a></li></ul></section>
 </div>

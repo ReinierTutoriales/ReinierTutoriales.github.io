@@ -2,7 +2,6 @@
   import { page } from '$app/state';
   import { siteSections } from '#lib/navigation.js';
   import ThemeControl from './ThemeControl.svelte';
-  import Arrow from './Arrow.svelte';
 
   let menu: HTMLDetailsElement;
   const current = (path: string) => page.url.pathname === path ? 'page'
@@ -27,7 +26,7 @@
 
 {#snippet sectionLinks()}
   {#each siteSections as section (section.path)}
-    <a href={section.path} aria-current={current(section.path)} onclick={closeMenu}><span>{section.path === '/guias/' ? 'Guías' : section.title}<small aria-hidden="true">{section.label}</small></span><Arrow /></a>
+    <a href={section.path} aria-current={current(section.path)} onclick={closeMenu}><span>{section.path === '/guias/' ? 'Guías' : section.title}<small aria-hidden="true">{section.label}</small></span><i class="arrow-icon" aria-hidden="true"></i></a>
   {/each}
 {/snippet}
 
@@ -44,12 +43,12 @@
       <ThemeControl />
       <details class="mobile-menu" bind:this={menu}>
         <summary aria-label="Menú de navegación">
-          <svg class="menu-icon" viewBox="0 0 20 20" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 7h12M4 13h12"/></svg>
+          <svg class="menu-icon" viewBox="0 0 20 20" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 7L16 7M4 13L16 13"/></svg>
         </summary>
         <nav class="mobile-panel" aria-label="Navegación móvil" data-sveltekit-preload-data="hover">
-          <a href="/" aria-current={current('/')} onclick={closeMenu}><span>Inicio</span><Arrow /></a>
+          <a href="/" aria-current={current('/')} onclick={closeMenu}><span>Inicio</span><i class="arrow-icon" aria-hidden="true"></i></a>
           {@render sectionLinks()}
-          <a class="menu-github" href="https://github.com/ReinierTutoriales" onclick={closeMenu}><span>GitHub</span><Arrow direction="external" /></a>
+          <a class="menu-github" href="https://github.com/ReinierTutoriales" onclick={closeMenu}><span>GitHub</span><i class="arrow-icon" data-dir="external" aria-hidden="true"></i></a>
         </nav>
       </details>
     </div>
