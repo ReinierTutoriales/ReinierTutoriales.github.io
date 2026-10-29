@@ -598,7 +598,7 @@
 @layer sections {
   .hero { padding-top:clamp(56px,8vw,112px); text-align:center }
   .hero h1 { margin-inline:auto; font-size:clamp(3.25rem,7vw,6.5rem); letter-spacing:-.055em }
-  .hero .eyebrow { display:flex; justify-content:center; align-items:center; gap:10px }
+  .hero-brand { display:block; font-size:clamp(1.75rem,6.5vw,6rem) }
   .hero-bottom {
     display:flex; flex-direction:column; align-items:center; gap:28px; margin-top:28px;
     & p { font-size:clamp(1.125rem,1.6vw,1.3125rem); line-height:1.5; max-width:600px; letter-spacing:-.02em }
