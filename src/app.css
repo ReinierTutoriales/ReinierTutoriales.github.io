@@ -765,7 +765,7 @@
   .featured h3 { font-size:2.25rem }
   .guide-group-grid,.category-grid { grid-template-columns:repeat(2,minmax(0,1fr)) }
 }
-@media (max-width:720px) {
+@media (max-width:900px) {
   :root { --header-h:96px }
   .header-inner {
     display:grid;
@@ -787,6 +787,14 @@
   .theme-text { display:none }
   .theme-option { padding-inline:10px; min-height:30px }
 
+}
+@media (max-width:360px) {
+  .site-header .brand { font-size:.875rem }
+  .theme-option { padding-inline:8px }
+  .site-header nav { font-size:.75rem; margin-inline:-6px }
+  .site-header nav a { padding-inline:6px }
+}
+@media (max-width:720px) {
   .hero { padding-top:40px }
   .hero h1 { font-size:clamp(2.75rem,12vw,4.25rem); margin-top:16px }
   .library-hero h1 { font-size:clamp(2.25rem,10vw,3.25rem) }
@@ -830,11 +838,12 @@
   .project,.guide-group,.category-card { border:1px solid CanvasText }
 }
 @media (prefers-contrast:more) {
-  :root { --hairline:var(--line); --muted:var(--ink) }
+  :root,:root[data-theme] { --hairline:var(--line); --muted:var(--ink); --feature-muted:var(--feature-ink) }
   .project,.guide-group,.category-card,.table-scroll,.article-index { outline:1px solid var(--line) }
 }
 @media print {
-  :root { --paper:white; --ink:black; --muted:#333; --line:#999; --soft:white; --secondary:white; --tile:white; --card:white }
+  :root,:root[data-theme] { --paper:white; --ink:black; --muted:#333; --line:#999; --soft:white; --secondary:white; --tile:white; --card:white; --feature-ink:black; --feature-muted:#333; --feature-hover:#0066cc; color-scheme:light }
+  *,*::before,*::after { animation:none!important; transition:none!important }
   .filters,.site-header nav,.hero .button,.footer-links,.theme-switch { display:none }
   .site-header { position:static; background:white; backdrop-filter:none }
   .container { width:100% }

@@ -17,6 +17,18 @@
     return () => window.removeEventListener('storage', sync);
   });
 
+  function moveSelection(event: KeyboardEvent, index: number) {
+    const step = event.key === 'ArrowRight' || event.key === 'ArrowDown' ? 1
+      : event.key === 'ArrowLeft' || event.key === 'ArrowUp' ? -1 : 0;
+    if (!step) return;
+    event.preventDefault();
+    const next = (index + step + options.length) % options.length;
+    setTheme(options[next].value);
+    const button = event.currentTarget as HTMLButtonElement;
+    const buttons = button.parentElement?.querySelectorAll<HTMLButtonElement>('[role="radio"]');
+    buttons?.[next].focus();
+  }
+
   function setTheme(value: string) {
     if (preference === value) return;
     preference = value;
@@ -25,13 +37,15 @@
 </script>
 
 <div class="theme-switch" role="radiogroup" aria-label="Tema de apariencia">
-  {#each options as opt}
+  {#each options as opt, index}
     <button
       type="button"
       role="radio"
       class="theme-option"
       aria-checked={preference === opt.value}
       aria-label={opt.label}
+      tabindex={preference === opt.value ? 0 : -1}
+      onkeydown={(event) => moveSelection(event, index)}
       disabled={!ready}
       onclick={() => setTheme(opt.value)}
     >
