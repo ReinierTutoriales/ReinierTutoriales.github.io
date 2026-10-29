@@ -20,6 +20,18 @@ test('carga la elección guardada, cambia temas, sigue el sistema y sincroniza o
 
   await waitFor(() => expect(darkBtn.getAttribute('aria-checked')).toBe('true'));
   expect(lightBtn.getAttribute('aria-checked')).toBe('false');
+  expect(darkBtn.tabIndex).toBe(0);
+  expect(lightBtn.tabIndex).toBe(-1);
+  darkBtn.focus();
+  await fireEvent.keyDown(darkBtn, { key: 'ArrowRight' });
+  await waitFor(() => expect(systemBtn.getAttribute('aria-checked')).toBe('true'));
+  expect(document.activeElement).toBe(systemBtn);
+  expect(systemBtn.tabIndex).toBe(0);
+  expect(document.documentElement.dataset.themePreference).toBe('system');
+  await fireEvent.keyDown(systemBtn, { key: 'ArrowLeft' });
+  await waitFor(() => expect(darkBtn.getAttribute('aria-checked')).toBe('true'));
+  expect(document.activeElement).toBe(darkBtn);
+
 
   await fireEvent.click(lightBtn);
   expect(document.documentElement.dataset.theme).toBe('light');
