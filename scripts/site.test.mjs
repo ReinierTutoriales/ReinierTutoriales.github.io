@@ -168,7 +168,7 @@ test('navegación activa y destinos internos válidos en todas las páginas púb
   const urls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(m => m[1]);
   for (const url of urls) {
     const page = await readFile(resolve('build',new URL(url).pathname.slice(1),'index.html'),'utf8');
-    const nav = page.match(/<nav aria-label="Navegación principal">([\s\S]*?)<\/nav>/)[1];
+    const nav = page.match(/<nav\b[^>]*aria-label="Navegación principal"[^>]*>([\s\S]*?)<\/nav>/)[1];
     const path = new URL(url).pathname;
     const expected = path === '/' ? 0 : 1;
     assert.equal((nav.match(/aria-current=/g)||[]).length,expected,url);

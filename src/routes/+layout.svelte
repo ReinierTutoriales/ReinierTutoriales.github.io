@@ -11,6 +11,7 @@
   // Transición nativa entre páginas (View Transitions API); sin soporte o con
   // movimiento reducido la navegación es instantánea.
   onNavigate((navigation) => {
+    if (navigation.to?.url.pathname === navigation.from?.url.pathname && navigation.to?.url.search === navigation.from?.url.search) return;
     if (!document.startViewTransition || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     return new Promise((resolve) => {
       document.startViewTransition(async () => {

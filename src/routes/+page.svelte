@@ -1,5 +1,6 @@
 <script lang="ts">
 
+  import Arrow from '#lib/components/Arrow.svelte';
   import ProjectCatalog from '#lib/components/ProjectCatalog.svelte';
   import { siteSections } from '#lib/sections.js';
   import ResourceList from '#lib/components/ResourceList.svelte';
@@ -7,24 +8,24 @@
 
 
     <section class="hero container" id="inicio" aria-labelledby="hero-title">
-      <div class="eyebrow"><span class="status-dot" aria-hidden="true"></span> Reinier Lazo · ReinierTutoriales</div>
+      <div class="eyebrow">Reinier Lazo</div>
       <h1 id="hero-title">Optimizado.<br><span>Listo para usar.</span></h1>
-      <div class="hero-bottom"><p>Herramientas nativas y guías verificables para Windows, macOS y Android TV. Sin fricción, sin cloud innecesario. Directo al resultado.</p><a class="button primary" href="#proyectos">Explorar proyectos <span aria-hidden="true">↓</span></a></div>
-      <div class="hero-foot"><span>Desarrollo y documentación</span><span>Windows <i>/</i> Android TV <i>/</i> macOS</span></div>
+      <div class="hero-bottom"><p>Aplicaciones y guías para Windows, macOS y Android TV. Directo al resultado.</p><div class="hero-actions"><a class="button primary" href="#proyectos">Explorar proyectos <Arrow direction="down" /></a><a class="button secondary" href="/guias/">Ver guías <Arrow /></a></div></div>
+      <div class="hero-foot"><span>Desarrollo y documentación</span><span class="platforms"><span>Windows</span><span>Android TV</span><span>macOS</span></span></div>
     </section>
     <section class="work-section" id="proyectos" aria-labelledby="projects-title">
       <div class="container">
-        <div class="section-heading"><div><p class="eyebrow">Proyectos seleccionados</p><h2 id="projects-title">Aplicaciones para copiar, descargar y navegar.</h2></div><p>Qué hace cada herramienta, para qué sistema está pensada y dónde seguir su desarrollo.</p></div>
+        <div class="section-heading"><div><p class="eyebrow">Proyectos seleccionados</p><h2 id="projects-title">Herramientas que van al grano.</h2></div><p>Copia, descarga o navega. Elige una plataforma y encuentra tu proyecto.</p></div>
         <ProjectCatalog />
         <p class="section-note">Las funciones y la disponibilidad dependen de cada proyecto. Consulta su README y sus publicaciones antes de instalar.</p>
-        <a class="text-link" href="/aplicaciones/#comparar">Comparar aplicaciones por tarea <span aria-hidden="true">›</span></a>
+        <a class="text-link" href="/aplicaciones/#comparar">Comparar aplicaciones <Arrow /></a>
       </div>
     </section>
     <section class="guide-teaser container" aria-labelledby="guides-title">
       <div class="section-heading"><div><p class="eyebrow">Explora la web</p><h2 id="guides-title">Cada recurso, en su lugar.</h2></div><p>Sistemas, aplicaciones y conocimiento técnico, organizados para ir directo a lo que necesitas.</p></div>
       <div class="guide-group-grid">
         {#each siteSections as section (section.path)}
-          <a class="guide-group" href={section.path}><span class="eyebrow">{section.label}</span><h3>{section.title}</h3><p>{section.summary}</p><span class="text-link">Explorar sección <span aria-hidden="true">›</span></span></a>
+          <a class="guide-group" href={section.path}><span class="eyebrow">{section.label}</span><h3>{section.title}</h3><p>{section.summary}</p><span class="text-link">Ver {section.path === '/guias/' ? 'guías' : section.title.toLowerCase()} <Arrow /></span></a>
         {/each}
       </div>
     </section>
@@ -37,4 +38,4 @@
         <div class="principles" id="areas"><article><span class="principle-number">01</span><h3>Utilidad concreta</h3><p>Copiar archivos, gestionar descargas o navegar desde el televisor. Cada proyecto parte de una tarea reconocible.</p></article><article><span class="principle-number">02</span><h3>Atención a los recursos</h3><p>Interfaces nativas, WebView y motores de sistema elegidos según el dispositivo y el trabajo que deben realizar.</p></article><article><span class="principle-number">03</span><h3>Trabajo verificable</h3><p>Repositorios públicos para consultar el código, los cambios, las instrucciones y las limitaciones conocidas.</p></article></div>
       </div>
     </section>
-    <section class="community-section container" id="contacto" aria-labelledby="community-title"><div><p class="eyebrow">Comunidad</p><h2 id="community-title">El trabajo continúa<br>en comunidad.</h2><p>Consulta el código, sigue los tutoriales o participa en la conversación.</p></div><div class="community-links"><a href="https://github.com/ReinierTutoriales"><span>GitHub<small>Código, cambios e incidencias</small></span><span aria-hidden="true">↗</span></a><a href="https://youtube.com/c/ReinierTutoriales"><span>YouTube<small>Tutoriales y demostraciones</small></span><span aria-hidden="true">↗</span></a><a href="https://t.me/ReinierTutoriales"><span>Telegram<small>Conversación y novedades</small></span><span aria-hidden="true">↗</span></a></div></section>
+    <section class="community-section container" id="contacto" aria-labelledby="community-title"><div><p class="eyebrow">Comunidad</p><h2 id="community-title">El trabajo continúa<br>en comunidad.</h2><p>Consulta el código, sigue los tutoriales o participa en la conversación.</p></div><div class="community-links"><a href="https://github.com/ReinierTutoriales"><span>GitHub<small>Código, cambios e incidencias</small></span><Arrow direction="external" /></a><a href="https://youtube.com/c/ReinierTutoriales"><span>YouTube<small>Tutoriales y demostraciones</small></span><Arrow direction="external" /></a><a href="https://t.me/ReinierTutoriales"><span>Telegram<small>Conversación y novedades</small></span><Arrow direction="external" /></a></div></section>

@@ -3,6 +3,7 @@
   var root = document.documentElement;
   var media = window.matchMedia('(prefers-color-scheme: dark)');
   var preference = 'system';
+  var transition;
   var valid = function (value) { return value === 'light' || value === 'dark' || value === 'system'; };
   try {
     var stored = window.localStorage.getItem('rt-theme');
@@ -23,8 +24,14 @@
     try { window.localStorage.setItem('rt-theme', preference); } catch (_) { /* Keep the in-memory preference. */ }
     // Crossfade del cambio de tema con View Transitions cuando está disponible.
     var calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (typeof document.startViewTransition === 'function' && !calm) document.startViewTransition(apply);
-    else apply();
+    if (transition) transition.skipTransition();
+    if (typeof document.startViewTransition === 'function' && !calm) {
+      var current = document.startViewTransition(apply);
+      transition = current;
+      current.finished.catch(function () {}).then(function () {
+        if (transition === current) transition = null;
+      });
+    } else apply();
   });
   window.addEventListener('storage', function (event) {
     if (event.key !== 'rt-theme' && event.key !== null) return;
