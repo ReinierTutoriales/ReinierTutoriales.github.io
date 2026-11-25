@@ -2,6 +2,7 @@
   import '../app.css';
   import Header from '#lib/components/Header.svelte';
   import Seo from '#lib/components/Seo.svelte';
+  import Pwa from '#lib/components/Pwa.svelte';
   import type { LayoutData } from './$types';
   import type { Snippet } from 'svelte';
   import Footer from '#lib/components/Footer.svelte';
@@ -27,9 +28,11 @@
   <meta name="author" content="ReinierTutoriales">
   <link rel="icon" href="/favicon.png" type="image/png">
   <link rel="apple-touch-icon" href="/imagenes/apple-touch-icon.png">
+  <link rel="manifest" href="/manifest.webmanifest">
 </svelte:head>
 
 <Seo metadata={data.seo} />
+<Pwa />
 <a class="skip-link" href="#main">Saltar al contenido</a>
 <Header />
 <main id="main">{@render children()}</main>

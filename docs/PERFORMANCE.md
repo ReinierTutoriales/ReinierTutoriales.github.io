@@ -1,5 +1,7 @@
 # SEO técnico, dependencias y peso del cliente — 16/10/2026
 
+Última revisión: 24/11/2026 (dependencias, PWA y limpieza de activos).
+
 ## Hallazgos y cambios
 
 Los componentes de SEO importaban el índice de todas las rutas y, a través de él, el contenido completo de las fichas de aplicaciones. Además, una ficha importaba el catálogo completo para obtener una función que construye un enlace. La cabecera compartía módulo con los datos de todos los sistemas y herramientas.
@@ -10,7 +12,13 @@ Los componentes de SEO importaban el índice de todas las rutas y, a través de 
 - Las dos guías incluyen Article y Open Graph de tipo article. Autor, publicación y revisión se muestran en el texto. El sitemap usa lastmod solo donde existe una fecha editorial registrada; no se sustituye por la hora de cada build.
 - La compilación limpia su salida generada antes de reconstruirla, evitando conservar chunks obsoletos de compilaciones anteriores.
 
-No se añaden dependencias, valoraciones, ofertas ni garantías de resultados enriquecidos.
+### Cambios de la revisión del 24/11/2026
+
+- **Seguridad**: se actualizan `@sveltejs/kit` (3.1.0 → 3.4.0), `@sveltejs/adapter-static` (4.0.0 → 4.0.1) y `@sveltejs/vite-plugin-svelte` (7.3.1 → 7.3.2), corrigiendo los advisories GHSA-m9j8-jcmv-hp69 (severidad alta) y GHSA-jf9x-2fg2-hx4w (moderada), entre otros. Son parches/menores sin cambio semántico; se conservan las versiones exactas. `npm audit --json` vuelve a reportar 0 vulnerabilidades. Detalle en [PERFORMANCE.md → Dependencias](#dependencias).
+- **PWA**: se añaden `static/manifest.webmanifest`, un service worker ligero (`static/sw.js`) y su registro desde `Pwa.svelte` (solo producción, vía `import.meta.env.PROD`). El SW usa *network-first* para navegaciones y *cache-first* solo para activos con hash; sin shell SPA. El coste es despreciable en el presupuesto de bytes (un import mínimo en cada página).
+- **Activo sin uso**: se elimina `static/imagenes/Logo RT.png` (1 760 246 bytes), no referenciado por ninguna página; la marca se mantiene en las variantes `logo-192.webp`, `logo-384.webp` y `og-logo.png`.
+
+No se añaden dependencias nuevas, valoraciones, ofertas ni garantías de resultados enriquecidos.
 
 ## Medición de archivos
 
@@ -40,10 +48,11 @@ El informe incluye las 17 rutas, HTML, JS precargado, CSS y el total generado de
 
 ## Dependencias
 
-Consultados el registro npm y los metadatos de compatibilidad el 16/10/2026:
+Consultados el registro npm y los metadatos de compatibilidad el 16/10/2026 y de nuevo el 24/11/2026:
 
-- SvelteKit 3.1.0, Svelte 5.57.2, Vite 8.3.4, adapter-static 4.0.0 y las herramientas de pruebas instaladas no tienen una versión posterior en el registro consultado.
-- `npm audit --json` no reportó vulnerabilidades conocidas. Es una consulta puntual de avisos, no una garantía sobre fallos desconocidos.
+- Svelte 5.57.2, Vite 8.3.4 y las herramientas de pruebas instaladas no tienen una versión posterior en el registro consultado.
+- Actualización de seguridad del 24/11/2026: `@sveltejs/kit` pasa de 3.1.0 a 3.4.0 (corrige el advisory GHSA-m9j8-jcmv-hp69, de severidad alta, y varios de severidad moderada), `@sveltejs/adapter-static` pasa de 4.0.0 a 4.0.1 (GHSA-jf9x-2fg2-hx4w) y `@sveltejs/vite-plugin-svelte` pasa de 7.3.1 a 7.3.2. Son parches y menores sin cambio semántico mayor; se mantienen las versiones exactas y los peer dependencies admitidos (vite ^8, svelte ^5.57, typescript ^6, adapter-static compatible con kit ^3).
+- Tras la actualización, `npm audit --json` no reporta vulnerabilidades conocidas. Es una consulta puntual de avisos, no una garantía sobre fallos desconocidos. La auditoría del 16/10/2026 sí las había reportado limpias; los advisories se publicaron en las semanas posteriores.
 - `npm outdated --json` muestra TypeScript 7.0.2 y los tipos de Node 26 como saltos disponibles. `svelte-check` 4.7.6 declara TypeScript `^5.0.0 || ^6.0.0` como peer dependency: se mantiene 6.0.3. Los tipos de Node permanecen en 24 para corresponder al Node 24 usado por CI.
 - Los paquetes de desarrollo sirven para compilar o probar. Su número en node_modules no equivale al número de bibliotecas enviadas al visitante.
 - Dependabot ya revisa npm y las acciones de GitHub. No se introducen actualizaciones mayores incompatibles para aumentar números de versión.
