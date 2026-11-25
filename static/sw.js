@@ -1,68 +1,72 @@
-/* ReinierTutoriales · Service Worker.
- * Estrategia conservadora para un sitio estático prerenderizado:
- *  - network-first para navegaciones (evita servir HTML obsoleto en caché),
- *  - cache-first para activos con hash (inmutables) y para el que falle la red,
- *  - sin shell SPA: cada ruta es una página HTML real.
- * El manifest solo se usa en producción (el desarrollo no registra el SW).
- */
 'use strict';
 
-const VERSION = 'rt-v1';
+const VERSION = 'rt-v2';
 const SHELL_CACHE = `${VERSION}-shell`;
 const ASSET_CACHE = `${VERSION}-assets`;
-
+const OWN_CACHE = /^rt-v\d+-(?:shell|assets)$/;
 const NAVIGATIONS = ['/', '/sistemas/', '/aplicaciones/', '/herramientas/', '/guias/'];
-const ASSET_PREFIXES = ['/_app/', '/assets/', '/imagenes/', '/icons/', '/favicon.png', '/theme.js'];
+const MUTABLE_PREFIXES = ['/_app/', '/assets/', '/imagenes/', '/icons/'];
+const MUTABLE_FILES = new Set(['/theme.js', '/favicon.png', '/manifest.webmanifest']);
 
 self.addEventListener('install', (event) => {
   event.waitUntil((async () => {
     const shell = await caches.open(SHELL_CACHE);
     await shell.addAll(NAVIGATIONS);
-    self.skipWaiting();
+    await self.skipWaiting();
   })());
 });
 
 self.addEventListener('activate', (event) => {
   event.waitUntil((async () => {
     const names = await caches.keys();
-    await Promise.all(
-      names.filter((name) => name !== SHELL_CACHE && name !== ASSET_CACHE).map((name) => caches.delete(name))
-    );
+    await Promise.all(names
+      .filter((name) => OWN_CACHE.test(name) && name !== SHELL_CACHE && name !== ASSET_CACHE)
+      .map((name) => caches.delete(name)));
     await self.clients.claim();
   })());
 });
 
-/* Estrategia de caché según el tipo de petición. */
-async function handle(request) {
-  const url = new URL(request.url);
-  if (request.mode === 'navigate') return networkFirst(request, url);
-  if (request.destination === 'style' || request.destination === 'script' || request.mode === 'no-cors') {
-    return cacheFirstAssets(request);
-  }
-  return fetch(request);
-}
-
-async function networkFirst(request) {
+async function readCache(name, request) {
   try {
-    const response = await fetch(request);
-    const cache = await caches.open(SHELL_CACHE);
-    await cache.put(request, response.clone());
-    return response;
-  } catch (error) {
-    const cached = await caches.match(request);
-    if (cached) return cached;
-    const fallback = await caches.match('/');
-    if (fallback) return fallback;
-    throw error;
+    return await (await caches.open(name)).match(request);
+  } catch {
+    return undefined;
   }
 }
 
-async function cacheFirstAssets(request) {
-  const cached = await caches.match(request);
+async function rememberResponse(name, request, response) {
+  if (response.status !== 200 || response.redirected) return;
+  try {
+    await (await caches.open(name)).put(request, response.clone());
+  } catch {
+    // Cache storage can fail without invalidating a successful network response.
+  }
+}
+
+async function networkFirst(request, cacheName) {
+  let response;
+  try {
+    response = request.mode === 'navigate'
+      ? await fetch(request)
+      : await fetch(request, { cache: 'no-cache' });
+  } catch (error) {
+    const cached = await readCache(cacheName, request);
+    if (cached) return cached;
+    if (request.mode !== 'navigate') throw error;
+    return new Response('Sin conexión. Esta página aún no está disponible sin internet.', {
+      status: 503,
+      headers: { 'Content-Type': 'text/plain; charset=utf-8' }
+    });
+  }
+  await rememberResponse(cacheName, request, response);
+  return response;
+}
+
+async function cacheFirst(request) {
+  const cached = await readCache(ASSET_CACHE, request);
   if (cached) return cached;
   const response = await fetch(request);
-  const cache = await caches.open(ASSET_CACHE);
-  await cache.put(request, response.clone());
+  await rememberResponse(ASSET_CACHE, request, response);
   return response;
 }
 
@@ -70,6 +74,13 @@ self.addEventListener('fetch', (event) => {
   const { request } = event;
   if (request.method !== 'GET') return;
   const url = new URL(request.url);
-  if (url.origin !== self.location.origin) return;
-  event.respondWith(handle(request));
+  if (url.origin !== self.location.origin || request.headers.has('range')) return;
+
+  if (request.mode === 'navigate') {
+    event.respondWith(networkFirst(request, SHELL_CACHE));
+  } else if (url.pathname.startsWith('/_app/immutable/')) {
+    event.respondWith(cacheFirst(request));
+  } else if (MUTABLE_FILES.has(url.pathname) || MUTABLE_PREFIXES.some((prefix) => url.pathname.startsWith(prefix))) {
+    event.respondWith(networkFirst(request, ASSET_CACHE));
+  }
 });
