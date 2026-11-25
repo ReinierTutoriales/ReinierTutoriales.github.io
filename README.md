@@ -6,7 +6,7 @@ Aplicaciones para Windows y Android TV, herramientas de sistema y documentación
 
 ## Stack
 
-- SvelteKit 3.1 + Svelte 5, TypeScript 6 y Vite 8.
+- SvelteKit 3.4 + Svelte 5, TypeScript 6 y Vite 8.
 - `adapter-static` con prerenderizado completo. GitHub Pages sirve HTML y activos; no necesita servidor Node.
 - Componentes con runes (`$state`, `$derived`, `$props`) y subpath imports `#lib`.
 - Configuración actual en `vite.config.ts`, TypeScript extiende `$app/tsconfig`.
@@ -66,6 +66,8 @@ El selector permite Sistema, Claro y Oscuro. `static/theme.js` resuelve el tema 
 El HTML prerenderizado contiene todos los proyectos sin ejecutar JS. Los filtros se activan tras montar Svelte y mantienen botones nativos, estado de selección y anuncio de resultados. Sin JS se ve el catálogo completo.
 
 No hay fuentes remotas, analítica, servidor de aplicación ni llamadas a GitHub desde el navegador. El framework genera activos con hash para caché y CSP con hashes para su arranque. No se habilitan funcionalidades experimentales ni una SPA vacía como fallback.
+
+Un `manifest.webmanifest` y un service worker ligero (`static/sw.js`) permiten la instalación como aplicación y mejoran la carga recurrente en producción. El SW usa *network-first* para navegaciones (no sirve HTML obsoleto) y *cache-first* solo para activos con hash inmutables; no hay shell SPA ni caché ofuscada. Se registra únicamente en producción, desde `Pwa.svelte`, y degrada sin interrumpir si el contexto no admite SW.
 
 La captura procede de `VelocityCopy/docs/screenshots/transfer-compact.png`, rama `main`, consultada el 16/10/2026 y convertida a WebP. Sus cifras son ilustrativas; no son un benchmark. Se mantienen los enlaces comunitarios originales.
 
